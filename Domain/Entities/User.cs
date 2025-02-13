@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlindBoxSystem.Domain.Entities
 {
@@ -19,6 +19,7 @@ namespace BlindBoxSystem.Domain.Entities
         public string Phone { get; set; }
         [Required]
         public string Email { get; set; }
+        public Boolean Gender { get; set; }
 
         public int RoleId { get; set; }
 

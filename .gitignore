@@ -400,3 +400,4 @@ FodyWeavers.xsd
 *.sln.iml
 bin/
 obj/
+appsettings.json
