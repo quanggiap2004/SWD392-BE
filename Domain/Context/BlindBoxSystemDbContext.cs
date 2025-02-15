@@ -1,9 +1,11 @@
 ﻿using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Entities.ApplicationEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Domain.Context
 {
-    public class BlindBoxSystemDbContext: DbContext
+    public class BlindBoxSystemDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public BlindBoxSystemDbContext(DbContextOptions<BlindBoxSystemDbContext> options)
         : base(options)

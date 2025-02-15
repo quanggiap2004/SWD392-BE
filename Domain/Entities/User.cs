@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,6 +21,7 @@ namespace BlindBoxSystem.Domain.Entities
         [Required]
         public string Email { get; set; }
         public Boolean Gender { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public int RoleId { get; set; }
 

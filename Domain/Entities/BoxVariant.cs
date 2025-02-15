@@ -24,6 +24,7 @@ namespace BlindBoxSystem.Domain.Entities
         public float DisplayPrice { get; set; }  // float
 
         public int BoxVariantStock { get; set; }  // int
+        public bool IsDeleted { get; set; } = false;
 
         // Navigation properties
         [ForeignKey("VariantId")]

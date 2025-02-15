@@ -13,7 +13,6 @@ namespace BlindBoxSystem.Domain.Entities
         public int VoucherId { get; set; }
         public string PaymentMethod { get; set; }
         public float TotalPrice { get; set; }
-        public bool IsRefund { get; set; } = false;
         public float Revenue { get; set; }
         public int AddressId { get; set; }
 

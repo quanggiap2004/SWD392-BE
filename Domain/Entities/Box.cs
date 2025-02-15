@@ -14,6 +14,8 @@ namespace BlindBoxSystem.Domain.Entities
         public string BoxName { get; set; }
 
         public string? BoxDescription { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public int SoldQuantity { get; set; }
 
         // Foreign Key to Brand
         public int BrandId { get; set; }
