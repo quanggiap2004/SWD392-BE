@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Domain.Context
 {
-    public class BlindBoxSystemDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class BlindBoxSystemDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public BlindBoxSystemDbContext(DbContextOptions<BlindBoxSystemDbContext> options)
         : base(options)

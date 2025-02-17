@@ -3,7 +3,6 @@ using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Data.Implementations;
 using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Entities.ApplicationEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -93,13 +92,16 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IBoxService, BoxService>();
 
 #endregion
 
 #region Repositories
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IBoxRepository, BoxRepository>();
 #endregion
 
 var app = builder.Build();
