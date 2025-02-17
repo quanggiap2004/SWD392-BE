@@ -3,7 +3,6 @@ using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Data.Implementations;
 using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Entities.ApplicationEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -60,14 +59,25 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequireDigit = false;
     options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = true;
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
 })
     .AddEntityFrameworkStores<BlindBoxSystemDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    // this sets the lifespan for generated tokens like email and reset password
+    options.TokenLifespan = TimeSpan.FromMinutes(5);
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+
+
 })
     .AddJwtBearer(options =>
     {
@@ -80,7 +90,13 @@ builder.Services.AddAuthentication(options =>
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key is not configured.")))
         };
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
     });
+
 
 builder.Services.AddAuthorization(options =>
 {

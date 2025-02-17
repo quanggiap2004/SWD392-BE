@@ -8,7 +8,7 @@ namespace BlindBoxSystem.Domain.Context
     {
         public IdentityServiceContext(DbContextOptions<IdentityServiceContext> options) : base(options)
         {
-            
+
         }
     }
 }

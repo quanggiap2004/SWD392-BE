@@ -6,13 +6,13 @@ namespace BlindBoxSystem.Domain.Entities
     public class Feedback
     {
         [Key]
-        public int FeedbackId { get;set; }
+        public int FeedbackId { get; set; }
         public int UserId { get; set; }
         public string FeedbackContent { get; set; }
         public DateTime? UpdatedAt { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
-        
+
 
         public string FeedbackType { get; set; }
         public string ImageUrl { get; set; }

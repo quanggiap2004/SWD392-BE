@@ -1,26 +1,26 @@
 ﻿using BlindBoxSystem.Application.Interfaces;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 
 namespace BlindBoxSystem.Application.Implementations
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _configuration;
-
         public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public Task SendEmailAsync(string email, string subject, string message)
         {
-            // Implement your email sending logic here
-            // For example, using SMTP
+
             var smtpClient = new SmtpClient(_configuration["Smtp:Host"])
             {
                 Port = int.Parse(_configuration["Smtp:Port"]),
-                Credentials = new NetworkCredential(_configuration["Smtp:Username"], _configuration["Smtp:Password"]),
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
                 EnableSsl = true,
+                Credentials = new NetworkCredential(_configuration["Smtp:Username"], _configuration["Smtp:Password"])
             };
 
             var mailMessage = new MailMessage
@@ -32,7 +32,7 @@ namespace BlindBoxSystem.Application.Implementations
             };
             mailMessage.To.Add(email);
 
-            await smtpClient.SendMailAsync(mailMessage);
+            return smtpClient.SendMailAsync(mailMessage);
         }
     }
 }

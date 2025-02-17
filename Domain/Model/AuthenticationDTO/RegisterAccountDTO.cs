@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Domain.Model.AccountDTOs
+﻿namespace BlindBoxSystem.Domain.Model.AuthenticationDTO
 {
     public class RegisterAccountDTO
     {
@@ -9,5 +9,6 @@
         public string phoneNumber { get; set; }
         public Boolean gender { get; set; }
         public int roleId { get; set; }
+        public bool isTestAccount { get; set; }
     }
 }

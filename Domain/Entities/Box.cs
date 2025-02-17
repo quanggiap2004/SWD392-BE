@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlindBoxSystem.Domain.Entities
 {
@@ -24,9 +24,8 @@ namespace BlindBoxSystem.Domain.Entities
         public virtual Brand Brand { get; set; }
 
         // Navigation Properties (if Box has relationships)
-        public virtual ICollection<BoxVariant> BoxVariants { get; set; }
+        public virtual ICollection<BoxOption> BoxOptions { get; set; }
         public virtual ICollection<BoxImage> BoxImages { get; set; }
-        public virtual ICollection<Variant> Variants { get; set; }
         public virtual ICollection<BoxItem> BoxItems { get; set; }
         public virtual ICollection<OnlineSerieBox> OnlineSerieBoxes { get; set; }
     }

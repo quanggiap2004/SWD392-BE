@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Domain.Model.AccountDTOs
+﻿namespace BlindBoxSystem.Domain.Model.AuthenticationDTO
 {
     public class UserRoleDTO
     {

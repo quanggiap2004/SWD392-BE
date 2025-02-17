@@ -8,14 +8,15 @@ namespace BlindBoxSystem.Domain.Entities
         [Key]
         public int OrderId { get; set; }
         public int UserId { get; set; }
-        
+
         public DateTime OrderCreatedAt { get; set; }
         public int VoucherId { get; set; }
         public string PaymentMethod { get; set; }
         public float TotalPrice { get; set; }
         public float Revenue { get; set; }
         public int AddressId { get; set; }
-
+        public bool OpenRequest { get; set; } = false;
+        public bool RefundRequest { get; set; } = false;
         public virtual ICollection<OrderStatusDetail> OrderStatusDetails { get; set; }
 
         public virtual ICollection<OrderStatus> OrderStatus { get; set; }

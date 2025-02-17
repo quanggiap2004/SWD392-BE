@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Domain.Context
 {
-    public class BlindBoxSystemDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class BlindBoxSystemDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public BlindBoxSystemDbContext(DbContextOptions<BlindBoxSystemDbContext> options)
         : base(options)
@@ -15,7 +15,6 @@ namespace BlindBoxSystem.Domain.Context
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Box> Boxes { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<Variant> Variants { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
@@ -24,7 +23,7 @@ namespace BlindBoxSystem.Domain.Context
         public DbSet<OrderStatusDetail> OrderStatusDetails { get; set; }
         public DbSet<UserVotedBoxItem> UserVotedBoxItems { get; set; }
         public DbSet<BoxImage> BoxImages { get; set; }
-        public DbSet<BoxVariant> BoxVariants { get; set; }
+        public DbSet<BoxOption> BoxOptions { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserWallet> UserWallets { get; set; }
@@ -40,24 +39,6 @@ namespace BlindBoxSystem.Domain.Context
                 .HasMany(e => e.OnlineSerieBoxes)
                 .WithMany(e => e.BoxItems)
                 .UsingEntity("RolledItem");
-
-            modelBuilder.Entity<Box>()
-                .HasMany(e => e.Variants)
-                .WithMany(e => e.Boxes)
-                .UsingEntity<BoxVariant>(
-                    j => j
-                        .HasOne(bv => bv.Variant)
-                        .WithMany(v => v.BoxVariants)
-                        .HasForeignKey(bv => bv.VariantId),
-                    j => j
-                        .HasOne(bv => bv.Box)
-                        .WithMany(b => b.BoxVariants)
-                        .HasForeignKey(bv => bv.BoxId),
-                    j =>
-                    {
-                        j.HasKey(bv => bv.BoxVariantId);
-                        j.ToTable("BoxVariants");
-                    });
 
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.OrderStatus)
