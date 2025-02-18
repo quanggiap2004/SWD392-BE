@@ -4,7 +4,6 @@
     {
         public int OnlineSerieBoxId { get; set; }
 
-        public int BoxId { get; set; }
 
         public float Price { get; set; }
 
@@ -13,5 +12,6 @@
         public bool IsSecretOpen { get; set; }
 
         public int Turn { get; set; }
+        public int BoxId { get; set; }
     }
 }

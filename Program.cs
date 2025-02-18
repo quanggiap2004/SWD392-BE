@@ -140,6 +140,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBoxService, BoxService>();
+builder.Services.AddScoped<IBoxImageService, BoxImageService>();
+builder.Services.AddScoped<IBoxItemService, BoxItemService>();
+builder.Services.AddScoped<IBoxOptionService, BoxOptionService>();
+
 
 #endregion
 
@@ -148,6 +152,9 @@ builder.Services.AddScoped<IBoxService, BoxService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBoxRepository, BoxRepository>();
+builder.Services.AddScoped<IBoxImageRepository, BoxImageRepository>();
+builder.Services.AddScoped<IBoxItemRepository, BoxItemRepository>();
+builder.Services.AddScoped<IBoxOptionRepository, BoxOptionRepository>();
 #endregion
 
 var app = builder.Build();

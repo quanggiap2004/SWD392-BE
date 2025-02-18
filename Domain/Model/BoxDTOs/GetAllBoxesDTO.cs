@@ -1,5 +1,6 @@
 ﻿using BlindBoxSystem.Domain.Model.BoxImageDTOs;
 using BlindBoxSystem.Domain.Model.BoxItemDTOs;
+using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
 using BlindBoxSystem.Domain.Model.OnlineSerieBoxDTOs;
 
 namespace BlindBoxSystem.Domain.Model.BoxDTOs
@@ -22,6 +23,7 @@ namespace BlindBoxSystem.Domain.Model.BoxDTOs
         // Navigation Properties (if Box has relationships)
         public List<BoxImageDTO> BoxImage { get; set; }
         public List<BoxItemDTO> BoxItem { get; set; }
+        public List<BoxOptionDTO> BoxOptions { get; set; }
         public List<OnlineSerieBoxDTO> OnlineSerieBox { get; set; }
     }
 }
