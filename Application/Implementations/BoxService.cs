@@ -4,6 +4,7 @@ using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
 using BlindBoxSystem.Domain.Model.BoxImageDTOs;
 using BlindBoxSystem.Domain.Model.BoxItemDTOs;
+using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
 using BlindBoxSystem.Domain.Model.OnlineSerieBoxDTOs;
 
 namespace BlindBoxSystem.Application.Implementations
@@ -45,15 +46,16 @@ namespace BlindBoxSystem.Application.Implementations
                 IsDeleted = b.IsDeleted,
                 SoldQuantity = b.SoldQuantity,
                 BrandId = b.BrandId,
-                BrandName = b.Brand.BrandName,
-                BoxImage = b.BoxImages.Select(bimage => new BoxImageDTO
+                BrandName = b.Brand?.BrandName,
+
+                BoxImage = b.BoxImages?.Select(bimage => new BoxImageDTO
                 {
                     BoxId = bimage.BoxId,
                     BoxImageId = bimage.BoxImageId,
                     BoxImageUrl = bimage.BoxImageUrl,
-                }).ToList(),
+                }).ToList() ?? new List<BoxImageDTO>(),
 
-                BoxItem = b.BoxItems.Select(bitem => new BoxItemDTO
+                BoxItem = b.BoxItems?.Select(bitem => new BoxItemDTO
                 {
                     BoxId = bitem.BoxId,
                     BoxItemId = bitem.BoxItemId,
@@ -65,17 +67,29 @@ namespace BlindBoxSystem.Application.Implementations
                     ImageUrl = bitem.ImageUrl,
                     NumOfVote = bitem.NumOfVote,
                     IsSecret = bitem.IsSecret,
-                }).ToList(),
+                }).ToList() ?? new List<BoxItemDTO>(),
 
-                OnlineSerieBox = b.OnlineSerieBoxes.Select(bOnline => new OnlineSerieBoxDTO
+                BoxOptions = b.BoxOptions?.Select(boption => new BoxOptionDTO
+                {
+                    BoxId = boption.BoxId,
+                    BoxOptionId = boption.BoxOptionId,
+                    BoxOptionName = boption.BoxOptionName,
+                    BoxOptionPrice = boption.BoxOptionPrice,
+                    BoxOptionStock = boption.BoxOptionStock,
+                    OriginPrice = boption.OriginPrice,
+                    DisplayPrice = boption.DisplayPrice,
+                    IsDeleted = boption.IsDeleted,
+                }).ToList() ?? new List<BoxOptionDTO>(),
+
+                OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
                 {
                     BoxId = bOnline.BoxId,
-                    OnlineSerieBoxId = bOnline.BoxId,
+                    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
                     IsSecretOpen = bOnline.IsSecretOpen,
                     Price = bOnline.Price,
                     Name = bOnline.Name,
                     Turn = bOnline.Turn,
-                }).ToList(),
+                }).ToList() ?? new List<OnlineSerieBoxDTO>(),
             });
             return boxesDTO;
         }
@@ -103,6 +117,7 @@ namespace BlindBoxSystem.Application.Implementations
                 SoldQuantity = box.SoldQuantity,
                 BrandId = box.BrandId,
                 BrandName = box.Brand?.BrandName,
+
                 BoxImage = box.BoxImages?.Select(bimage => new BoxImageDTO
                 {
                     BoxId = bimage.BoxId,
@@ -123,6 +138,18 @@ namespace BlindBoxSystem.Application.Implementations
                     NumOfVote = bitem.NumOfVote,
                     IsSecret = bitem.IsSecret,
                 }).ToList() ?? new List<BoxItemDTO>(),
+
+                BoxOptions = box.BoxOptions?.Select(boption => new BoxOptionDTO
+                {
+                    BoxId = boption.BoxId,
+                    BoxOptionId = boption.BoxOptionId,
+                    BoxOptionName = boption.BoxOptionName,
+                    BoxOptionPrice = boption.BoxOptionPrice,
+                    BoxOptionStock = boption.BoxOptionStock,
+                    OriginPrice = boption.OriginPrice,
+                    DisplayPrice = boption.DisplayPrice,
+                    IsDeleted = boption.IsDeleted,
+                }).ToList() ?? new List<BoxOptionDTO>(),
 
                 OnlineSerieBox = box.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
                 {

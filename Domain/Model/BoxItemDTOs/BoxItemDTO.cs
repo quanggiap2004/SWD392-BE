@@ -1,6 +1,4 @@
-﻿using BlindBoxSystem.Domain.Entities;
-
-namespace BlindBoxSystem.Domain.Model.BoxItemDTOs
+﻿namespace BlindBoxSystem.Domain.Model.BoxItemDTOs
 {
     public class BoxItemDTO
     {
@@ -23,7 +21,6 @@ namespace BlindBoxSystem.Domain.Model.BoxItemDTOs
         public int NumOfVote { get; set; }
 
         public bool IsSecret { get; set; }
-        public virtual ICollection<OnlineSerieBox> OnlineSerieBoxes { get; set; }
 
     }
 }
