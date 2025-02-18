@@ -60,7 +60,6 @@ namespace BlindBoxSystem.Controllers
             var ToAddBoxOption = new BoxOption
             {
                 BoxOptionName = addBoxOptionDTO.BoxOptionName,
-                BoxOptionPrice = addBoxOptionDTO.BoxOptionPrice,
                 BoxOptionStock = addBoxOptionDTO.BoxOptionStock,
                 OriginPrice = addBoxOptionDTO.OriginPrice,
                 DisplayPrice = addBoxOptionDTO.DisplayPrice,
@@ -97,7 +96,6 @@ namespace BlindBoxSystem.Controllers
             {
                 BoxOptionId = id,
                 BoxOptionName = updateBoxOptionDTO.BoxOptionName,
-                BoxOptionPrice = updateBoxOptionDTO.BoxOptionPrice,
                 BoxOptionStock = updateBoxOptionDTO.BoxOptionStock,
                 OriginPrice = updateBoxOptionDTO.OriginPrice,
                 DisplayPrice = updateBoxOptionDTO.DisplayPrice,

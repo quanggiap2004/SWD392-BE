@@ -38,7 +38,6 @@ namespace BlindBoxSystem.Application.Implementations
             {
                 BoxOptionId = bOption.BoxOptionId,
                 BoxOptionName = bOption.BoxOptionName,
-                BoxOptionPrice = bOption.BoxOptionPrice,
                 BoxOptionStock = bOption.BoxOptionStock,
                 OriginPrice = bOption.OriginPrice,
                 DisplayPrice = bOption.DisplayPrice,
@@ -70,7 +69,6 @@ namespace BlindBoxSystem.Application.Implementations
             {
                 BoxOptionId = boxOption.BoxOptionId,
                 BoxOptionName = boxOption.BoxOptionName,
-                BoxOptionPrice = boxOption.BoxOptionPrice,
                 BoxOptionStock = boxOption.BoxOptionStock,
                 OriginPrice = boxOption.OriginPrice,
                 DisplayPrice = boxOption.DisplayPrice,
@@ -92,7 +90,6 @@ namespace BlindBoxSystem.Application.Implementations
                 return null; // Return null if the brand does not exist
             }
             existingBoxOption.BoxOptionName = boxOption.BoxOptionName;
-            existingBoxOption.BoxOptionPrice = boxOption.BoxOptionPrice;
             existingBoxOption.BoxOptionStock = boxOption.BoxOptionStock;
             existingBoxOption.OriginPrice = boxOption.OriginPrice;
             existingBoxOption.DisplayPrice = boxOption.DisplayPrice;
