@@ -18,6 +18,32 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+
+builder.Services.AddCors(options =>
+{
+    //options.AddPolicy("AllowSpecificOrigins", policy =>
+    //{
+    //    policy.WithOrigins("https://example.com", "https://another.com") // Specify allowed origins
+    //          .AllowAnyHeader()  // Allow all headers
+    //          .AllowAnyMethod(); // Allow all HTTP methods (GET, POST, etc.)
+    //});
+
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin() // Allow any origin
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+    //options.AddPolicy("AllowFrontend", policy =>
+    //{
+    //    policy.WithOrigins("http://localhost:5173") // Replace with your frontend URL
+    //          .AllowAnyHeader()
+    //          .AllowAnyMethod();
+    //});
+
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BlindBoxSystem API", Version = "v1" });
@@ -132,6 +158,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
