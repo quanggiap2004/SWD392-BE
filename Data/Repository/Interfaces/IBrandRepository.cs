@@ -1,6 +1,6 @@
 ﻿using BlindBoxSystem.Domain.Entities;
 
-namespace BlindBoxSystem.Data.Interfaces
+namespace BlindBoxSystem.Data.Repository.Interfaces
 {
     public interface IBrandRepository
     {

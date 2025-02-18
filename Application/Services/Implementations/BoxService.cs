@@ -1,5 +1,5 @@
 ﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Interfaces;
+using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
 using BlindBoxSystem.Domain.Model.BoxImageDTOs;

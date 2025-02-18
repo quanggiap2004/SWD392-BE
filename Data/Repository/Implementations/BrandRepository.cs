@@ -1,4 +1,4 @@
-﻿using BlindBoxSystem.Data.Interfaces;
+﻿using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
