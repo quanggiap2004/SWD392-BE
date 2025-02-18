@@ -1,6 +1,7 @@
 ﻿using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.BoxDTOs;
 using BlindBoxSystem.Domain.Model.BoxImageDTOs;
 
 namespace BlindBoxSystem.Application.Implementations
@@ -20,29 +21,70 @@ namespace BlindBoxSystem.Application.Implementations
             return addedBoxImage;
         }
 
-        public Task DeleteBoxImageAsync(int id)
+        public async Task DeleteBoxImageAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingBoxImage = await _boxImageRepository.GetBoxImageByIdAsync(id);
+
+            if (existingBoxImage != null)
+            {
+                await _boxImageRepository.DeleteBoxImageAsync(id);
+            }
         }
 
-        public Task<IEnumerable<GetAllBoxImageDTO>> GetAllBoxesImage()
+        public async Task<IEnumerable<GetAllBoxImageDTO>> GetAllBoxesImage()
         {
-            throw new NotImplementedException();
+            var boxImages = await _boxImageRepository.GetAllBoxImageAsync();
+            var boxImagesDTO = boxImages.Select(bImage => new GetAllBoxImageDTO
+            {
+                BoxImageId = bImage.BoxImageId,
+                BoxImageUrl = bImage.BoxImageUrl,
+                BelongBox = new BelongBoxResponseDTO
+                {
+                    BoxId = bImage.BoxId,
+                    BoxName = bImage.Box.BoxName,
+                }
+            });
+            return boxImagesDTO;
         }
 
-        public Task<BoxImage> GetBoxImageById(int id)
+        public async Task<BoxImage> GetBoxImageById(int id)
         {
-            throw new NotImplementedException();
+            var boxImage = await _boxImageRepository.GetBoxImageByIdAsync(id);
+            return boxImage;
         }
 
-        public Task<GetAllBoxImageDTO> GetBoxImageDTO(int id)
+        public async Task<GetAllBoxImageDTO> GetBoxImageDTO(int id)
         {
-            throw new NotImplementedException();
+            var boxImage = await _boxImageRepository.GetBoxImageByIdDTO(id);
+            if (boxImage == null)
+            {
+                return null;
+            }
+            var boxImageDTO = new GetAllBoxImageDTO
+            {
+                BoxImageId = boxImage.BoxImageId,
+                BoxImageUrl = boxImage.BoxImageUrl,
+                BelongBox = new BelongBoxResponseDTO
+                {
+                    BoxId = boxImage.BoxId,
+                    BoxName = boxImage.Box.BoxName,
+                }
+            };
+            return boxImageDTO;
+
         }
 
-        public Task<BoxImage> UpdateBoxImageAsync(int id, BoxImage boxImage)
+        public async Task<BoxImage> UpdateBoxImageAsync(int id, BoxImage boxImage)
         {
-            throw new NotImplementedException();
+            var existingBoxImage = await _boxImageRepository.GetBoxImageByIdAsync(id);
+            if (existingBoxImage == null)
+            {
+                return null; // Return null if the brand does not exist
+            }
+            existingBoxImage.BoxImageUrl = boxImage.BoxImageUrl;
+            existingBoxImage.BoxId = boxImage.BoxId;
+
+            return await _boxImageRepository.UpdateBoxImageAsync(existingBoxImage);
         }
     }
 }
