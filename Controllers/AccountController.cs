@@ -245,14 +245,27 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Password reset failed", errors = result.Errors });
         }
 
-        //[HttpGet("google-login")]
-        //public IActionResult GoogleLogin()
-        //{
-        //    var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
-        //    return Challenge(properties, GoogleDefaults.AuthenticationScheme);
-        //}
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto )
+        {
+            var user = await _userManager.FindByEmailAsync(changePasswordDto.email);
+            if (user == null)
+            {
+                return BadRequest(new { message = "User not found" });
+            }
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.currentPassword, changePasswordDto.newPassword);
+            
+            if (result.Succeeded)
+            {
+                bool saveNewPassword = await _userService.ChangePassword(changePasswordDto);
+                return Ok(new { message = "Password changed successfully" });
+            }
 
-        [HttpPost("google-login")]
+            return BadRequest(new { message = "Password change failed", errors = result.Errors });
+        }
+
+
+            [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleAuthenticationModel model)
         {
             var httpClient = new HttpClient();

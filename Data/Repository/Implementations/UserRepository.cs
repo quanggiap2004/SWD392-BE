@@ -36,6 +36,23 @@ namespace BlindBoxSystem.Data.Repository.Implementations
             return result > 0;
         }
 
+        public async Task<bool> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == changePasswordDto.email);
+            if (user != null)
+            {
+                if(user.Password != changePasswordDto.currentPassword)
+                {
+                    return false;
+                }
+                _context.Entry(user).State = EntityState.Modified;
+                user.Password = changePasswordDto.newPassword;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<User?> GetByCondition(Expression<Func<User, bool>> expression)
         {
             return await _context.Users.FirstOrDefaultAsync(expression);

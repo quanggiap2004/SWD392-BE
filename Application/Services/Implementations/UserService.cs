@@ -17,6 +17,11 @@ namespace BlindBoxSystem.Application.Services.Implementations
             return await _userRepository.AddUser(registerAccountDTO);
         }
 
+        public async Task<bool> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            return await _userRepository.ChangePassword(changePasswordDto);
+        }
+
         public async Task<UserLoginResponse> GetUserByEmail(string email)
         {
             return await _userRepository.GetUserByEmail(email);

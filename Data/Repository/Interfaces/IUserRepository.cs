@@ -11,5 +11,6 @@ namespace BlindBoxSystem.Data.Repository.Interfaces
         Task<bool> ResetPassword(string newPassword, string email);
         Task<UserLoginResponse> GetUserByEmail(string email);
         Task<User?> GetByCondition(Expression<Func<User, bool>> expression);
+        Task<bool> ChangePassword(ChangePasswordDto changePasswordDto);
     }
 }
