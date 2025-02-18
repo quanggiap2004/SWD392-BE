@@ -1,8 +1,9 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Interfaces;
+﻿using BlindBoxSystem.Application.Services.Interfaces;
+using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Model.AuthenticationDTO;
+using BlindBoxSystem.Domain.Model.UserDTO.Response;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace BlindBoxSystem.Application.Services.Implementations
 {
     public class UserService : IUserService
     {
@@ -14,6 +15,11 @@ namespace BlindBoxSystem.Application.Implementations
         public async Task<bool> AddUser(RegisterAccountDTO registerAccountDTO)
         {
             return await _userRepository.AddUser(registerAccountDTO);
+        }
+
+        public async Task<UserLoginResponse> GetUserByEmail(string email)
+        {
+            return await _userRepository.GetUserByEmail(email);
         }
 
         public async Task<bool> ResetPassword(string newPassword, string email)
