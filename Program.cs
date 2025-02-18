@@ -3,6 +3,7 @@ using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Application.Services.Implementations;
 using BlindBoxSystem.Application.Services.Interfaces;
 using BlindBoxSystem.Data.Implementations;
+using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Data.Repository.Implementations;
 using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Context;
