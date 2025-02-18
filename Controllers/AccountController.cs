@@ -270,6 +270,11 @@ namespace BlindBoxSystem.Controllers
             var email = userInfo["email"]?.ToString();
 
             var user = await _userManager.FindByEmailAsync(email);
+            var userLoginResponse = await _userService.GetUserByEmail(user.Email);
+            if (userLoginResponse == null)
+            {
+                return BadRequest(new { message = "User not found" });
+            }
             if (user == null)
             {
                 user = new ApplicationUser
@@ -308,10 +313,13 @@ namespace BlindBoxSystem.Controllers
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256)
             );
 
+            
+
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo
+                expiration = token.ValidTo,
+                user = userLoginResponse
             });
         }
 
