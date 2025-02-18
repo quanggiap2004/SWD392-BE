@@ -1,5 +1,4 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Domain.Entities.ApplicationEntities;
+﻿using BlindBoxSystem.Domain.Entities.ApplicationEntities;
 using BlindBoxSystem.Domain.Model.AuthenticationDTO;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -13,6 +12,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Common;
+using BlindBoxSystem.Application.Services.Interfaces;
 
 namespace BlindBoxSystem.Controllers
 {
@@ -112,10 +112,18 @@ namespace BlindBoxSystem.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])), SecurityAlgorithms.HmacSha256)
                 );
+                var userLoginResponse = await _userService.GetUserByEmail(user.Email);
+
+                if(userLoginResponse == null)
+                {
+                    return BadRequest(new { message = "User not found" });
+                }
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    user = userLoginResponse
                 });
             }
             return Unauthorized(new { message = "Invalid email or password." });

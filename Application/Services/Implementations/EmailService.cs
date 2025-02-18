@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Application.Interfaces;
+﻿using BlindBoxSystem.Application.Services.Interfaces;
 using System.Net;
 using System.Net.Mail;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace BlindBoxSystem.Application.Services.Implementations
 {
     public class EmailService : IEmailService
     {

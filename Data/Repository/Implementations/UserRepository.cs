@@ -1,12 +1,13 @@
-﻿using BlindBoxSystem.Data.Interfaces;
+﻿using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.AuthenticationDTO;
+using BlindBoxSystem.Domain.Model.UserDTO.Response;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Security.Principal;
 
-namespace BlindBoxSystem.Data.Implementations
+namespace BlindBoxSystem.Data.Repository.Implementations
 {
     public class UserRepository : IUserRepository
     {
@@ -40,10 +41,23 @@ namespace BlindBoxSystem.Data.Implementations
             return await _context.Users.FirstOrDefaultAsync(expression);
         }
 
+        public async Task<UserLoginResponse?> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.Where(u => u.Email.Equals(email)).Select(u => new UserLoginResponse
+            {
+                fullname = u.Fullname,
+                phone = u.Phone,
+                email = u.Email,
+                username = u.Username,
+                roleId = u.RoleId,
+                gender = u.Gender
+            }).FirstOrDefaultAsync();
+            return user;
+        }
         public async Task<bool> ResetPassword(string newPassword, string email)
         {
             var user = await GetByCondition(e => e.Email == email);
-            if(user != null)
+            if (user != null)
             {
                 _context.Entry(user).State = EntityState.Modified;
                 user.Password = newPassword;

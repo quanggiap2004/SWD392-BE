@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Application.Interfaces
+﻿namespace BlindBoxSystem.Application.Services.Interfaces
 {
     public interface IEmailService
     {
