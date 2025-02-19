@@ -79,7 +79,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddDbContext<BlindBoxSystemDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("connection")));
-builder.Services.AddDbContext<IdentityServiceContext>(options => options.UseNpgsql(builder.Configuration["IdentityConnection:connection"]));
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {

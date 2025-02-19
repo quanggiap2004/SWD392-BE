@@ -13,7 +13,9 @@ namespace BlindBoxSystem.Domain.Entities
         public int VoucherDiscount { get; set; }
         public DateTime VoucherStartDate { get; set; }
         public DateTime VoucherEndDate { get; set; }
+        public float VoucherPriceRequirement { get; set; }
         public float MaxDiscount { get; set; }
+        public int NumOfVoucher { get; set; }
         public bool IsDeleted { get; set; } = false;
         public virtual ICollection<Order> Orders { get; set; }
     }

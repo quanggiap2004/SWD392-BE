@@ -3,6 +3,7 @@ using System;
 using BlindBoxSystem.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250219111932_AddVoucherPriceRequireColumn")]
+    partial class AddVoucherPriceRequireColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -375,8 +378,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     b.HasKey("FeedbackId");
 
-                    b.HasIndex("OrderItemId")
-                        .IsUnique();
+                    b.HasIndex("OrderItemId");
 
                     b.HasIndex("UserId");
 
@@ -701,9 +703,6 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<float>("MaxDiscount")
                         .HasColumnType("real");
 
-                    b.Property<int>("NumOfVoucher")
-                        .HasColumnType("integer");
-
                     b.Property<string>("VoucherCode")
                         .IsRequired()
                         .HasColumnType("text");
@@ -922,8 +921,8 @@ namespace BlindBoxSystem.Domain.Migrations
             modelBuilder.Entity("BlindBoxSystem.Domain.Entities.Feedback", b =>
                 {
                     b.HasOne("BlindBoxSystem.Domain.Entities.OrderItem", "OrderItem")
-                        .WithOne("Feedbacks")
-                        .HasForeignKey("BlindBoxSystem.Domain.Entities.Feedback", "OrderItemId")
+                        .WithMany("Feedback")
+                        .HasForeignKey("OrderItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1172,8 +1171,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
             modelBuilder.Entity("BlindBoxSystem.Domain.Entities.OrderItem", b =>
                 {
-                    b.Navigation("Feedbacks")
-                        .IsRequired();
+                    b.Navigation("Feedback");
                 });
 
             modelBuilder.Entity("BlindBoxSystem.Domain.Entities.OrderStatus", b =>
