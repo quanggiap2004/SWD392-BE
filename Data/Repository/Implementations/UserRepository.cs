@@ -2,6 +2,7 @@
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.AuthenticationDTO;
+using BlindBoxSystem.Domain.Model.UserDTO.Request;
 using BlindBoxSystem.Domain.Model.UserDTO.Response;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -41,7 +42,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == changePasswordDto.email);
             if (user != null)
             {
-                if(user.Password != changePasswordDto.currentPassword)
+                if (user.Password != changePasswordDto.currentPassword)
                 {
                     return false;
                 }
@@ -60,17 +61,19 @@ namespace BlindBoxSystem.Data.Repository.Implementations
 
         public async Task<UserLoginResponse?> GetUserByEmail(string email)
         {
-            var user = await _context.Users.Where(u => u.Email.Equals(email)).Select(u => new UserLoginResponse
+            var user = await _context.Users.AsNoTracking().Where(u => u.Email.Equals(email)).Select(u => new UserLoginResponse
             {
                 fullname = u.Fullname,
                 phone = u.Phone,
                 email = u.Email,
                 username = u.Username,
                 roleId = u.RoleId,
-                gender = u.Gender
+                gender = u.Gender,
+                isActive = u.IsActive
             }).FirstOrDefaultAsync();
             return user;
         }
+
         public async Task<bool> ResetPassword(string newPassword, string email)
         {
             var user = await GetByCondition(e => e.Email == email);
@@ -82,6 +85,20 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                 return true;
             }
             return false;
+        }
+        public async Task<UserProfile?> GetUserById(int id)
+        {
+            var user = await _context.Users.AsNoTracking().Where(u => u.UserId == id && u.IsActive == true).Select(u => new UserProfile
+            {
+                fullname = u.Fullname,
+                phone = u.Phone,
+                email = u.Email,
+                username = u.Username,
+                roleId = u.RoleId,
+                gender = u.Gender,
+                isActive = u.IsActive
+            }).FirstOrDefaultAsync();
+            return user;
         }
     }
 }

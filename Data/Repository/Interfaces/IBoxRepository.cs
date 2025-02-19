@@ -1,4 +1,5 @@
 ﻿using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
 
 namespace BlindBoxSystem.Data.Repository.Interfaces
 {
@@ -11,5 +12,9 @@ namespace BlindBoxSystem.Data.Repository.Interfaces
         Task<Box> AddBoxAsync(Box Box);
         Task<Box> UpdateBoxAsync(Box Box);
         Task DeleteBoxAsync(int id);
+        Task<IEnumerable<AllBoxesDto>> GetAllBox();
+        Task<AllBoxesDto?> GetBoxByIdV2(int id);
+        Task<IEnumerable<BestSellerBoxesDto>> GetBestSellerBox(int quantity);
+        Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId);
     }
 }

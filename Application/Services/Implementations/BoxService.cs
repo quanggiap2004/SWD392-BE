@@ -2,10 +2,12 @@
 using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
+using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
 using BlindBoxSystem.Domain.Model.BoxImageDTOs;
 using BlindBoxSystem.Domain.Model.BoxItemDTOs;
 using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
 using BlindBoxSystem.Domain.Model.OnlineSerieBoxDTOs;
+using static BlindBoxSystem.Common.Exceptions.CustomExceptions;
 
 namespace BlindBoxSystem.Application.Implementations
 {
@@ -33,6 +35,11 @@ namespace BlindBoxSystem.Application.Implementations
             {
                 await _boxRepository.DeleteBoxAsync(id);
             }
+        }
+
+        public async Task<IEnumerable<AllBoxesDto>> GetAllBox()
+        {
+            return await _boxRepository.GetAllBox();
         }
 
         public async Task<IEnumerable<GetAllBoxesDTO>> GetAllBoxes()
@@ -162,6 +169,7 @@ namespace BlindBoxSystem.Application.Implementations
             return boxDTO;
         }
 
+
         public async Task<Box> UpdateBoxAsync(int id, Box box)
         {
             var existingBox = await _boxRepository.GetBoxByIdAsync(id);
@@ -174,6 +182,32 @@ namespace BlindBoxSystem.Application.Implementations
             existingBox.BrandId = box.BrandId;
 
             return await _boxRepository.UpdateBoxAsync(existingBox);
+        }
+
+
+        public async Task<AllBoxesDto?> GetBoxByIdV2(int id)
+        {
+            var box = await _boxRepository.GetBoxByIdV2(id);
+            if (box == null)
+            {
+                throw new NotFoundException($"Cannot found box with id:{id}");
+            }
+            return box;
+        }
+
+        public Task<IEnumerable<BestSellerBoxesDto>> GetBestSellerBox(int quantity)
+        {
+            return _boxRepository.GetBestSellerBox(quantity);
+        }
+
+        public async Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId)
+        {
+            IEnumerable<AllBoxesDto> result = await _boxRepository.GetBoxByBrand(brandId);
+            if (result == null)
+            {
+                throw new NotFoundException($"Cannot found box with brandId:{brandId}");
+            }
+            return result;
         }
     }
 }

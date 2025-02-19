@@ -11,8 +11,8 @@ using System.Security.Claims;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Common;
 using BlindBoxSystem.Application.Services.Interfaces;
+using BlindBoxSystem.Common.Constants;
 
 namespace BlindBoxSystem.Controllers
 {

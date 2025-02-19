@@ -18,7 +18,7 @@ namespace BlindBoxSystem.Domain.Entities
         public string OrderStatusCheckCardImage { get; set; }
         public bool IsRefund { get; set; } = false;
         public bool OpenRequest { get; set; } = false;
-        public ICollection<Feedback> Feedback { get; set; }
+        public virtual Feedback Feedbacks { get; set; }
 
         [ForeignKey("BoxVariantId")]
         public BoxOption BoxOption { get; set; }
