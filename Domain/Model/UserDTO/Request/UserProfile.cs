@@ -1,7 +1,12 @@
-﻿namespace BlindBoxSystem.Domain.Model.UserDTO.Response
+﻿using BlindBoxSystem.Domain.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace BlindBoxSystem.Domain.Model.UserDTO.Request
 {
-    public class UserLoginResponse
+    public class UserProfile
     {
+        public int userId { get; set; }
         public string username { get; set; }
         public string fullname { get; set; }
         public string phone { get; set; }

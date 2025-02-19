@@ -1,6 +1,7 @@
 ﻿using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Data.Implementations
@@ -51,6 +52,83 @@ namespace BlindBoxSystem.Data.Implementations
             _context.Boxes.Update(Box);
             await _context.SaveChangesAsync();
             return Box;
+        }
+
+        public async Task<IEnumerable<AllBoxesDto>> GetAllBox()
+        {
+            return await _context.Boxes
+        .AsNoTracking()
+        .Where(b => !b.IsDeleted)
+        .Select(b => new AllBoxesDto
+        {
+            boxId = b.BoxId,
+            boxName = b.BoxName,
+            boxDescription = b.BoxDescription,
+            isDeleted = b.IsDeleted,
+            soldQuantity = b.SoldQuantity,
+            brandId = b.BrandId,
+            brandName = b.Brand.BrandName,
+            imageUrl = b.BoxImages.Select(img => img.BoxImageUrl),
+            boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId) 
+        })
+        .ToListAsync();
+        }
+
+        public async Task<AllBoxesDto?> GetBoxByIdV2(int id)
+        {
+            return await _context.Boxes.AsNoTracking()
+                .Where(b => b.BoxId == id)
+                .Select(b => new AllBoxesDto
+                {
+                    boxId = b.BoxId,
+                    boxName = b.BoxName,
+                    boxDescription = b.BoxDescription,
+                    isDeleted = b.IsDeleted,
+                    soldQuantity = b.SoldQuantity,
+                    brandId = b.BrandId,
+                    brandName = b.Brand.BrandName,
+                    imageUrl = b.BoxImages.Select(img => img.BoxImageUrl),
+                    boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId)
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<BestSellerBoxesDto>> GetBestSellerBox(int quantity)
+        {
+            return await _context.Boxes.AsNoTracking()
+                .Where(b => !b.IsDeleted)
+                .OrderByDescending(b => b.SoldQuantity)
+                .Select(b => new BestSellerBoxesDto
+                {
+                    boxId = b.BoxId,
+                    boxName = b.BoxName,
+                    boxDescription = b.BoxDescription,
+                    soldQuantity = b.SoldQuantity,
+                    brandId = b.BrandId,
+                    brandName = b.Brand.BrandName,
+                    imageUrl = b.BoxImages.Select(img => img.BoxImageUrl),
+                    boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId)
+                })
+                .Take(quantity)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId)
+        {
+            return await _context.Boxes.AsNoTracking()
+                .Where(b => b.BrandId == brandId && b.IsDeleted == false)
+                .Select(b => new AllBoxesDto
+                {
+                    boxId = b.BoxId,
+                    boxName = b.BoxName,
+                    boxDescription = b.BoxDescription,
+                    isDeleted = b.IsDeleted,
+                    soldQuantity = b.SoldQuantity,
+                    brandId = b.BrandId,
+                    brandName = b.Brand.BrandName,
+                    imageUrl = b.BoxImages.Select(img => img.BoxImageUrl),
+                    boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId)
+                }).ToListAsync();
         }
     }
 }

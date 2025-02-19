@@ -1,4 +1,5 @@
 ﻿using BlindBoxSystem.Domain.Model.AuthenticationDTO;
+using BlindBoxSystem.Domain.Model.UserDTO.Request;
 using BlindBoxSystem.Domain.Model.UserDTO.Response;
 
 namespace BlindBoxSystem.Application.Services.Interfaces
@@ -9,5 +10,6 @@ namespace BlindBoxSystem.Application.Services.Interfaces
         Task<bool> ResetPassword(string newPassword, string email);
         Task<UserLoginResponse> GetUserByEmail(string email);
         Task<bool> ChangePassword(ChangePasswordDto changePasswordDto);
+        Task<UserProfile?> GetUserById(int id);
     }
 }

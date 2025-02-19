@@ -1,12 +1,14 @@
 ﻿using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
+using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlindBoxSystem.Controllers
 {
     [Route("api/[controller]")]
+    //[Authorize(Roles = "User, Staff, Admin")]
     [ApiController]
     public class BoxController : ControllerBase
     {
@@ -18,9 +20,18 @@ namespace BlindBoxSystem.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllBoxesDTO>>> GetAllBoxes()
         {
             var result = await _boxService.GetAllBoxes();
+            return Ok(result);
+        }
+
+        [HttpGet("allbox")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<AllBoxesDto>>> GetAllBox()
+        {
+            var result = await _boxService.GetAllBox();
             return Ok(result);
         }
 
@@ -110,6 +121,47 @@ namespace BlindBoxSystem.Controllers
             }
 
             return Ok(new { message = "Box updated successfully.", updatedBox });
+        }
+
+        [HttpGet("v2/{id}")]
+        public async Task<ActionResult<AllBoxesDto>> GetBoxById(int id)
+        {
+            try
+            {
+                var box = await _boxService.GetBoxByIdV2(id);
+                return Ok(box);
+            } catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("best-seller-box")]
+        public async Task<ActionResult<IEnumerable<BestSellerBoxesDto>>> GetBestSellerBox(int quantityWantToGet)
+        {
+            try
+            {
+                var result = await _boxService.GetBestSellerBox(quantityWantToGet);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred." });
+            }
+        }
+
+        [HttpGet("box-by-brand")]
+        public async Task<ActionResult<IEnumerable<AllBoxesDto>>> GetBoxByBrand(int brandId)
+        {
+            try
+            {
+                IEnumerable<AllBoxesDto> result = await _boxService.GetBoxByBrand(brandId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred." });
+            }
         }
     }
 }
