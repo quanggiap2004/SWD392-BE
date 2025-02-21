@@ -3,6 +3,7 @@ using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
 using BlindBoxSystem.Domain.Model.OrderItem;
 using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+using BlindBoxSystem.Domain.Model.VoucherDTOs.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Data.Repository.Implementations
@@ -37,7 +38,11 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                     paymentMethod = o.PaymentMethod,
                     totalPrice = o.TotalPrice,
                     currentStatusId = o.CurrentOrderStatusId,
-
+                    voucher = new VoucherDto
+                    {
+                        voucherId = o.VoucherId,
+                        voucherDiscount = o.Voucher.VoucherDiscount,
+                    },
                     orderItems = o.OrderItems.Select(oi => new OrderItemSimpleDto
                     {
                         orderItemId = oi.OrderItemId,
