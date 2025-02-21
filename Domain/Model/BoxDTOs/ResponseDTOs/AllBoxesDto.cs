@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs
+﻿namespace BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs
 {
     public class AllBoxesDto
     {

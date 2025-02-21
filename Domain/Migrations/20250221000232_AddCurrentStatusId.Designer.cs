@@ -3,6 +3,7 @@ using System;
 using BlindBoxSystem.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250221000232_AddCurrentStatusId")]
+    partial class AddCurrentStatusId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,8 +428,9 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CurrentOrderStatusId")
-                        .HasColumnType("integer");
+                    b.Property<string>("CurrentOrderStatusName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("OpenRequest")
                         .HasColumnType("boolean");
@@ -475,6 +479,9 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("BoxOptionId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("BoxVariantId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsFeedback")
                         .HasColumnType("boolean");
 
@@ -499,7 +506,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.HasIndex("BoxOptionId");
+                    b.HasIndex("BoxVariantId");
 
                     b.HasIndex("OrderId");
 
@@ -980,7 +987,7 @@ namespace BlindBoxSystem.Domain.Migrations
                 {
                     b.HasOne("BlindBoxSystem.Domain.Entities.BoxOption", "BoxOption")
                         .WithMany("OrderItem")
-                        .HasForeignKey("BoxOptionId")
+                        .HasForeignKey("BoxVariantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -1,6 +1,7 @@
 ﻿using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.OrderItem;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlindBoxSystem.Data.Implementations
@@ -50,6 +51,21 @@ namespace BlindBoxSystem.Data.Implementations
             _context.BoxOptions.Update(boxOption);
             await _context.SaveChangesAsync();
             return boxOption;
+        }
+
+        public async Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems)
+        {
+            var boxOptions = await _context.BoxOptions.Where(b => orderItems.Select(oi => oi.boxOptionId).Contains(b.BoxOptionId)).ToListAsync();
+            foreach (var orderItem in orderItems)
+            {
+                var boxOption = boxOptions.FirstOrDefault(b => b.BoxOptionId == orderItem.boxOptionId);
+                if (boxOption != null)
+                {
+                    boxOption.BoxOptionStock += orderItem.quantity;
+                }
+            }
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

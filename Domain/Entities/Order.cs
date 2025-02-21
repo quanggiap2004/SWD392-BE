@@ -17,6 +17,7 @@ namespace BlindBoxSystem.Domain.Entities
         public int AddressId { get; set; }
         public bool OpenRequest { get; set; } = false;
         public bool RefundRequest { get; set; } = false;
+        public int CurrentOrderStatusId { get; set; }
         public virtual ICollection<OrderStatusDetail> OrderStatusDetails { get; set; }
 
         public virtual ICollection<OrderStatus> OrderStatus { get; set; }
