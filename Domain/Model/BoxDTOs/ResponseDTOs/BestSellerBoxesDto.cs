@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs
+﻿namespace BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs
 {
     public class BestSellerBoxesDto
     {
@@ -13,6 +13,6 @@
         public string brandName { get; set; }
         public IEnumerable<string> imageUrl { get; set; }
         public IEnumerable<int> boxOptionIds { get; set; }
-        
+
     }
 }

@@ -2,7 +2,7 @@
 using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
+using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
 using BlindBoxSystem.Domain.Model.BoxImageDTOs;
 using BlindBoxSystem.Domain.Model.BoxItemDTOs;
 using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
@@ -188,7 +188,7 @@ namespace BlindBoxSystem.Application.Implementations
         public async Task<AllBoxesDto?> GetBoxByIdV2(int id)
         {
             var box = await _boxRepository.GetBoxByIdV2(id);
-            if (box == null)
+            if (box is null)
             {
                 throw new NotFoundException($"Cannot found box with id:{id}");
             }

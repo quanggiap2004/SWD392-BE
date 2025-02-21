@@ -3,6 +3,7 @@ using BlindBoxSystem.Data.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
 using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
+using BlindBoxSystem.Domain.Model.OrderItem;
 
 namespace BlindBoxSystem.Application.Implementations
 {
@@ -97,6 +98,11 @@ namespace BlindBoxSystem.Application.Implementations
             existingBoxOption.BoxId = boxOption.BoxId;
 
             return await _boxOptionRepository.UpdateBoxOptionAsync(existingBoxOption);
+        }
+
+        public async Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems)
+        {
+            return await _boxOptionRepository.UpdateStockQuantity(orderItems);
         }
     }
 }

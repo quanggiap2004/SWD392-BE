@@ -1,4 +1,5 @@
 ﻿using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.OrderItem;
 
 namespace BlindBoxSystem.Data.Interfaces
 {
@@ -11,5 +12,6 @@ namespace BlindBoxSystem.Data.Interfaces
         Task<BoxOption> AddBoxOptionAsync(BoxOption boxOption);
         Task<BoxOption> UpdateBoxOptionAsync(BoxOption boxOption);
         Task DeleteBoxOptionAsync(int id);
+        Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems);
     }
 }

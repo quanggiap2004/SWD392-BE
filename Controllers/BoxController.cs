@@ -1,7 +1,7 @@
 ﻿using BlindBoxSystem.Application.Interfaces;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
+using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

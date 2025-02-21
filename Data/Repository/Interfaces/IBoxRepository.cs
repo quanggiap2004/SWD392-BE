@@ -1,5 +1,5 @@
 ﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs.RequestDTOs;
+using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
 
 namespace BlindBoxSystem.Data.Repository.Interfaces
 {

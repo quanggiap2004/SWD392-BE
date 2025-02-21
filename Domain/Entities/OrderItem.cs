@@ -20,7 +20,7 @@ namespace BlindBoxSystem.Domain.Entities
         public bool OpenRequest { get; set; } = false;
         public virtual Feedback Feedbacks { get; set; }
 
-        [ForeignKey("BoxVariantId")]
+        [ForeignKey("BoxOptionId")]
         public BoxOption BoxOption { get; set; }
         public Order Order { get; set; }
 
