@@ -63,6 +63,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
         {
             var user = await _context.Users.AsNoTracking().Where(u => u.Email.Equals(email)).Select(u => new UserLoginResponse
             {
+                userId = u.UserId,
                 fullname = u.Fullname,
                 phone = u.Phone,
                 email = u.Email,

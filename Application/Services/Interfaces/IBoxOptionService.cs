@@ -13,5 +13,6 @@ namespace BlindBoxSystem.Application.Interfaces
         Task<BoxOption> UpdateBoxOptionAsync(int id, BoxOption boxOption);
         Task DeleteBoxOptionAsync(int id);
         Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems);
+        Task ReduceStockQuantity(ICollection<OrderItem> orderItems);
     }
 }

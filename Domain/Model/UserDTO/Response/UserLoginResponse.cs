@@ -2,6 +2,7 @@
 {
     public class UserLoginResponse
     {
+        public int userId { get; set; }
         public string username { get; set; }
         public string fullname { get; set; }
         public string phone { get; set; }

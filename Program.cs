@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
 
@@ -26,12 +27,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
 {
-    //options.AddPolicy("AllowSpecificOrigins", policy =>
-    //{
-    //    policy.WithOrigins("https://example.com", "https://another.com") // Specify allowed origins
-    //          .AllowAnyHeader()  // Allow all headers
-    //          .AllowAnyMethod(); // Allow all HTTP methods (GET, POST, etc.)
-    //});
+    //options.AddPolicy(name: MyAllowSpecificOrigins, // This is the policy name
+    //                  policy =>
+    //                  {
+    //                      policy.WithOrigins("http://localhost:5173")
+    //                          .AllowAnyHeader()
+    //                          .AllowAnyMethod()
+    //                          .AllowCredentials();
+    //                  });
 
     options.AddPolicy("AllowAll", policy =>
     {
@@ -78,7 +81,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 builder.Services.AddDbContext<BlindBoxSystemDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("connection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("connection")).EnableSensitiveDataLogging());
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
@@ -146,8 +149,9 @@ builder.Services.AddScoped<IBoxOptionService, BoxOptionService>();
 builder.Services.AddScoped<IBoxService, BoxService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderStatusDetailService, OrderStatusDetailService>();
-
-
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>();
 #endregion
 
 #region Repositories
@@ -161,6 +165,8 @@ builder.Services.AddScoped<IBoxOptionRepository, BoxOptionRepository>();
 builder.Services.AddScoped<IBoxRepository, BoxRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderStatusDetailRepository, OrderStatusDetailRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 #endregion
 
 var app = builder.Build();
