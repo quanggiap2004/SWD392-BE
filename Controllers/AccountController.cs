@@ -95,13 +95,13 @@ namespace BlindBoxSystem.Controllers
                     return Unauthorized(new { message = "Email not confirmed. Please check your email to confirm your account." });
                 }
                 var userRoles = await _userManager.GetRolesAsync(user);
-
+                var userDetail = await _userService.GetUserByEmail(user.Email);
                 var authClaims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("username", user.UserName),
-                    new Claim("userId", user.Id)
+                    new Claim("userId", userDetail.userId.ToString())
                 };
 
                 authClaims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));

@@ -69,7 +69,8 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                 username = u.Username,
                 roleId = u.RoleId,
                 gender = u.Gender,
-                isActive = u.IsActive
+                isActive = u.IsActive,
+                userId = u.UserId
             }).FirstOrDefaultAsync();
             return user;
         }

@@ -9,5 +9,6 @@
         public Boolean gender { get; set; }
         public int roleId { get; set; }
         public bool isActive { get; set; }
+        public int userId { get; set; }
     }
 }
