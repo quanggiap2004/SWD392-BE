@@ -67,5 +67,16 @@ namespace BlindBoxSystem.Data.Implementations
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task ReduceStockQuantity(ICollection<OrderItem> orderItems)
+        {
+            var boxOptionIds = orderItems.Select(oi => oi.BoxOptionId).ToList();
+            var boxOptionList = await _context.BoxOptions.Where(b => boxOptionIds.Contains(b.BoxOptionId)).ToListAsync();
+            foreach (var boxOption in boxOptionList)
+            {
+                boxOption.BoxOptionStock -= orderItems.FirstOrDefault(oi => oi.BoxOptionId == boxOption.BoxOptionId).Quantity;
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

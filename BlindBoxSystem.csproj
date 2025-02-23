@@ -27,8 +27,6 @@
   <ItemGroup>
     <Folder Include="Domain\Model\BoxDTOs\ResponseDTOs\" />
     <Folder Include="Domain\Model\OrderItem\Response\" />
-    <Folder Include="Domain\Model\OrderItem\Request\" />
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>
