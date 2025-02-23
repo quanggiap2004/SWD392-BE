@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlindBoxSystem.Common.Constants;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlindBoxSystem.Domain.Entities
@@ -18,6 +19,10 @@ namespace BlindBoxSystem.Domain.Entities
         public bool OpenRequest { get; set; } = false;
         public bool RefundRequest { get; set; } = false;
         public int CurrentOrderStatusId { get; set; }
+        public string PaymentStatus { get; set; } = ProjectConstant.PaymentPending;
+        public bool IsEnable { get; set; } = true;
+        [Column(TypeName = "jsonb")]
+        public string? JsonOrderModel { get; set; }
         public virtual ICollection<OrderStatusDetail> OrderStatusDetails { get; set; }
 
         public virtual ICollection<OrderStatus> OrderStatus { get; set; }

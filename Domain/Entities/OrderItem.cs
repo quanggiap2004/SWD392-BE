@@ -15,7 +15,7 @@ namespace BlindBoxSystem.Domain.Entities
         public float OrderPrice { get; set; }
         public bool IsFeedback { get; set; } = false;
 
-        public string OrderStatusCheckCardImage { get; set; }
+        public string? OrderStatusCheckCardImage { get; set; }
         public bool IsRefund { get; set; } = false;
         public bool OpenRequest { get; set; } = false;
         public virtual Feedback Feedbacks { get; set; }

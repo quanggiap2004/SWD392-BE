@@ -104,5 +104,10 @@ namespace BlindBoxSystem.Application.Implementations
         {
             return await _boxOptionRepository.UpdateStockQuantity(orderItems);
         }
+
+        public async Task ReduceStockQuantity(ICollection<OrderItem> orderItems)
+        {
+            await _boxOptionRepository.ReduceStockQuantity(orderItems);
+        }
     }
 }

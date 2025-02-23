@@ -8,6 +8,9 @@
         public static string VnPay = "VnPay";
         public static string COD = "COD";
 
+        public static string PaymentPending = "Payment Pending";
+        public static string PaymentSuccess = "Payment Success";
+        public static string PaymentFailed = "Payment Failed";
         public enum OrderStatus
         {
             Pending = 1,

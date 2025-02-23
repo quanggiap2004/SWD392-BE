@@ -21,7 +21,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                 OrderId = orderStatusDetail.orderId,
                 OrderStatusId = orderStatusDetail.statusId,
                 OrderStatusNote = orderStatusDetail.note,
-                OrderStatusUpdatedAt = orderStatusDetail.updatedAt
+                OrderStatusUpdatedAt = DateTime.UtcNow
             };
             _context.OrderStatusDetails.Add(statusDetail);
             await _context.SaveChangesAsync();

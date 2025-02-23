@@ -3,6 +3,7 @@ using System;
 using BlindBoxSystem.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250221214401_Add_Payment_Status_In_Order")]
+    partial class Add_Payment_Status_In_Order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -428,12 +431,6 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("CurrentOrderStatusId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("JsonOrderModel")
-                        .HasColumnType("jsonb");
-
                     b.Property<bool>("OpenRequest")
                         .HasColumnType("boolean");
 
@@ -501,6 +498,7 @@ namespace BlindBoxSystem.Domain.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("OrderStatusCheckCardImage")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Quantity")

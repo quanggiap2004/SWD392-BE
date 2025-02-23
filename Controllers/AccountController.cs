@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using BlindBoxSystem.Domain.Entities;
 using BlindBoxSystem.Application.Services.Interfaces;
 using BlindBoxSystem.Common.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlindBoxSystem.Controllers
 {
@@ -34,6 +35,7 @@ namespace BlindBoxSystem.Controllers
             _emailService = emailService;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterAccountDTO model)
         {
@@ -82,7 +84,7 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Password must contain at least 8 character with 1 upper case, username and email must be unique" });
         }
 
-
+        [AllowAnonymous]
         [HttpPost("login")]
 
         public async Task<IActionResult> Login([FromBody] LoginDTO model)
@@ -129,6 +131,7 @@ namespace BlindBoxSystem.Controllers
             return Unauthorized(new { message = "Invalid email or password." });
         }
 
+        [AllowAnonymous]
         [HttpPost("add-role")]
         public async Task<IActionResult> AddRole([FromBody] string role)
         {
@@ -144,6 +147,7 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Role already exists" });
         }
 
+        [AllowAnonymous]
         [HttpPost("assign-role")]
         public async Task<IActionResult> AssignRole([FromBody] UserRoleDTO model)
         {
@@ -164,6 +168,7 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(result.Errors);
         }
 
+        [AllowAnonymous]
         [HttpGet("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
@@ -182,6 +187,7 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Email confirmation failed" });
         }
 
+        [AllowAnonymous]
         [HttpPost("resend-verification-email")]
         public async Task<IActionResult> ResendVerificationEmail([FromBody] string email)
         {
@@ -206,6 +212,7 @@ namespace BlindBoxSystem.Controllers
             return Ok(new { message = "Verification email resent. Please check your email to confirm your account." });
         }
 
+        [AllowAnonymous]
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO model)
         {
@@ -225,6 +232,7 @@ namespace BlindBoxSystem.Controllers
             return Ok(new { message = "Password reset email sent. Please check your email to reset your password. " + token});
         }
 
+        [AllowAnonymous]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO model)
         {
@@ -245,6 +253,7 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Password reset failed", errors = result.Errors });
         }
 
+        [AllowAnonymous]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto )
         {
@@ -264,8 +273,8 @@ namespace BlindBoxSystem.Controllers
             return BadRequest(new { message = "Password change failed", errors = result.Errors });
         }
 
-
-            [HttpPost("google-login")]
+        [AllowAnonymous]
+        [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleAuthenticationModel model)
         {
             var httpClient = new HttpClient();
