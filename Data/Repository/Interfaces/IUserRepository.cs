@@ -14,5 +14,6 @@ namespace BlindBoxSystem.Data.Repository.Interfaces
         Task<User?> GetByCondition(Expression<Func<User, bool>> expression);
         Task<bool> ChangePassword(ChangePasswordDto changePasswordDto);
         Task<UserProfile?> GetUserById(int id);
+        Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile);
     }
 }

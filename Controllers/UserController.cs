@@ -45,5 +45,24 @@ namespace BlindBoxSystem.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileDto userProfile)
+        {
+            try
+            {
+                var result = await _userService.UpdateUserProfile(userProfile);
+                if (result)
+                {
+                    return Ok("User profile updated successfully.");
+                }
+                return BadRequest("Username duplicate please check again");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
