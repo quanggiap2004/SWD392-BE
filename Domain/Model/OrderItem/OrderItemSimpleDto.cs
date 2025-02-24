@@ -15,5 +15,6 @@
         public bool openRequest { get; set; } = false;
         public string boxOptionName { get; set; }
         public string boxName { get; set; }
+        public string? imageUrl { get; set; }
     }
 }

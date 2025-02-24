@@ -66,7 +66,8 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                         isRefund = oi.IsRefund,
                         openRequest = oi.OpenRequest,
                         boxOptionName = oi.BoxOption.BoxOptionName,
-                        boxName = oi.BoxOption.Box.BoxName
+                        boxName = oi.BoxOption.Box.BoxName,
+                        imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
                     }).ToList(),
                 }).ToListAsync();
 
