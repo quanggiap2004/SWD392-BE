@@ -44,9 +44,7 @@ namespace BlindBoxSystem.Controllers
         {
             // Read the URL-encoded form data from the request body.
             var formData = await Request.ReadFormAsync();
-            // Convert the form data to an IQueryCollection.
-            // IFormCollection implements IDictionary<string, Microsoft.Extensions.Primitives.StringValues>,
-            // so we can convert it to a QueryCollection.
+
             IQueryCollection queryCollection = new QueryCollection(formData.ToDictionary(k => k.Key, v => v.Value));
 
             // Call the service function to decode and validate the VNPay response.
@@ -56,12 +54,12 @@ namespace BlindBoxSystem.Controllers
             {
                 return BadRequest("Payment failed");
             }
-
-            CreateOrderDTO orderDto = await _orderService.GetOrderDto(paymentResponse.OrderId);
-            OrderResponseDto result = await _orderService.UpdateOrderVnPay(orderDto, paymentResponse.OrderId);
+        
             // Return a response based on the validation result.
             if (paymentResponse.Success)
             {
+                CreateOrderDTO orderDto = await _orderService.GetOrderDto(paymentResponse.OrderId);
+                OrderResponseDto result = await _orderService.UpdateOrderVnPay(orderDto, paymentResponse.OrderId);
                 // Optionally, update order status or perform other business logic.
                 return Ok(paymentResponse);
             }
