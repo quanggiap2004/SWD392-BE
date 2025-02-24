@@ -13,5 +13,7 @@
         public string orderStatusCheckCardImage { get; set; }
         public bool isRefund { get; set; } = false;
         public bool openRequest { get; set; } = false;
+        public string boxOptionName { get; set; }
+        public string boxName { get; set; }
     }
 }

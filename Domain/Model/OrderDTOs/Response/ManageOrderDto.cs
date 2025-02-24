@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
 using BlindBoxSystem.Domain.Model.OrderItem;
 using BlindBoxSystem.Domain.Model.VoucherDTOs.Response;
+using BlindBoxSystem.Domain.Model.Address.Response;
 
 namespace BlindBoxSystem.Domain.Model.OrderDTOs.Response
 {
@@ -15,7 +16,7 @@ namespace BlindBoxSystem.Domain.Model.OrderDTOs.Response
         public DateTime orderCreatedAt { get; set; }
         public string paymentMethod { get; set; }
         public float totalPrice { get; set; }
-        public int addressId { get; set; }
+        public AddressResponseDto address { get; set; }
         public bool openRequest { get; set; } = false;
         public bool refundRequest { get; set; } = false;
         public int currentStatusId { get; set; }
