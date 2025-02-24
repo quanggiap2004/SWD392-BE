@@ -2,6 +2,7 @@
 using BlindBoxSystem.Data.Repository.Interfaces;
 using BlindBoxSystem.Domain.Context;
 using BlindBoxSystem.Domain.Entities;
+using BlindBoxSystem.Domain.Model.Address.Response;
 using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
 using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
 using BlindBoxSystem.Domain.Model.OrderItem;
@@ -21,7 +22,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
 
         public async Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
         {
-            var result = await _context.Orders
+            var result = await _context.Orders.AsNoTracking()
                 .Where(o => userId <= 0|| o.UserId == userId)
                 .Select(o => new ManageOrderDto
                 {
@@ -35,7 +36,15 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                         note = osd.OrderStatusNote,
                         updatedAt = osd.OrderStatusUpdatedAt
                     }).ToList(),
-                    addressId = o.AddressId,
+                    address = new AddressResponseDto
+                    {
+                        addressId = o.AddressId,
+                        province = o.Address.Province,
+                        district = o.Address.District,
+                        ward = o.Address.Ward,
+                        addressDetail = o.Address.AddressDetail,
+                        userId = o.UserId
+                    },
                     openRequest = o.OpenRequest,
                     refundRequest = o.RefundRequest,
                     paymentMethod = o.PaymentMethod,
@@ -55,9 +64,10 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         isRefund = oi.IsRefund,
-                        openRequest = oi.OpenRequest
-
-                    }).ToList()
+                        openRequest = oi.OpenRequest,
+                        boxOptionName = oi.BoxOption.BoxOptionName,
+                        boxName = oi.BoxOption.Box.BoxName
+                    }).ToList(),
                 }).ToListAsync();
 
             return result;
@@ -92,7 +102,6 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                         note = osd.OrderStatusNote,
                         updatedAt = osd.OrderStatusUpdatedAt
                     }).ToList(),
-                    addressId = o.AddressId,
                     openRequest = o.OpenRequest,
                     refundRequest = o.RefundRequest,
                     paymentMethod = o.PaymentMethod,
