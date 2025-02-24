@@ -11,5 +11,6 @@ namespace BlindBoxSystem.Application.Services.Interfaces
         Task<UserLoginResponse> GetUserByEmail(string email);
         Task<bool> ChangePassword(ChangePasswordDto changePasswordDto);
         Task<UserProfile?> GetUserById(int id);
+        Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile);
     }
 }

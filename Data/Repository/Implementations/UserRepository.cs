@@ -101,5 +101,22 @@ namespace BlindBoxSystem.Data.Repository.Implementations
             }).FirstOrDefaultAsync();
             return user;
         }
+
+        public async Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userProfile.userId);
+            if (user != null)
+            {
+                user.Username = userProfile.username;
+                user.Fullname = userProfile.fullname;
+                user.Phone = userProfile.phone;
+                user.Gender = userProfile.gender;
+
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }
