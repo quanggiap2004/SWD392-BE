@@ -48,7 +48,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
             }
 
             //check order method
-            if (order.paymentMethod.Equals(ProjectConstant.VnPay, StringComparison.OrdinalIgnoreCase))
+            if (order.paymentMethod.Equals(ProjectConstant.COD, StringComparison.OrdinalIgnoreCase))
             {
                 //update order status
                 var addStatus = await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
