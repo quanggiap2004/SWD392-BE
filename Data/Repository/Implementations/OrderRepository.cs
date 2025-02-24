@@ -192,6 +192,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
                 result.Revenue = createOrderDtoDetail.revenue;
                 result.OpenRequest = createOrderDtoDetail.openRequest;
                 result.CurrentOrderStatusId = createOrderDtoDetail.currentOrderStatusId;
+                result.IsEnable = true;
                 await _context.SaveChangesAsync();
                 return new OrderResponseDto
                 {
