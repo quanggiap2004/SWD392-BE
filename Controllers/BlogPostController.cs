@@ -67,6 +67,7 @@ namespace BlindBoxSystem.Controllers
                 BlogPostTitle = addBlogDTO.BlogPostTitle,
                 BlogPostContent = addBlogDTO.BlogPostContent,
                 BlogPostImage = addBlogDTO.BlogPostImage,
+                UserId = addBlogDTO.UserId
             };
 
             var result = await _blogPostService.AddBlogAsync(ToAddBlog);

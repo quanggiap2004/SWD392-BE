@@ -7,5 +7,7 @@
         public string BlogPostContent { get; set; }
 
         public string BlogPostImage { get; set; }
+        public int UserId { get; set; }
+
     }
 }
