@@ -1,9 +1,9 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlindBoxSystem.Data.Implementations
+namespace Data.Repository.Implementations
 {
     public class BrandRepository : IBrandRepository
     {

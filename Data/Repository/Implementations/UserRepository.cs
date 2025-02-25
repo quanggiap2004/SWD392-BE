@@ -1,14 +1,13 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.AuthenticationDTO;
-using BlindBoxSystem.Domain.Model.UserDTO.Request;
-using BlindBoxSystem.Domain.Model.UserDTO.Response;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.AuthenticationDTO;
+using Domain.Domain.Model.UserDTO.Request;
+using Domain.Domain.Model.UserDTO.Response;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Security.Principal;
 
-namespace BlindBoxSystem.Data.Repository.Implementations
+namespace Data.Repository.Implementations
 {
     public class UserRepository : IUserRepository
     {
@@ -104,7 +103,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
 
         public async Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userProfile.userId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(userProfile.email));
             if (user != null)
             {
                 user.Username = userProfile.username;

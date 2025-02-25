@@ -1,14 +1,13 @@
-﻿using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Entities.ApplicationEntities;
-using BlindBoxSystem.Domain.Model.AuthenticationDTO;
-using BlindBoxSystem.Domain.Model.UserDTO.Request;
-using BlindBoxSystem.Domain.Model.UserDTO.Response;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities.ApplicationEntities;
+using Domain.Domain.Model.AuthenticationDTO;
+using Domain.Domain.Model.UserDTO.Request;
+using Domain.Domain.Model.UserDTO.Response;
 using Microsoft.AspNetCore.Identity;
-using static BlindBoxSystem.Common.Exceptions.CustomExceptions;
+using static Common.Exceptions.CustomExceptions;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class UserService : IUserService
     {
@@ -32,7 +31,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
         public async Task<UserLoginResponse> GetUserByEmail(string email)
         {
             var user = await _userRepository.GetUserByEmail(email);
-            if(user == null)
+            if (user == null)
             {
                 throw new NotFoundException("Can't find the user with email: " + email);
             }
@@ -57,7 +56,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
         public async Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile)
         {
             var user = await _userManager.FindByEmailAsync(userProfile.email);
-            if(user == null)
+            if (user == null)
             {
                 throw new NotFoundException("Can't find the user with email: " + userProfile.email);
             }
@@ -65,7 +64,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
             user.FullName = userProfile.fullname;
             user.PhoneNumber = userProfile.phone;
             var identityUpdate = await _userManager.UpdateAsync(user);
-            if(!identityUpdate.Succeeded)
+            if (!identityUpdate.Succeeded)
             {
                 return false;
             }

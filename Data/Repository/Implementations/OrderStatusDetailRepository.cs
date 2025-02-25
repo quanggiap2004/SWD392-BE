@@ -1,10 +1,10 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.OrderStatusDetailDTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlindBoxSystem.Data.Repository.Implementations
+namespace Data.Repository.Implementations
 {
     public class OrderStatusDetailRepository : IOrderStatusDetailRepository
     {
@@ -31,7 +31,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
         public async Task<bool> CheckOrderStatusDetailExist(int orderId, int statusId)
         {
             var result = await _context.OrderStatusDetails.Where(x => x.OrderId == orderId && x.OrderStatusId == statusId).FirstOrDefaultAsync();
-            if(result == null)
+            if (result == null)
             {
                 return false;
             }

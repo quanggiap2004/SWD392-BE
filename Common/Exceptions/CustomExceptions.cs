@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Common.Exceptions
+﻿namespace Common.Exceptions
 {
     public static class CustomExceptions
     {

@@ -1,6 +1,6 @@
-﻿using BlindBoxSystem.Domain.Entities;
+﻿using Domain.Domain.Entities;
 
-namespace BlindBoxSystem.Data.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IBoxImageRepository
     {

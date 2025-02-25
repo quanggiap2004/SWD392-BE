@@ -1,6 +1,6 @@
-﻿using BlindBoxSystem.Domain.Entities;
+﻿using Domain.Domain.Entities;
 
-namespace BlindBoxSystem.Data.Repository.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IOrderItemRepository
     {

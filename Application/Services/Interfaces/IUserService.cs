@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Domain.Model.AuthenticationDTO;
-using BlindBoxSystem.Domain.Model.UserDTO.Request;
-using BlindBoxSystem.Domain.Model.UserDTO.Response;
+﻿using Domain.Domain.Model.AuthenticationDTO;
+using Domain.Domain.Model.UserDTO.Request;
+using Domain.Domain.Model.UserDTO.Response;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IUserService
     {

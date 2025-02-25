@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
 
-namespace BlindBoxSystem.Data.Repository.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IBoxRepository
     {

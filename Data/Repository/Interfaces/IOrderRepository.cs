@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.OrderDTOs.Request;
+using Domain.Domain.Model.OrderDTOs.Response;
 
-namespace BlindBoxSystem.Data.Repository.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IOrderRepository
     {

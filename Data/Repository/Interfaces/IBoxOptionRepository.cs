@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderItem;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.OrderItem;
 
-namespace BlindBoxSystem.Data.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IBoxOptionRepository
     {
