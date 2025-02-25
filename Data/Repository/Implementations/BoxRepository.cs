@@ -1,10 +1,10 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlindBoxSystem.Data.Implementations
+namespace Data.Repository.Implementations
 {
     public class BoxRepository : IBoxRepository
     {
@@ -69,7 +69,7 @@ namespace BlindBoxSystem.Data.Implementations
             brandId = b.BrandId,
             brandName = b.Brand.BrandName,
             imageUrl = b.BoxImages.Select(img => img.BoxImageUrl),
-            boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId) 
+            boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId)
         })
         .ToListAsync();
         }

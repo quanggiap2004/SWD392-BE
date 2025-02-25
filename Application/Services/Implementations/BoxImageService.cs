@@ -1,10 +1,10 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxImageDTOs;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs;
+using Domain.Domain.Model.BoxImageDTOs;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace Application.Services.Implementations
 {
     public class BoxImageService : IBoxImageService
     {

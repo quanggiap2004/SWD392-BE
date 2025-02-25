@@ -1,5 +1,4 @@
-﻿
-namespace BlindBoxSystem.Data.Repository.Interfaces
+﻿namespace Data.Repository.Interfaces
 {
     public interface IVoucherRepository
     {

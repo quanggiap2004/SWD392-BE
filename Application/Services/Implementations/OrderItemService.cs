@@ -1,10 +1,8 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class OrderItemService : IOrderItemService
     {

@@ -1,10 +1,10 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.AuthenticationDTO;
-using BlindBoxSystem.Domain.Model.UserDTO.Request;
-using BlindBoxSystem.Domain.Model.UserDTO.Response;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.AuthenticationDTO;
+using Domain.Domain.Model.UserDTO.Request;
+using Domain.Domain.Model.UserDTO.Response;
 using System.Linq.Expressions;
 
-namespace BlindBoxSystem.Data.Repository.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IUserRepository
     {

@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxItemDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxItemDTOs;
 
-namespace BlindBoxSystem.Application.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBoxItemService
     {

@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
-using BlindBoxSystem.Domain.Model.PaymentDTOs.Response;
+﻿using Domain.Domain.Model.OrderDTOs.Request;
+using Domain.Domain.Model.PaymentDTOs.Response;
+using Microsoft.AspNetCore.Http;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IVnPayService
     {

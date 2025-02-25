@@ -1,11 +1,11 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
-using BlindBoxSystem.Domain.Model.OrderItem;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs;
+using Domain.Domain.Model.BoxOptionDTOs;
+using Domain.Domain.Model.OrderItem;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace Application.Services.Implementations
 {
     public class BoxOptionService : IBoxOptionService
     {

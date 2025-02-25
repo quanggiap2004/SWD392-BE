@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BrandDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BrandDTOs;
 
-namespace BlindBoxSystem.Application.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBrandService
     {

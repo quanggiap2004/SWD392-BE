@@ -1,16 +1,14 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Common.Constants;
-using BlindBoxSystem.Common.Exceptions;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
-using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+﻿using Application.Services.Interfaces;
+using Common.Constants;
+using Common.Exceptions;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.OrderDTOs.Request;
+using Domain.Domain.Model.OrderDTOs.Response;
+using Domain.Domain.Model.OrderStatusDetailDTOs;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class OrderService : IOrderService
     {
@@ -37,12 +35,12 @@ namespace BlindBoxSystem.Application.Services.Implementations
         public async Task<bool> CancelOrder(int orderId, string note)
         {
             var order = await _orderRepository.GetOrderById(orderId);
-            if(order == null)
+            if (order == null)
             {
                 throw new CustomExceptions.NotFoundException("Order not found");
             }
 
-            if(order.currentStatusId == (int)ProjectConstant.OrderStatus.Cancelled)
+            if (order.currentStatusId == (int)ProjectConstant.OrderStatus.Cancelled)
             {
                 throw new CustomExceptions.BadRequestException("Order already cancelled");
             }
@@ -64,14 +62,14 @@ namespace BlindBoxSystem.Application.Services.Implementations
                 }
 
                 var updateStatus = await _orderRepository.UpdateCurrentStatus(orderId, (int)ProjectConstant.OrderStatus.Cancelled);
-                if(!updateStatus)
+                if (!updateStatus)
                 {
                     throw new CustomExceptions.BadRequestException("Update order status failed");
                 }
 
 
                 var updateBoxoption = await _boxOption.UpdateStockQuantity(order.orderItems);
-                if(!updateBoxoption)
+                if (!updateBoxoption)
                 {
                     throw new CustomExceptions.BadRequestException("Update box option failed");
                 }
@@ -90,9 +88,9 @@ namespace BlindBoxSystem.Application.Services.Implementations
             OrderResponseDto result = new OrderResponseDto();
             foreach (var item in model.orderItemRequestDto)
             {
-                if(item.orderItemOpenRequest == true)
+                if (item.orderItemOpenRequest == true)
                 {
-                    openRequest= true;
+                    openRequest = true;
                     break;
                 }
             }
@@ -139,7 +137,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
         public async Task<CreateOrderDTO> GetOrderDto(int orderId)
         {
             var result = await _orderRepository.GetOrderDto(orderId);
-            if(result == null)
+            if (result == null)
             {
                 throw new CustomExceptions.NotFoundException("Order not found");
             }
@@ -163,13 +161,13 @@ namespace BlindBoxSystem.Application.Services.Implementations
             }
 
             OrderResponseDto result = await _orderRepository.UpdateVnPayOrder(new CreateOrderDtoDetail
-                {
-                    paymentStatus = paymentStatus,
-                    revenue = revenue,
-                    openRequest = openRequest,
-                    currentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing,
-                    createOrderDto = model,
-                }, orderId);
+            {
+                paymentStatus = paymentStatus,
+                revenue = revenue,
+                openRequest = openRequest,
+                currentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing,
+                createOrderDto = model,
+            }, orderId);
 
             await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
             {
