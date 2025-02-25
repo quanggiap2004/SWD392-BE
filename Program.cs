@@ -147,6 +147,7 @@ builder.Services.AddScoped<IBoxImageService, BoxImageService>();
 builder.Services.AddScoped<IBoxItemService, BoxItemService>();
 builder.Services.AddScoped<IBoxOptionService, BoxOptionService>();
 builder.Services.AddScoped<IBoxService, BoxService>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderStatusDetailService, OrderStatusDetailService>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
@@ -163,10 +164,12 @@ builder.Services.AddScoped<IBoxImageRepository, BoxImageRepository>();
 builder.Services.AddScoped<IBoxItemRepository, BoxItemRepository>();
 builder.Services.AddScoped<IBoxOptionRepository, BoxOptionRepository>();
 builder.Services.AddScoped<IBoxRepository, BoxRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderStatusDetailRepository, OrderStatusDetailRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
+
 #endregion
 
 var app = builder.Build();
