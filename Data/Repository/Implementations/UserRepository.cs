@@ -103,7 +103,7 @@ namespace Data.Repository.Implementations
 
         public async Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userProfile.userId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(userProfile.email));
             if (user != null)
             {
                 user.Username = userProfile.username;
