@@ -1,16 +1,16 @@
-﻿using BlindBoxSystem.Common.Constants;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.Address.Response;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
-using BlindBoxSystem.Domain.Model.OrderItem;
-using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
-using BlindBoxSystem.Domain.Model.VoucherDTOs.Response;
+﻿using Common.Constants;
+using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.Address.Response;
+using Domain.Domain.Model.OrderDTOs.Request;
+using Domain.Domain.Model.OrderDTOs.Response;
+using Domain.Domain.Model.OrderItem;
+using Domain.Domain.Model.OrderStatusDetailDTOs;
+using Domain.Domain.Model.VoucherDTOs.Response;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlindBoxSystem.Data.Repository.Implementations
+namespace Data.Repository.Implementations
 {
     public class OrderRepository : IOrderRepository
     {
@@ -23,7 +23,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
         public async Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
         {
             var result = await _context.Orders.AsNoTracking()
-                .Where(o => userId <= 0|| o.UserId == userId)
+                .Where(o => userId <= 0 || o.UserId == userId)
                 .Select(o => new ManageOrderDto
                 {
                     userId = o.UserId,
@@ -186,7 +186,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
         public async Task<OrderResponseDto> UpdateVnPayOrder(CreateOrderDtoDetail createOrderDtoDetail, int orderId)
         {
             var result = await _context.Orders.FindAsync(orderId);
-            if(result != null)
+            if (result != null)
             {
                 result.PaymentStatus = createOrderDtoDetail.paymentStatus;
                 result.Revenue = createOrderDtoDetail.revenue;

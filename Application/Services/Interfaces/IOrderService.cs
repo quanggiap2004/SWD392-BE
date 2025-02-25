@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Model.OrderDTOs.Request;
-using BlindBoxSystem.Domain.Model.OrderDTOs.Response;
+﻿using Domain.Domain.Model.OrderDTOs.Request;
+using Domain.Domain.Model.OrderDTOs.Response;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IOrderService
     {

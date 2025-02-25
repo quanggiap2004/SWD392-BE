@@ -1,9 +1,9 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BrandDTOs;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BrandDTOs;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace Application.Services.Implementations
 {
     public class BrandService : IBrandService
     {

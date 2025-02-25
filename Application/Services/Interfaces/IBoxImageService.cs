@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxImageDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxImageDTOs;
 
-namespace BlindBoxSystem.Application.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBoxImageService
     {

@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
 
-namespace BlindBoxSystem.Data.Repository.Implementations
+namespace Data.Repository.Implementations
 {
     public class OrderItemRepository : IOrderItemRepository
     {

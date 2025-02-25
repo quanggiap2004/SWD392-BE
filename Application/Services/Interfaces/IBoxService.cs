@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs;
+using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
 
-namespace BlindBoxSystem.Application.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBoxService
     {

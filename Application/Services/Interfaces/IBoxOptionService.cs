@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
-using BlindBoxSystem.Domain.Model.OrderItem;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxOptionDTOs;
+using Domain.Domain.Model.OrderItem;
 
-namespace BlindBoxSystem.Application.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBoxOptionService
     {

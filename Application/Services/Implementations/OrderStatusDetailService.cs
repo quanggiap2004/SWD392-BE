@@ -1,8 +1,8 @@
-﻿using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Model.OrderStatusDetailDTOs;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class OrderStatusDetailService : IOrderStatusDetailService
     {
@@ -13,8 +13,8 @@ namespace BlindBoxSystem.Application.Services.Implementations
         }
         public async Task<bool> AddOrderStatusDetailAsync(OrderStatusDetailSimple orderStatusDetail)
         {
-           
-           return await _orderStatusDetailRepository.AddOrderStatusDetailAsync(orderStatusDetail);
+
+            return await _orderStatusDetailRepository.AddOrderStatusDetailAsync(orderStatusDetail);
         }
 
         public async Task<bool> CheckOrderStatusDetailExist(int orderId, int statusId)

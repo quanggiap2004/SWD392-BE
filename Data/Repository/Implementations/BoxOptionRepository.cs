@@ -1,10 +1,10 @@
-﻿using BlindBoxSystem.Data.Interfaces;
-using BlindBoxSystem.Domain.Context;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderItem;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.OrderItem;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlindBoxSystem.Data.Implementations
+namespace Data.Repository.Implementations
 {
     public class BoxOptionRepository : IBoxOptionRepository
     {

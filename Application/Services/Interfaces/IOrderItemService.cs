@@ -1,6 +1,6 @@
-﻿using BlindBoxSystem.Domain.Entities;
+﻿using Domain.Domain.Entities;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IOrderItemService
     {

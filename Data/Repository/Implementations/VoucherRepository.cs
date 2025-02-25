@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Context;
+﻿using Data.Repository.Interfaces;
+using Domain.Domain.Context;
 
-namespace BlindBoxSystem.Data.Repository.Implementations
+namespace Data.Repository.Implementations
 {
     public class VoucherRepository : IVoucherRepository
     {
@@ -13,7 +13,7 @@ namespace BlindBoxSystem.Data.Repository.Implementations
         public async Task ReduceVoucherQuantity(int voucherId)
         {
             var voucher = await _context.Vouchers.FindAsync(voucherId);
-            if(voucher == null)
+            if (voucher == null)
             {
                 throw new Exception("Voucher not found");
             }

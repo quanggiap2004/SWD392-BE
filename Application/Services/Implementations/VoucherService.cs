@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class VoucherService : IVoucherService
     {
@@ -12,7 +12,7 @@ namespace BlindBoxSystem.Application.Services.Implementations
         }
         public async Task ReduceVoucherQuantity(int voucherId)
         {
-            await _voucherRepository.ReduceVoucherQuantity(voucherId); 
+            await _voucherRepository.ReduceVoucherQuantity(voucherId);
         }
     }
 }

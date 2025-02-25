@@ -1,4 +1,4 @@
-﻿namespace BlindBoxSystem.Common.Constants
+﻿namespace Common.Constants
 {
     public static class ProjectConstant
     {

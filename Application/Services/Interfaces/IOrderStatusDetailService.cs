@@ -1,6 +1,6 @@
-﻿using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+﻿using Domain.Domain.Model.OrderStatusDetailDTOs;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IOrderStatusDetailService
     {

@@ -1,15 +1,15 @@
-﻿using BlindBoxSystem.Application.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BoxDTOs;
-using BlindBoxSystem.Domain.Model.BoxDTOs.ResponseDTOs;
-using BlindBoxSystem.Domain.Model.BoxImageDTOs;
-using BlindBoxSystem.Domain.Model.BoxItemDTOs;
-using BlindBoxSystem.Domain.Model.BoxOptionDTOs;
-using BlindBoxSystem.Domain.Model.OnlineSerieBoxDTOs;
-using static BlindBoxSystem.Common.Exceptions.CustomExceptions;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BoxDTOs;
+using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
+using Domain.Domain.Model.BoxImageDTOs;
+using Domain.Domain.Model.BoxItemDTOs;
+using Domain.Domain.Model.BoxOptionDTOs;
+using Domain.Domain.Model.OnlineSerieBoxDTOs;
+using static Common.Exceptions.CustomExceptions;
 
-namespace BlindBoxSystem.Application.Implementations
+namespace Application.Services.Implementations
 {
     public class BoxService : IBoxService
     {

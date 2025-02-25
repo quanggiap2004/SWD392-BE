@@ -1,7 +1,6 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.OrderStatusDetailDTOs;
+﻿using Domain.Domain.Model.OrderStatusDetailDTOs;
 
-namespace BlindBoxSystem.Data.Repository.Interfaces
+namespace Data.Repository.Interfaces
 {
     public interface IOrderStatusDetailRepository
     {
