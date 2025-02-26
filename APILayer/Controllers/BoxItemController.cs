@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Domain.Domain.Entities;
 using Domain.Domain.Model.BoxItemDTOs;
+using Domain.Domain.Model.UserVotedBoxItemDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -118,6 +119,31 @@ namespace APILayer.Controllers
             }
 
             return Ok(new { message = "Box Item updated successfully.", updatedBoxItem });
+        }
+
+
+        [HttpPost("vote")]
+        public async Task<IActionResult> AddOrUpdateVote([FromBody] AddVoteDTO addVoteDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _boxItemService.AddOrUpdateVoteAsync(addVoteDTO);
+            return Ok(result);
+        }
+
+        [HttpGet("{boxItemId}/votes")]
+        public async Task<IActionResult> GetVotesByBoxItemId(int boxItemId)
+        {
+            var votes = await _boxItemService.GetVotesByBoxItemId(boxItemId);
+            if (votes == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(votes);
         }
     }
 }

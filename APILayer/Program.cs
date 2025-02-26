@@ -166,6 +166,8 @@ builder.Services.AddScoped<IOrderStatusDetailRepository, OrderStatusDetailReposi
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IUserVotedBoxItemRepository, UserVotedBoxItemRepository>();
+
 
 #endregion
 
