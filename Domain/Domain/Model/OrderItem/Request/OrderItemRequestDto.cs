@@ -6,6 +6,6 @@
         public float price { get; set; }
         public int boxOptionId { get; set; }
         public int originPrice { get; set; }
-        public bool orderItemOpenRequest { get; set; }
+        public int orderItemOpenRequestNumber { get; set; }
     }
 }

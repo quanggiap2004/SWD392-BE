@@ -88,7 +88,7 @@ namespace Application.Services.Implementations
             OrderResponseDto result = new OrderResponseDto();
             foreach (var item in model.orderItemRequestDto)
             {
-                if (item.orderItemOpenRequest == true)
+                if (item.orderItemOpenRequestNumber > 0)
                 {
                     openRequest = true;
                     break;
@@ -116,7 +116,7 @@ namespace Application.Services.Implementations
                 BoxOptionId = model.boxOptionId,
                 Quantity = model.quantity,
                 OrderPrice = model.price,
-                OpenRequest = model.orderItemOpenRequest,
+                OpenRequestNumber = model.orderItemOpenRequestNumber,
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
             await _voucherService.ReduceVoucherQuantity(model.voucherId);
@@ -153,7 +153,7 @@ namespace Application.Services.Implementations
             string paymentStatus = ProjectConstant.PaymentSuccess;
             foreach (var item in model.orderItemRequestDto)
             {
-                if (item.orderItemOpenRequest == true)
+                if (item.orderItemOpenRequestNumber > 0)
                 {
                     openRequest = true;
                     break;
@@ -182,7 +182,7 @@ namespace Application.Services.Implementations
                 BoxOptionId = model.boxOptionId,
                 Quantity = model.quantity,
                 OrderPrice = model.price,
-                OpenRequest = model.orderItemOpenRequest,
+                OpenRequestNumber = model.orderItemOpenRequestNumber,
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
             await _voucherService.ReduceVoucherQuantity(model.voucherId);

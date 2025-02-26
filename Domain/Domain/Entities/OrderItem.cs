@@ -15,9 +15,9 @@ namespace Domain.Domain.Entities
         public float OrderPrice { get; set; }
         public bool IsFeedback { get; set; } = false;
 
-        public string? OrderStatusCheckCardImage { get; set; }
+        public ICollection<string> OrderStatusCheckCardImage { get; set; }
         public bool IsRefund { get; set; } = false;
-        public bool OpenRequest { get; set; } = false;
+        public int OpenRequestNumber { get; set; }
         public virtual Feedback Feedbacks { get; set; }
 
         [ForeignKey("BoxOptionId")]
