@@ -1,5 +1,6 @@
 ﻿using Domain.Domain.Entities;
 using Domain.Domain.Model.BoxItemDTOs;
+using Domain.Domain.Model.UserVotedBoxItemDTOs;
 
 namespace Application.Services.Interfaces
 {
@@ -11,5 +12,7 @@ namespace Application.Services.Interfaces
         Task<BoxItem> AddBoxItemAsync(BoxItem boxItem);
         Task<BoxItem> UpdateBoxItemAsync(int id, BoxItem boxItem);
         Task DeleteBoxItemAsync(int id);
+        Task<GetAllVotedDTO> AddOrUpdateVoteAsync(AddVoteDTO addVoteDTO);
+        Task<IEnumerable<UserVotedBoxItem>> GetVotesByBoxItemId(int id);
     }
 }

@@ -3,6 +3,7 @@ using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
 using Domain.Domain.Model.BoxDTOs;
 using Domain.Domain.Model.BoxItemDTOs;
+using Domain.Domain.Model.UserVotedBoxItemDTOs;
 
 namespace Application.Services.Implementations
 {
@@ -10,9 +11,13 @@ namespace Application.Services.Implementations
     {
 
         private readonly IBoxItemRepository _boxItemRepository;
-        public BoxItemService(IBoxItemRepository boxItemRepository)
+        private readonly IUserVotedBoxItemRepository _userVotedBoxItemRepository;
+
+        public BoxItemService(IBoxItemRepository boxItemRepository, IUserVotedBoxItemRepository userVotedBoxItemRepository)
         {
             _boxItemRepository = boxItemRepository;
+            _userVotedBoxItemRepository = userVotedBoxItemRepository;
+
         }
         public async Task<BoxItem> AddBoxItemAsync(BoxItem boxItem)
         {
@@ -78,6 +83,12 @@ namespace Application.Services.Implementations
                 ImageUrl = boxItem.ImageUrl,
                 NumOfVote = boxItem.NumOfVote,
                 IsSecret = boxItem.IsSecret,
+                VotedResponse = boxItem.UserVotedBoxItems.Select(vote => new VotedResponseDTO
+                {
+                    boxItemId = vote.BoxItemId,
+                    userId = vote.UserId,
+                    rating = vote.Rating,
+                }).ToList(),
                 BelongBox = new BelongBoxResponseDTO
                 {
                     BoxId = boxItem.BoxId,
@@ -103,6 +114,25 @@ namespace Application.Services.Implementations
             existingBoxItem.BoxId = boxItem.BoxId;
 
             return await _boxItemRepository.UpdateBoxItemAsync(existingBoxItem);
+        }
+
+        public async Task<GetAllVotedDTO> AddOrUpdateVoteAsync(AddVoteDTO addVoteDTO)
+        {
+            var result = await _userVotedBoxItemRepository.AddOrUpdateVoteAsync(addVoteDTO);
+            var VotedDTO = new GetAllVotedDTO
+            {
+                UserVotedBoxItemId = result.UserVotedBoxItemId,
+                BoxItemId = result.BoxItemId,
+                UserId = result.UserId,
+                Rating = result.Rating,
+                LastUpdated = result.LastUpdated,
+            };
+            return VotedDTO;
+        }
+        public async Task<IEnumerable<UserVotedBoxItem>> GetVotesByBoxItemId(int id)
+        {
+            var Vote = await _userVotedBoxItemRepository.GetVotesByBoxItemIdAsync(id);
+            return Vote;
         }
     }
 }

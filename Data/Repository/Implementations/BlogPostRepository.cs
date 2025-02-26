@@ -2,6 +2,7 @@
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+
 namespace Data.Repository.Implementations
 {
     public class BlogPostRepository : IBlogPostRepository

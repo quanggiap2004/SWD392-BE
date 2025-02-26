@@ -13,6 +13,7 @@ namespace Domain.Domain.Model.BoxItemDTOs
         public string ImageUrl { get; set; }
         public int NumOfVote { get; set; }
         public bool IsSecret { get; set; }
+        public ICollection<VotedResponseDTO> VotedResponse { get; set; }
         public BelongBoxResponseDTO BelongBox { get; set; }
 
     }
