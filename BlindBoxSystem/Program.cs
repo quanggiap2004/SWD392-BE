@@ -163,6 +163,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderStatusDetailRepository, OrderStatusDetailRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
+
 #endregion
 
 var app = builder.Build();

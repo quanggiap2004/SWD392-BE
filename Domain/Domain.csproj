@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Model\Address\Request\" />
     <Folder Include="Domain\Model\OrderItem\Response\" />
     <Folder Include="Domain\Model\VoucherDTOs\Request\" />
   </ItemGroup>

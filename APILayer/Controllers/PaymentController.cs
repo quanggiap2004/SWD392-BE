@@ -4,7 +4,6 @@ using Domain.Domain.Model.OrderDTOs.Request;
 using Domain.Domain.Model.OrderDTOs.Response;
 using Domain.Domain.Model.PaymentDTOs.Response;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

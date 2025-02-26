@@ -5,12 +5,8 @@ using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities.ApplicationEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -152,6 +148,8 @@ builder.Services.AddScoped<IOrderStatusDetailService, OrderStatusDetailService>(
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 #endregion
 
 #region Repositories
@@ -167,6 +165,8 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderStatusDetailRepository, OrderStatusDetailRepository>();
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 #endregion
 
 var app = builder.Build();
