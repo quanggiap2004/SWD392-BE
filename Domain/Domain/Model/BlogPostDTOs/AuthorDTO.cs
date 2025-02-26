@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlindBoxSystem.Domain.Model.BlogPostDTOs
+namespace Domain.Domain.Model.BlogPostDTOs
 {
     public class AuthorDTO
     {

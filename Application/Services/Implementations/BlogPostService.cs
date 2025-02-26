@@ -1,9 +1,9 @@
-﻿using BlindBoxSystem.Application.Services.Interfaces;
-using BlindBoxSystem.Data.Repository.Interfaces;
-using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BlogPostDTOs;
+﻿using Application.Services.Interfaces;
+using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
+using Domain.Domain.Model.BlogPostDTOs;
 
-namespace BlindBoxSystem.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
     public class BlogPostService : IBlogPostService
     {

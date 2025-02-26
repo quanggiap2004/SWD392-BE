@@ -1,7 +1,7 @@
-﻿using BlindBoxSystem.Domain.Entities;
-using BlindBoxSystem.Domain.Model.BlogPostDTOs;
+﻿using Domain.Domain.Entities;
+using Domain.Domain.Model.BlogPostDTOs;
 
-namespace BlindBoxSystem.Application.Services.Interfaces
+namespace Application.Services.Interfaces
 {
     public interface IBlogPostService
     {
