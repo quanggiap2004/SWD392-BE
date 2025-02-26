@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250226091204_Remove column")]
+    partial class Removecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -496,18 +499,11 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<bool>("IsRefund")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OpenRequestNumber")
-                        .HasColumnType("integer");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
                     b.Property<float>("OrderPrice")
                         .HasColumnType("real");
-
-                    b.PrimitiveCollection<string[]>("OrderStatusCheckCardImage")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");

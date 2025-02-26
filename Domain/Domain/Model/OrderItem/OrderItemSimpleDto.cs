@@ -10,9 +10,9 @@
         public float orderPrice { get; set; }
         public bool isFeedback { get; set; } = false;
 
-        public string orderStatusCheckCardImage { get; set; }
+        public ICollection<string> orderStatusCheckCardImage { get; set; }
         public bool isRefund { get; set; } = false;
-        public bool openRequest { get; set; } = false;
+        public int openRequestNumber { get; set; }
         public string boxOptionName { get; set; }
         public string boxName { get; set; }
         public string? imageUrl { get; set; }

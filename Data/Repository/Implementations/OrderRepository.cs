@@ -64,7 +64,7 @@ namespace Data.Repository.Implementations
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         isRefund = oi.IsRefund,
-                        openRequest = oi.OpenRequest,
+                        openRequestNumber = oi.OpenRequestNumber,
                         boxOptionName = oi.BoxOption.BoxOptionName,
                         boxName = oi.BoxOption.Box.BoxName,
                         imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
@@ -116,7 +116,7 @@ namespace Data.Repository.Implementations
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         isRefund = oi.IsRefund,
-                        openRequest = oi.OpenRequest
+                        openRequestNumber = oi.OpenRequestNumber
                     }).ToList(),
                     currentStatusId = o.CurrentOrderStatusId
                 }).FirstOrDefaultAsync();
