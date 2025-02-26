@@ -15,10 +15,14 @@ namespace APILayer.Controllers
     {
         private readonly IVnPayService _vnPayService;
         private readonly IOrderService _orderService;
-        public PaymentController(IVnPayService vnPayService, IOrderService orderService)
+        private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
+        public PaymentController(IVnPayService vnPayService, IOrderService orderService, IUserService userService, IEmailService emailService)
         {
             _vnPayService = vnPayService;
             _orderService = orderService;
+            _userService = userService;
+            _emailService = emailService;
         }
 
         [AllowAnonymous]
@@ -56,6 +60,12 @@ namespace APILayer.Controllers
             {
                 CreateOrderDTO orderDto = await _orderService.GetOrderDto(paymentResponse.OrderId);
                 OrderResponseDto result = await _orderService.UpdateOrderVnPay(orderDto, paymentResponse.OrderId);
+
+                var user = await _userService.GetUserById(orderDto.userId);
+                if (user != null)
+                {
+                    await _emailService.SendPaymentConfirmationEmailAsync(user.email, user.fullname, paymentResponse.OrderId);
+                }
                 // Optionally, update order status or perform other business logic.
                 return Ok(paymentResponse);
             }

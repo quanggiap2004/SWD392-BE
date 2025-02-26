@@ -73,7 +73,7 @@ namespace APILayer.Controllers
                 var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
 
                 // Send email
-                await _emailService.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your account by clicking this link: <a href='{confirmationLink}'>link</a>");
+                await _emailService.SendRegistrationConfirmationEmailAsync(user.Email, confirmationLink, user.FullName);
 
                 return Ok(new { message = "Registered successful. Please check your email to confirm your account." });
             }

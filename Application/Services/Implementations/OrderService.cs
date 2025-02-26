@@ -183,6 +183,7 @@ namespace Application.Services.Implementations
                 Quantity = model.quantity,
                 OrderPrice = model.price,
                 OpenRequestNumber = model.orderItemOpenRequestNumber,
+                OrderStatusCheckCardImage = new List<string>(),
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
             await _voucherService.ReduceVoucherQuantity(model.voucherId);

@@ -43,7 +43,7 @@ namespace Data.Repository.Implementations
 
         public async Task<BoxItem> GetBoxItemByIdDTO(int id)
         {
-            return await _context.BoxItems.Include(b => b.Box).FirstOrDefaultAsync(b => b.BoxItemId == id);
+            return await _context.BoxItems.Include(b => b.Box).Include(vote => vote.UserVotedBoxItems).FirstOrDefaultAsync(b => b.BoxItemId == id);
         }
 
         public async Task<BoxItem> UpdateBoxItemAsync(BoxItem boxItem)

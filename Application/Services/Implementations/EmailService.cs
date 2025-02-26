@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Common.Helper;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Mail;
@@ -12,7 +13,7 @@ namespace Application.Services.Implementations
         {
             _configuration = configuration;
         }
-        public Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendEmailAsync(string email, string subject, string message)
         {
 
             var smtpClient = new SmtpClient(_configuration["Smtp:Host"])
@@ -33,7 +34,21 @@ namespace Application.Services.Implementations
             };
             mailMessage.To.Add(email);
 
-            return smtpClient.SendMailAsync(mailMessage);
+            await smtpClient.SendMailAsync(mailMessage);
+        }
+
+        public async Task SendPaymentConfirmationEmailAsync(string email, string fullName, int orderId)
+        {
+            string subject = "Payment Confirmation";
+            string message = EmailContentBuilder.BuildPaymentConfirmationEmail(fullName, orderId);
+            await SendEmailAsync(email, subject, message);
+        }
+
+        public async Task SendRegistrationConfirmationEmailAsync(string email, string confirmationLink, string fullName)
+        {
+            string subject = "Confirm your email";
+            string message = EmailContentBuilder.BuildRegistrationConfirmationEmail(confirmationLink, fullName);
+            await SendEmailAsync(email, subject, message);
         }
     }
 }

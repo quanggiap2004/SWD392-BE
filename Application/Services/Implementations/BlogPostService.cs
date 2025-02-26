@@ -7,6 +7,7 @@ namespace Application.Services.Implementations
 {
     public class BlogPostService : IBlogPostService
     {
+
         private readonly IBlogPostRepository _blogPostRepository;
         public BlogPostService(IBlogPostRepository blogPostRepository)
         {
@@ -92,5 +93,6 @@ namespace Application.Services.Implementations
 
             return await _blogPostRepository.UpdateBlogAsync(existingBlog);
         }
+
     }
 }
