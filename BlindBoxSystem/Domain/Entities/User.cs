@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlindBoxSystem.Domain.Entities
 {
-    [Index(nameof(Username), IsUnique = true)]
     [Index(nameof(Email), IsUnique = true)]
     public class User
     {
