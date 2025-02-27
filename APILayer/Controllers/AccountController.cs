@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -288,16 +289,11 @@ namespace APILayer.Controllers
             var email = userInfo["email"]?.ToString();
 
             var user = await _userManager.FindByEmailAsync(email);
-            var userLoginResponse = await _userService.GetUserByEmail(user.Email);
-            if (userLoginResponse == null)
-            {
-                return BadRequest(new { message = "User not found" });
-            }
             if (user == null)
             {
                 user = new ApplicationUser
                 {
-                    UserName = name,
+                    UserName = email,
                     Email = email,
                     FullName = fullName,
                     Password = "Giap123456"
@@ -305,17 +301,25 @@ namespace APILayer.Controllers
                 RegisterAccountDTO registerAccountDTO = new RegisterAccountDTO
                 {
                     email = email,
-                    userName = name,
+                    userName = email,
                     fullName = fullName,
                     password = "Giap123456",
                     roleId = 3,
                     phoneNumber = "0943991995"
                 };
-                await _userManager.CreateAsync(user);
-                await _userManager.AddToRoleAsync(user, ProjectConstant.USER);
+                await _userManager.CreateAsync(user, user.Password);
+                var userLogin = await _userManager.FindByEmailAsync(email);
+                if (userLogin == null) {
+                    return BadRequest(new { message = "create user failed" });
+                }
+                await _userManager.AddToRoleAsync(userLogin, ProjectConstant.USER);
                 await _userService.AddUser(registerAccountDTO);
             }
-
+            var userLoginResponse = await _userService.GetUserByEmail(user.Email);
+            if (userLoginResponse == null)
+            {
+                return BadRequest(new { message = "User not found" });
+            }
             var authClaims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
