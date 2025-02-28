@@ -37,7 +37,8 @@ namespace Application.Services.Implementations
             {
                 BrandId = b.BrandId,
                 BrandName = b.BrandName,
-                IncludedBox = b.Box.Select(n => n.BoxName).ToList()
+                IncludedBox = b.Box.Select(n => n.BoxName).ToList(),
+                imageUrl = b.ImageUrl
             });
 
             return BrandDTO;
@@ -56,7 +57,8 @@ namespace Application.Services.Implementations
             {
                 BrandId = Brand.BrandId,
                 BrandName = Brand.BrandName,
-                IncludedBox = Brand.Box.Select(b => b.BoxName).ToList()
+                IncludedBox = Brand.Box.Select(b => b.BoxName).ToList(),
+                imageUrl = Brand.ImageUrl
             };
             return BrandDTO;
         }
