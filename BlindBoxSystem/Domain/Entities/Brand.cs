@@ -7,6 +7,7 @@ namespace BlindBoxSystem.Domain.Entities
         [Key]
         public int BrandId { get; set; }
         public string BrandName { get; set; }
+        public string url
         public virtual ICollection<Box> Box { get; set; }
     }
 }
