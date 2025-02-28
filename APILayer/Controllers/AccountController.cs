@@ -246,7 +246,6 @@ namespace APILayer.Controllers
             {
                 return Ok(new { message = "Password reset successfully" });
             }
-
             return BadRequest(new { message = "Password reset failed", errors = result.Errors });
         }
 

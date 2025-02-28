@@ -43,7 +43,9 @@ namespace Data.Repository.Implementations
                         district = o.Address.District,
                         ward = o.Address.Ward,
                         addressDetail = o.Address.AddressDetail,
-                        userId = o.UserId
+                        userId = o.UserId,
+                        name = o.Address.Name,
+                        phoneNumber = o.Address.PhoneNumber
                     },
                     openRequest = o.OpenRequest,
                     refundRequest = o.RefundRequest,
