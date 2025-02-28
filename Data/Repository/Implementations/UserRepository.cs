@@ -117,5 +117,20 @@ namespace Data.Repository.Implementations
             }
             return false;
         }
+
+        public async Task<IEnumerable<UserProfile>> GetAllUsers()
+        {
+            return await _context.Users.AsNoTracking().Select(u => new UserProfile
+            {
+                userId = u.UserId,
+                fullname = u.Fullname,
+                phone = u.Phone,
+                email = u.Email,
+                username = u.Username,
+                roleId = u.RoleId,
+                gender = u.Gender,
+                isActive = u.IsActive
+            }).ToListAsync();
+        }
     }
 }
