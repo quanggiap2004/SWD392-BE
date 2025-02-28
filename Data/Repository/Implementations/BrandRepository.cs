@@ -41,7 +41,7 @@ namespace Data.Repository.Implementations
             return await _context.Brands.FindAsync(id);
         }
 
-        public async Task<Brand> GetBrandWithName(int id)
+        public async Task<Brand> GetBrandWithBoxName(int id)
         {
             return await _context.Brands.Include(b => b.Box).FirstOrDefaultAsync(x => x.BrandId == id);
         }

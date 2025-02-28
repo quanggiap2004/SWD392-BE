@@ -51,7 +51,7 @@ namespace Application.Services.Implementations
 
         public async Task<GetAllBrandsDTO> GetBrandWithBoxName(int id)
         {
-            var Brand = await _brandRepository.GetBrandWithName(id);
+            var Brand = await _brandRepository.GetBrandWithBoxName(id);
             var BrandDTO = new GetAllBrandsDTO
             {
                 BrandId = Brand.BrandId,
