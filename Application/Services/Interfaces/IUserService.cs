@@ -12,5 +12,6 @@ namespace Application.Services.Interfaces
         Task<bool> ChangePassword(ChangePasswordDto changePasswordDto);
         Task<UserProfile?> GetUserById(int id);
         Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile);
+        Task<IEnumerable<UserProfile>> GetAllUsers();
     }
 }

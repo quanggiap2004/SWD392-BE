@@ -63,5 +63,20 @@ namespace APILayer.Controllers
             }
         }
 
+        [HttpGet("all-users")]
+        public async Task<ActionResult<IEnumerable<UserProfile>>> GetAllUsers()
+        {
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
     }
 }

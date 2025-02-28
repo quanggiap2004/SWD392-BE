@@ -75,5 +75,10 @@ namespace Application.Services.Implementations
             }
             return true;
         }
+
+        public async Task<IEnumerable<UserProfile>> GetAllUsers()
+        {
+            return await _userRepository.GetAllUsers();
+        }
     }
 }
