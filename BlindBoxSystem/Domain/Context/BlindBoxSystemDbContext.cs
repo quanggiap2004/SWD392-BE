@@ -26,10 +26,8 @@ namespace BlindBoxSystem.Domain.Context
         public DbSet<BoxOption> BoxOptions { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserWallet> UserWallets { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<BoxItem> BoxItems { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<OnlineSerieBox> OnlineSerieBoxes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,12 +42,6 @@ namespace BlindBoxSystem.Domain.Context
                 .HasMany(e => e.OrderStatus)
                 .WithMany(e => e.Orders)
                 .UsingEntity<OrderStatusDetail>();
-
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.UserWallet)
-                .WithOne(uw => uw.User)
-                .HasForeignKey<UserWallet>(u => u.WalletId)
-                .IsRequired();
         }
     }
 }

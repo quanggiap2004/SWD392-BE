@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250228223144_Remove transaction and user wallet")]
+    partial class Removetransactionanduserwallet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -499,9 +502,6 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<bool>("IsRefund")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("NumOfRefund")
-                        .HasColumnType("integer");
-
                     b.Property<int>("OpenRequestNumber")
                         .HasColumnType("integer");
 
@@ -581,6 +581,37 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Domain.Domain.Entities.Transaction", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TransactionId"));
+
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
+                    b.Property<float>("BalanceAfter")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("WalletId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("Domain.Domain.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -658,6 +689,22 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserVotedBoxItems");
+                });
+
+            modelBuilder.Entity("Domain.Domain.Entities.UserWallet", b =>
+                {
+                    b.Property<int>("WalletId")
+                        .HasColumnType("integer");
+
+                    b.Property<float>("Balance")
+                        .HasColumnType("real");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("WalletId");
+
+                    b.ToTable("UserWallets");
                 });
 
             modelBuilder.Entity("Domain.Domain.Entities.Voucher", b =>
@@ -987,6 +1034,17 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Navigation("OrderStatus");
                 });
 
+            modelBuilder.Entity("Domain.Domain.Entities.Transaction", b =>
+                {
+                    b.HasOne("Domain.Domain.Entities.UserWallet", "UserWallet")
+                        .WithMany("Transactions")
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserWallet");
+                });
+
             modelBuilder.Entity("Domain.Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Domain.Entities.Role", "Role")
@@ -1013,6 +1071,17 @@ namespace BlindBoxSystem.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("BoxItem");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Domain.Entities.UserWallet", b =>
+                {
+                    b.HasOne("Domain.Domain.Entities.User", "User")
+                        .WithOne("UserWallet")
+                        .HasForeignKey("Domain.Domain.Entities.UserWallet", "WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -1148,6 +1217,13 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("UserVotedBoxItems");
+
+                    b.Navigation("UserWallet");
+                });
+
+            modelBuilder.Entity("Domain.Domain.Entities.UserWallet", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Domain.Domain.Entities.Voucher", b =>

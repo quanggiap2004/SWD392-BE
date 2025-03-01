@@ -27,7 +27,6 @@ namespace Domain.Domain.Entities
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
         public virtual ICollection<Address> Address { get; set; }
-        public virtual UserWallet? UserWallet { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 

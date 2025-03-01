@@ -19,10 +19,10 @@ namespace Domain.Domain.Entities
         public bool IsRefund { get; set; } = false;
         public int OpenRequestNumber { get; set; }
         public virtual Feedback Feedbacks { get; set; }
-
         [ForeignKey("BoxOptionId")]
         public BoxOption BoxOption { get; set; }
         public Order Order { get; set; }
+        public int NumOfRefund { get; set; }
 
     }
 }

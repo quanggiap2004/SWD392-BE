@@ -20,5 +20,10 @@ namespace Application.Services.Implementations
             await _boxOptionService.ReduceStockQuantity(orderItems);
             await _orderItemRepository.AddRangeOrderItems(orderItems);
         }
+
+        public async Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
+        {
+            var result = await _orderItemRepository.(orderItemId);
+        }
     }
 }
