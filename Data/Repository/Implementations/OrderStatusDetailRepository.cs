@@ -16,6 +16,13 @@ namespace Data.Repository.Implementations
 
         public async Task<bool> AddOrderStatusDetailAsync(OrderStatusDetailSimple orderStatusDetail)
         {
+            var result = await _context.OrderStatusDetails.Where(x => x.OrderId == orderStatusDetail.orderId && x.OrderStatusId == orderStatusDetail.statusId).FirstOrDefaultAsync();
+            if (result != null)
+            {
+                result.OrderStatusUpdatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
+                return true;
+            }
             OrderStatusDetail statusDetail = new OrderStatusDetail
             {
                 OrderId = orderStatusDetail.orderId,
