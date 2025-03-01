@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Common.Exceptions;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
 
@@ -23,7 +24,12 @@ namespace Application.Services.Implementations
 
         public async Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
         {
-            return true;
+           var result = await _orderItemRepository.UpdateOpenBlindBoxForCustomerImage(orderItemId, imageList);
+            if (result == false)
+            {
+                throw new CustomExceptions.NotFoundException("OrderItem not found");
+            }
+            return result;
         }
     }
 }
