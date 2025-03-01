@@ -39,6 +39,7 @@ namespace Application.Services.Implementations
                 BlogPostTitle = blog.BlogPostTitle,
                 BlogPostContent = blog.BlogPostContent,
                 BlogPostImage = blog.BlogPostImage,
+                BlogCreatedDate = blog.BlogCreatedDate,
                 Author = new AuthorDTO
                 {
                     UserId = blog.User.UserId,
@@ -67,6 +68,7 @@ namespace Application.Services.Implementations
                 BlogPostTitle = blog.BlogPostTitle,
                 BlogPostContent = blog.BlogPostContent,
                 BlogPostImage = blog.BlogPostImage,
+                BlogCreatedDate = blog.BlogCreatedDate,
                 Author = new AuthorDTO
                 {
                     UserId = blog.User.UserId,
