@@ -70,6 +70,7 @@ namespace Data.Repository.Implementations
                         boxOptionName = oi.BoxOption.BoxOptionName,
                         boxName = oi.BoxOption.Box.BoxName,
                         imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
+                        numOfRefund = oi.NumOfRefund
                     }).ToList(),
                 }).ToListAsync();
 

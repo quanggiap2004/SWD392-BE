@@ -16,5 +16,6 @@
         public string boxOptionName { get; set; }
         public string boxName { get; set; }
         public string? imageUrl { get; set; }
+        public int numOfRefund { get; set; }
     }
 }
