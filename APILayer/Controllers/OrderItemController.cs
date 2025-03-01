@@ -10,7 +10,7 @@ namespace APILayer.Controllers
         private readonly IOrderItemService _orderItemService;
         public OrderItemController(IOrderItemService orderItemService)
         {
-            orderItemService = _orderItemService;
+            _orderItemService = orderItemService;
         }
         [HttpPost]
         public async Task<ActionResult> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
@@ -18,7 +18,7 @@ namespace APILayer.Controllers
             try
             {
                 var result = await _orderItemService.UpdateOpenBlindBoxForCustomerImage(orderItemId, imageList);
-                return Ok(result);
+                return Ok("Upload image successfully");
             }
             catch (Exception e)
             {
