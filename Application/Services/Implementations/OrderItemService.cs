@@ -23,7 +23,7 @@ namespace Application.Services.Implementations
 
         public async Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
         {
-            var result = await _orderItemRepository.(orderItemId);
+            return true;
         }
     }
 }
