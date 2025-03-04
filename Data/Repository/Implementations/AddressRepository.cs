@@ -24,7 +24,11 @@ namespace Data.Repository.Implementations
                 Ward = createAddressDTO.Ward, 
                 UserId = createAddressDTO.UserId,
                 PhoneNumber = createAddressDTO.phoneNumber,
-                Name = createAddressDTO.name
+                Name = createAddressDTO.name,
+                WardCode = createAddressDTO.WardCode,
+                DistrictId = createAddressDTO.DistrictId,
+                ProvinceId = createAddressDTO.ProvinceId,
+                Note = createAddressDTO.note
             });
             await _context.SaveChangesAsync();
             return createAddressDTO;
