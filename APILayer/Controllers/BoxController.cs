@@ -164,5 +164,14 @@ namespace APILayer.Controllers
                 return StatusCode(500, new { error = "An unexpected error occurred." });
             }
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<GetAllBoxesDTO>>> SearchBoxesByName([FromQuery] string? boxName)
+        {
+            var boxes = await _boxService.SearchBoxesByNameAsync(boxName);
+            return Ok(boxes);
+        }
+
+
     }
 }

@@ -16,5 +16,7 @@ namespace Data.Repository.Interfaces
         Task<AllBoxesDto?> GetBoxByIdV2(int id);
         Task<IEnumerable<BestSellerBoxesDto>> GetBestSellerBox(int quantity);
         Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId);
+
+        Task<IEnumerable<Box>> SearchBoxesByNameAsync(string? boxName);
     }
 }

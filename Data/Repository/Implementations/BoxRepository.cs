@@ -130,5 +130,27 @@ namespace Data.Repository.Implementations
                     boxOptionIds = b.BoxOptions.Select(opt => opt.BoxOptionId)
                 }).ToListAsync();
         }
+        public async Task<IEnumerable<Box>> SearchBoxesByNameAsync(string? boxName)
+        {
+            if (string.IsNullOrEmpty(boxName))
+            {
+                return await _context.Boxes
+                 .Include(b => b.Brand)
+                .Include(bImage => bImage.BoxImages)
+                .Include(bItem => bItem.BoxItems)
+                .Include(bOnline => bOnline.OnlineSerieBoxes)
+                .Include(bOption => bOption.BoxOptions)
+                .Where(b => !b.IsDeleted).ToListAsync();
+            }
+
+            return await _context.Boxes
+                .Include(b => b.Brand)
+                .Include(bImage => bImage.BoxImages)
+                .Include(bItem => bItem.BoxItems)
+                .Include(bOnline => bOnline.OnlineSerieBoxes)
+                .Include(bOption => bOption.BoxOptions)
+                .Where(b => b.BoxName.Contains(boxName) && !b.IsDeleted)
+                .ToListAsync();
+        }
     }
 }
