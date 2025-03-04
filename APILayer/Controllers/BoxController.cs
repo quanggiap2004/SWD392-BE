@@ -2,6 +2,7 @@
 using Domain.Domain.Entities;
 using Domain.Domain.Model.BoxDTOs;
 using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
+using Domain.Domain.Model.OrderItem.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -171,7 +172,5 @@ namespace APILayer.Controllers
             var boxes = await _boxService.SearchBoxesByNameAsync(boxName);
             return Ok(boxes);
         }
-
-
     }
 }

@@ -12,11 +12,13 @@ namespace Application.Services.Implementations
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IBoxOptionService _boxOptionService;
         private readonly IOrderStatusDetailService _orderStatusDetailService;
-        public OrderItemService(IOrderItemRepository orderItemRepository, IBoxOptionService boxOptionService, IOrderStatusDetailService orderStatusDetailService)
+        private readonly IBoxService _boxService;
+        public OrderItemService(IOrderItemRepository orderItemRepository, IBoxOptionService boxOptionService, IOrderStatusDetailService orderStatusDetailService, IBoxService boxService)
         {
             _orderItemRepository = orderItemRepository;
             _boxOptionService = boxOptionService;
             _orderStatusDetailService = orderStatusDetailService;
+            _boxService = boxService;
         }
 
 
@@ -24,6 +26,7 @@ namespace Application.Services.Implementations
         {
             await _boxOptionService.ReduceStockQuantity(orderItems);
             await _orderItemRepository.AddRangeOrderItems(orderItems);
+            await _boxService.UpdateSoldQuantity(orderItems);
         }
 
         public async Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)

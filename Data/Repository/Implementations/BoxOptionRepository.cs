@@ -76,6 +76,7 @@ namespace Data.Repository.Implementations
             {
                 boxOption.BoxOptionStock -= orderItems.FirstOrDefault(oi => oi.BoxOptionId == boxOption.BoxOptionId).Quantity;
             }
+
             await _context.SaveChangesAsync();
         }
     }

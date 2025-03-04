@@ -17,13 +17,15 @@ namespace Application.Services.Implementations
         private readonly IBoxOptionService _boxOption;
         private readonly IOrderItemService _orderItemService;
         private readonly IVoucherService _voucherService;
-        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, IOrderItemService orderItemService, IVoucherService voucherService)
+        private readonly IBoxService _box;
+        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box)
         {
             _orderRepository = orderRepository;
             _orderStatusDetailService = orderStatusDetailService;
             _boxOption = boxOption;
             _orderItemService = orderItemService;
             _voucherService = voucherService;
+            _box = box;
         }
 
         public Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
@@ -73,6 +75,18 @@ namespace Application.Services.Implementations
                 {
                     throw new CustomExceptions.BadRequestException("Update box option failed");
                 }
+
+                ICollection<OrderItem> orderItems = order.orderItems.Select(model => new OrderItem
+                {
+                    OrderItemId = model.orderItemId,
+                    OrderStatusCheckCardImage = new List<string>(),
+                    BoxOptionId = model.boxOptionId,
+                }).ToList();
+                foreach (var item in order.orderItems)
+                {
+                    
+                }
+                await _box.UpdateSoldQuantity(orderItems);
 
                 return true;
             }

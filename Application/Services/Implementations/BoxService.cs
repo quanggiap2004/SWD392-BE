@@ -13,7 +13,6 @@ namespace Application.Services.Implementations
 {
     public class BoxService : IBoxService
     {
-
         private readonly IBoxRepository _boxRepository;
 
         public BoxService(IBoxRepository boxRepository)
@@ -266,6 +265,11 @@ namespace Application.Services.Implementations
                 }).ToList() ?? new List<OnlineSerieBoxDTO>(),
             });
             return boxesDTO;
+        }
+
+        public async Task UpdateSoldQuantity(ICollection<OrderItem> orderItems)
+        {
+            await _boxRepository.UpdateSoldQuantity(orderItems);
         }
     }
 }

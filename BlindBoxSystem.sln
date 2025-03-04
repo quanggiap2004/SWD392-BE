@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlindBoxSystem", "BlindBoxSystem\BlindBoxSystem.csproj", "{C1B04506-A720-4137-BB5F-0FE020645B3D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APILayer", "APILayer\APILayer.csproj", "{17C22034-F941-43AF-801C-C42A7FD14171}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{BEBE5A07-7701-4065-B220-92921F3772B5}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C1B04506-A720-4137-BB5F-0FE020645B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1B04506-A720-4137-BB5F-0FE020645B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1B04506-A720-4137-BB5F-0FE020645B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1B04506-A720-4137-BB5F-0FE020645B3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17C22034-F941-43AF-801C-C42A7FD14171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17C22034-F941-43AF-801C-C42A7FD14171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17C22034-F941-43AF-801C-C42A7FD14171}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -27,6 +27,10 @@ namespace APILayer.Controllers
             try
             {
                 var result = await _orderService.CancelOrder(orderId, note);
+                if(result == false)
+                {
+                    return BadRequest("Cancel order failed");
+                }
                 return Ok("Cancel order successfully");
             }
             catch (Exception e)

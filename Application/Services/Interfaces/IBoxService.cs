@@ -17,6 +17,6 @@ namespace Application.Services.Interfaces
         Task<IEnumerable<BestSellerBoxesDto>> GetBestSellerBox(int quantity);
         Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId);
         Task<IEnumerable<GetAllBoxesDTO>> SearchBoxesByNameAsync(string? boxName);
-
+        Task UpdateSoldQuantity(ICollection<OrderItem> orderItems);
     }
 }

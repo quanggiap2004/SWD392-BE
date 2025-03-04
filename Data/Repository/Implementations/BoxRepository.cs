@@ -1,4 +1,5 @@
-﻿using Data.Repository.Interfaces;
+﻿using Common.Constants;
+using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
 using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
@@ -151,6 +152,32 @@ namespace Data.Repository.Implementations
                 .Include(bOption => bOption.BoxOptions)
                 .Where(b => b.BoxName.Contains(boxName) && !b.IsDeleted)
                 .ToListAsync();
+        }
+
+        public async Task<bool> UpdateSoldQuantity(ICollection<OrderItem> orderItems)
+        {
+            foreach (var item in orderItems)
+            {
+                int soldQuantity = 0;
+                var boxOption = await _context.BoxOptions.FindAsync(item.BoxOptionId);
+                if(boxOption == null)
+                {
+                    return false;
+                }
+                var box = await _context.Boxes.FindAsync(boxOption.BoxId);
+                var orderItemWithCondition = await _context.OrderItems.Where(oi => 
+                                        oi.BoxOption.BoxId == box.BoxId 
+                                        &&
+                                        oi.Order.CurrentOrderStatusId != (int)ProjectConstant.OrderStatus.Cancelled)
+                                            .ToListAsync();
+                foreach (var orderItem in orderItemWithCondition)
+                {
+                    soldQuantity += orderItem.Quantity;
+                }
+                box.SoldQuantity = soldQuantity;
+            }
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
