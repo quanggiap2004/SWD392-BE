@@ -209,5 +209,63 @@ namespace Application.Services.Implementations
             }
             return result;
         }
+
+        public async Task<IEnumerable<GetAllBoxesDTO>> SearchBoxesByNameAsync(string? boxName)
+        {
+            var searchBoxes = await _boxRepository.SearchBoxesByNameAsync(boxName);
+            var boxesDTO = searchBoxes.Select(b => new GetAllBoxesDTO
+            {
+                BoxId = b.BoxId,
+                BoxName = b.BoxName,
+                BoxDescription = b.BoxDescription,
+                IsDeleted = b.IsDeleted,
+                SoldQuantity = b.SoldQuantity,
+                BrandId = b.BrandId,
+                BrandName = b.Brand?.BrandName,
+
+                BoxImage = b.BoxImages?.Select(bimage => new BoxImageDTO
+                {
+                    BoxId = bimage.BoxId,
+                    BoxImageId = bimage.BoxImageId,
+                    BoxImageUrl = bimage.BoxImageUrl,
+                }).ToList() ?? new List<BoxImageDTO>(),
+
+                BoxItem = b.BoxItems?.Select(bitem => new BoxItemDTO
+                {
+                    BoxId = bitem.BoxId,
+                    BoxItemId = bitem.BoxItemId,
+                    BoxItemName = bitem.BoxItemName,
+                    BoxItemColor = bitem.BoxItemColor,
+                    BoxItemDescription = bitem.BoxItemDescription,
+                    BoxItemEyes = bitem.BoxItemEyes,
+                    AverageRating = bitem.AverageRating,
+                    ImageUrl = bitem.ImageUrl,
+                    NumOfVote = bitem.NumOfVote,
+                    IsSecret = bitem.IsSecret,
+                }).ToList() ?? new List<BoxItemDTO>(),
+
+                BoxOptions = b.BoxOptions?.Select(boption => new BoxOptionDTO
+                {
+                    BoxId = boption.BoxId,
+                    BoxOptionId = boption.BoxOptionId,
+                    BoxOptionName = boption.BoxOptionName,
+                    BoxOptionStock = boption.BoxOptionStock,
+                    OriginPrice = boption.OriginPrice,
+                    DisplayPrice = boption.DisplayPrice,
+                    IsDeleted = boption.IsDeleted,
+                }).ToList() ?? new List<BoxOptionDTO>(),
+
+                OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
+                {
+                    BoxId = bOnline.BoxId,
+                    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
+                    IsSecretOpen = bOnline.IsSecretOpen,
+                    Price = bOnline.Price,
+                    Name = bOnline.Name,
+                    Turn = bOnline.Turn,
+                }).ToList() ?? new List<OnlineSerieBoxDTO>(),
+            });
+            return boxesDTO;
+        }
     }
 }
