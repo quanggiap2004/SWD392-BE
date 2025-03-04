@@ -34,7 +34,11 @@ namespace Application.Services.Implementations
                 addressDetail = address.AddressDetail,
                 userId = address.UserId,
                 phoneNumber = address.PhoneNumber,
-                name = address.Name
+                name = address.Name,
+                wardCode = address.WardCode,
+                districtId = address.DistrictId,
+                provinceId = address.ProvinceId,
+                note = address.Note
             };
         }
 
@@ -50,7 +54,10 @@ namespace Application.Services.Implementations
                 addressDetail = address.AddressDetail,
                 userId = address.UserId,
                 phoneNumber = address.PhoneNumber,
-                name = address.Name
+                name = address.Name,
+                districtId = address.DistrictId,
+                provinceId = address.ProvinceId,
+                note = address.Note
             });
         }
 
@@ -79,7 +86,10 @@ namespace Application.Services.Implementations
                 addressDetail = updatedAddress.AddressDetail,
                 userId = updatedAddress.UserId,
                 name = updatedAddress.Name,
-                phoneNumber = updatedAddress.PhoneNumber
+                phoneNumber = updatedAddress.PhoneNumber,
+                districtId = address.DistrictId,
+                provinceId = address.ProvinceId,
+                note = address.Note
             };
         }
     }
