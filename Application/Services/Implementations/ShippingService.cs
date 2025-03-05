@@ -1,4 +1,8 @@
 ﻿using Application.Services.Interfaces;
+using Domain.Domain.Model.ShippingDTOs.Request;
+using Domain.Domain.Model.ShippingDTOs.Response;
+using System.Text;
+using System.Text.Json;
 
 namespace Application.Services.Implementations
 {
@@ -23,15 +27,20 @@ namespace Application.Services.Implementations
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> GetShippingFeeAsync(string pickProvince, string pickDistrict, string province, string district, int weight, int value)
+        public async Task<ShippingFeeResponseDTO> GetShippingFeeAsync(ShippingFeeRequestDTO shippingFeeRequest)
         {
 
-            string url = $"{BASE_URL}/fee?pick_province={pickProvince}&pick_district={pickDistrict}&province={province}&district={district}&weight={weight}&value={value}";
+            string url = $"{BASE_URL}/shipping-order/fee";
+            var jsonContent = JsonSerializer.Serialize(shippingFeeRequest);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.PostAsync(url, content);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var shippingFeeResponse = JsonSerializer.Deserialize<ShippingFeeResponseDTO>(responseContent);
+                return shippingFeeResponse;
+
             }
 
             throw new Exception($"GHTK API Error: {response.StatusCode}");
