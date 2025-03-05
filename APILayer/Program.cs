@@ -150,6 +150,8 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IShippingService, ShippingService>();
+
 #endregion
 
 #region Repositories
@@ -169,6 +171,8 @@ builder.Services.AddScoped<IUserVotedBoxItemRepository, UserVotedBoxItemReposito
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 #endregion
+
+builder.Services.AddHttpClient<ShippingService>();
 
 var app = builder.Build();
 
