@@ -52,6 +52,7 @@ namespace Application.Services.Implementations
                 province = address.Province,
                 district = address.District,
                 ward = address.Ward,
+                wardCode = address.WardCode,
                 addressDetail = address.AddressDetail,
                 userId = address.UserId,
                 phoneNumber = address.PhoneNumber,
