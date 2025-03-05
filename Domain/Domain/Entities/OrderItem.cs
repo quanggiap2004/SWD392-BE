@@ -12,7 +12,7 @@ namespace Domain.Domain.Entities
         public int BoxOptionId { get; set; }
 
         public int Quantity { get; set; }
-        public float OrderPrice { get; set; }
+        public decimal OrderPrice { get; set; }
         public bool IsFeedback { get; set; } = false;
 
         public ICollection<string>? OrderStatusCheckCardImage { get; set; }

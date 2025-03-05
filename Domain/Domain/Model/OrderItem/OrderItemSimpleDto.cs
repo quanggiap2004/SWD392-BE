@@ -7,7 +7,7 @@
         public int boxOptionId { get; set; }
 
         public int quantity { get; set; }
-        public float orderPrice { get; set; }
+        public decimal orderPrice { get; set; }
         public bool isFeedback { get; set; } = false;
 
         public ICollection<string> orderStatusCheckCardImage { get; set; }

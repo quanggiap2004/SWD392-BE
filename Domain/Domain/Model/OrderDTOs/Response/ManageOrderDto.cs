@@ -11,7 +11,7 @@ namespace Domain.Domain.Model.OrderDTOs.Response
         public int orderId { get; set; }
         public DateTime orderCreatedAt { get; set; }
         public string paymentMethod { get; set; }
-        public float totalPrice { get; set; }
+        public decimal totalPrice { get; set; }
         public AddressResponseDto address { get; set; }
         public bool openRequest { get; set; } = false;
         public bool refundRequest { get; set; } = false;

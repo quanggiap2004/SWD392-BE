@@ -138,7 +138,8 @@ namespace Data.Repository.Implementations
                 AddressId = model.createOrderDto.addressId,
                 OpenRequest = model.openRequest,
                 CurrentOrderStatusId = model.currentOrderStatusId,
-                PaymentStatus = model.paymentStatus
+                PaymentStatus = model.paymentStatus,
+                ShippingFee = model.createOrderDto.shippingFee
             };
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -151,7 +152,8 @@ namespace Data.Repository.Implementations
                 totalPrice = order.TotalPrice,
                 addressId = order.AddressId,
                 revenue = order.Revenue,
-                currentOrderStatusId = order.CurrentOrderStatusId
+                currentOrderStatusId = order.CurrentOrderStatusId,
+                shippingFee = model.createOrderDto.shippingFee
             };
         }
 
@@ -170,7 +172,8 @@ namespace Data.Repository.Implementations
                 OpenRequest = false,
                 CurrentOrderStatusId = 1,
                 PaymentStatus = ProjectConstant.PaymentPending,
-                IsEnable = false
+                IsEnable = false,
+                ShippingFee = model.shippingFee
             };
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -206,7 +209,8 @@ namespace Data.Repository.Implementations
                     totalPrice = result.TotalPrice,
                     addressId = result.AddressId,
                     revenue = result.Revenue,
-                    currentOrderStatusId = result.CurrentOrderStatusId
+                    currentOrderStatusId = result.CurrentOrderStatusId,
+                    shippingFee = result.ShippingFee
                 };
             }
             return null;

@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250305103528_change moneytary value to decimal in order table")]
+    partial class changemoneytaryvaluetodecimalinordertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,14 +331,14 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("BoxOptionStock")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("DisplayPrice")
-                        .HasColumnType("numeric");
+                    b.Property<float>("DisplayPrice")
+                        .HasColumnType("real");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<decimal>("OriginPrice")
-                        .HasColumnType("numeric");
+                    b.Property<float>("OriginPrice")
+                        .HasColumnType("real");
 
                     b.HasKey("BoxOptionId");
 
@@ -526,8 +529,8 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("OrderPrice")
-                        .HasColumnType("numeric");
+                    b.Property<float>("OrderPrice")
+                        .HasColumnType("real");
 
                     b.PrimitiveCollection<string[]>("OrderStatusCheckCardImage")
                         .HasColumnType("text[]");

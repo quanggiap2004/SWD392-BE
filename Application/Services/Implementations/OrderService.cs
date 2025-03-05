@@ -95,7 +95,7 @@ namespace Application.Services.Implementations
 
         public async Task<OrderResponseDto> CreateOrderCOD(CreateOrderDTO model)
         {
-            float revenue = CalculateRevenue(model);
+            decimal revenue = CalculateRevenue(model);
             bool openRequest = false;
             int currentOrderStatusId = 1; //Processing with VnPay
             string paymentStatus = ProjectConstant.PaymentPending;
@@ -137,9 +137,10 @@ namespace Application.Services.Implementations
             return result;
         }
 
-        private float CalculateRevenue(CreateOrderDTO model)
+        private decimal CalculateRevenue(CreateOrderDTO model)
         {
-            return model.orderItemRequestDto.Select(m => m.quantity * (m.price - m.originPrice)).Sum();
+            decimal originPrice = model.orderItemRequestDto.Select(m => m.quantity * m.originPrice).Sum();
+            return model.totalPrice - model.shippingFee - originPrice;
         }
 
         public async Task<DraftOrderDto> SaveDraftOrder(CreateOrderDTO model)
@@ -161,7 +162,7 @@ namespace Application.Services.Implementations
 
         public async Task<OrderResponseDto> UpdateOrderVnPay(CreateOrderDTO model, int orderId)
         {
-            float revenue = CalculateRevenue(model);
+            decimal revenue = CalculateRevenue(model);
             bool openRequest = false;
             int currentOrderStatusId = 2; //Processing with VnPay
             string paymentStatus = ProjectConstant.PaymentSuccess;
