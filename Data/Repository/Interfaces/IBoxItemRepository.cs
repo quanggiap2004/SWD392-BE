@@ -11,5 +11,6 @@ namespace Data.Repository.Interfaces
         Task<BoxItem> AddBoxItemAsync(BoxItem boxItem);
         Task<BoxItem> UpdateBoxItemAsync(BoxItem boxItem);
         Task DeleteBoxItemAsync(int id);
+        Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id);
     }
 }

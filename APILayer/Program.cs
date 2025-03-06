@@ -1,5 +1,6 @@
 using Application.Services.Implementations;
 using Application.Services.Interfaces;
+using Data;
 using Data.Repository.Implementations;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
@@ -151,11 +152,10 @@ builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
-
+builder.Services.AddScoped<IOnlineSerieBoxService, OnlineSerieBoxService>();
 #endregion
 
 #region Repositories
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBoxRepository, BoxRepository>();
@@ -170,9 +170,11 @@ builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IUserVotedBoxItemRepository, UserVotedBoxItemRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IOnlineSerieBoxRepository, OnlineSerieBoxRepository>();
 #endregion
 
 builder.Services.AddHttpClient<ShippingService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

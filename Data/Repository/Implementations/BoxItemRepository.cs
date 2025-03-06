@@ -52,5 +52,9 @@ namespace Data.Repository.Implementations
             await _context.SaveChangesAsync();
             return boxItem;
         }
+        public async Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id)
+        {
+            return await _context.BoxItems.Where(b => b.BoxId == id).ToListAsync();
+        }
     }
 }

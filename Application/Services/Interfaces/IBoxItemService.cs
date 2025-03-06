@@ -14,5 +14,6 @@ namespace Application.Services.Interfaces
         Task DeleteBoxItemAsync(int id);
         Task<GetAllVotedDTO> AddOrUpdateVoteAsync(AddVoteDTO addVoteDTO);
         Task<IEnumerable<UserVotedBoxItem>> GetVotesByBoxItemId(int id);
+        Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id);
     }
 }

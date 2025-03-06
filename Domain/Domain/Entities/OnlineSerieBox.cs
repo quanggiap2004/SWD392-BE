@@ -5,21 +5,15 @@ namespace Domain.Domain.Entities
 {
     public class OnlineSerieBox
     {
-        [Key]
+        [Key, ForeignKey("BoxOption")]
         public int OnlineSerieBoxId { get; set; }
-
-        public int BoxId { get; set; }
-
-        public float Price { get; set; }
-
+        public decimal PriceAfterSecret { get; set; }
+        public int PriceIncreasePercent { get; set; }
         public string Name { get; set; }
-
-        public bool IsSecretOpen { get; set; }
-
+        public bool IsSecretOpen { get; set; } = false;
         public int Turn { get; set; }
-
-        [ForeignKey("BoxId")]
-        public virtual Box Box { get; set; }
-        public virtual ICollection<BoxItem> BoxItems { get; set; }
+        public int MaxTurn { get; set; }
+        public virtual BoxOption BoxOption { get; set; }
+        public bool IsPublished { get; set; } = false;
     }
 }

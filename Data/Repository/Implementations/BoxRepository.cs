@@ -35,7 +35,7 @@ namespace Data.Repository.Implementations
 
         public async Task<IEnumerable<Box>> GetAllBoxesAsync()
         {
-            return await _context.Boxes.Include(b => b.Brand).Include(bImage => bImage.BoxImages).Include(bItem => bItem.BoxItems).Include(bOnline => bOnline.OnlineSerieBoxes).Include(bOption => bOption.BoxOptions).ToListAsync();
+            return await _context.Boxes.Include(b => b.Brand).Include(bImage => bImage.BoxImages).Include(bItem => bItem.BoxItems).Include(bOption => bOption.BoxOptions).ToListAsync();
         }
 
         public async Task<Box> GetBoxByIdAsync(int id)
@@ -45,7 +45,7 @@ namespace Data.Repository.Implementations
 
         public async Task<Box> GetBoxByIdDTO(int id)
         {
-            return await _context.Boxes.Include(b => b.Brand).Include(bImage => bImage.BoxImages).Include(bItem => bItem.BoxItems).Include(bOnline => bOnline.OnlineSerieBoxes).Include(bOption => bOption.BoxOptions).FirstOrDefaultAsync(box => box.BoxId == id);
+            return await _context.Boxes.Include(b => b.Brand).Include(bImage => bImage.BoxImages).Include(bItem => bItem.BoxItems).Include(bOption => bOption.BoxOptions).FirstOrDefaultAsync(box => box.BoxId == id);
         }
 
         public async Task<Box> UpdateBoxAsync(Box Box)
@@ -139,7 +139,6 @@ namespace Data.Repository.Implementations
                  .Include(b => b.Brand)
                 .Include(bImage => bImage.BoxImages)
                 .Include(bItem => bItem.BoxItems)
-                .Include(bOnline => bOnline.OnlineSerieBoxes)
                 .Include(bOption => bOption.BoxOptions)
                 .Where(b => !b.IsDeleted).ToListAsync();
             }
@@ -148,7 +147,6 @@ namespace Data.Repository.Implementations
                 .Include(b => b.Brand)
                 .Include(bImage => bImage.BoxImages)
                 .Include(bItem => bItem.BoxItems)
-                .Include(bOnline => bOnline.OnlineSerieBoxes)
                 .Include(bOption => bOption.BoxOptions)
                 .Where(b => b.BoxName.Contains(boxName) && !b.IsDeleted)
                 .ToListAsync();

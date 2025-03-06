@@ -27,6 +27,5 @@ namespace Domain.Domain.Entities
         public virtual ICollection<BoxOption> BoxOptions { get; set; }
         public virtual ICollection<BoxImage> BoxImages { get; set; }
         public virtual ICollection<BoxItem> BoxItems { get; set; }
-        public virtual ICollection<OnlineSerieBox> OnlineSerieBoxes { get; set; }
     }
 }

@@ -29,14 +29,11 @@ namespace Domain.Domain.Context
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<BoxItem> BoxItems { get; set; }
         public DbSet<OnlineSerieBox> OnlineSerieBoxes { get; set; }
+        public DbSet<CurrentRolledItem> CurrentRolledItems { get; set; }
+        public DbSet<UserRolledItem> UserRolledItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<BoxItem>()
-                .HasMany(e => e.OnlineSerieBoxes)
-                .WithMany(e => e.BoxItems)
-                .UsingEntity("RolledItem");
 
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.OrderStatus)

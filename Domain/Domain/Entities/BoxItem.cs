@@ -26,11 +26,11 @@ namespace Domain.Domain.Entities
         public int NumOfVote { get; set; }
 
         public bool IsSecret { get; set; }
+        public virtual CurrentRolledItem CurrentRolledItem { get; set; }
 
         [ForeignKey("BoxId")]
         public virtual Box Box { get; set; }
         public virtual ICollection<UserVotedBoxItem> UserVotedBoxItems { get; set; }
-        public virtual ICollection<OnlineSerieBox> OnlineSerieBoxes { get; set; }
 
     }
 }

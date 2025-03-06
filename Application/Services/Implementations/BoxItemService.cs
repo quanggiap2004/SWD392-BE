@@ -134,5 +134,10 @@ namespace Application.Services.Implementations
             var Vote = await _userVotedBoxItemRepository.GetVotesByBoxItemIdAsync(id);
             return Vote;
         }
+
+        public async Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id)
+        {
+            return await _boxItemRepository.GetBoxItemByBoxId(id);
+        }
     }
 }

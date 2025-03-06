@@ -17,10 +17,12 @@ namespace Domain.Domain.Entities
         public decimal DisplayPrice { get; set; }  // float
 
         public int BoxOptionStock { get; set; }  // int
+        public bool IsOnlineSerieBox { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
 
         [ForeignKey("BoxId")]
         public virtual Box Box { get; set; }
         public virtual ICollection<OrderItem> OrderItem { get; set; }
+        public virtual OnlineSerieBox OnlineSerieBox { get; set; }
     }
 }

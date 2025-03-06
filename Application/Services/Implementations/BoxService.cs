@@ -86,15 +86,15 @@ namespace Application.Services.Implementations
                     IsDeleted = boption.IsDeleted,
                 }).ToList() ?? new List<BoxOptionDTO>(),
 
-                OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
-                {
-                    BoxId = bOnline.BoxId,
-                    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
-                    IsSecretOpen = bOnline.IsSecretOpen,
-                    Price = bOnline.Price,
-                    Name = bOnline.Name,
-                    Turn = bOnline.Turn,
-                }).ToList() ?? new List<OnlineSerieBoxDTO>(),
+                //OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
+                //{
+                //    BoxId = bOnline.Box,
+                //    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
+                //    IsSecretOpen = bOnline.IsSecretOpen,
+                //    Price = bOnline.Price,
+                //    Name = bOnline.Name,
+                //    Turn = bOnline.Turn,
+                //}).ToList() ?? new List<OnlineSerieBoxDTO>(),
             });
             return boxesDTO;
         }
@@ -155,15 +155,15 @@ namespace Application.Services.Implementations
                     IsDeleted = boption.IsDeleted,
                 }).ToList() ?? new List<BoxOptionDTO>(),
 
-                OnlineSerieBox = box.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
-                {
-                    BoxId = bOnline.BoxId,
-                    OnlineSerieBoxId = bOnline.BoxId,
-                    IsSecretOpen = bOnline.IsSecretOpen,
-                    Price = bOnline.Price,
-                    Name = bOnline.Name,
-                    Turn = bOnline.Turn,
-                }).ToList() ?? new List<OnlineSerieBoxDTO>(),
+                //OnlineSerieBox = box.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
+                //{
+                //    BoxId = bOnline.BoxId,
+                //    OnlineSerieBoxId = bOnline.BoxId,
+                //    IsSecretOpen = bOnline.IsSecretOpen,
+                //    Price = bOnline.Price,
+                //    Name = bOnline.Name,
+                //    Turn = bOnline.Turn,
+                //}).ToList() ?? new List<OnlineSerieBoxDTO>(),
             };
             return boxDTO;
         }
@@ -254,15 +254,15 @@ namespace Application.Services.Implementations
                     IsDeleted = boption.IsDeleted,
                 }).ToList() ?? new List<BoxOptionDTO>(),
 
-                OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
-                {
-                    BoxId = bOnline.BoxId,
-                    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
-                    IsSecretOpen = bOnline.IsSecretOpen,
-                    Price = bOnline.Price,
-                    Name = bOnline.Name,
-                    Turn = bOnline.Turn,
-                }).ToList() ?? new List<OnlineSerieBoxDTO>(),
+                //OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
+                //{
+                //    BoxId = bOnline.BoxId,
+                //    OnlineSerieBoxId = bOnline.OnlineSerieBoxId,
+                //    IsSecretOpen = bOnline.IsSecretOpen,
+                //    Price = bOnline.Price,
+                //    Name = bOnline.Name,
+                //    Turn = bOnline.Turn,
+                //}).ToList() ?? new List<OnlineSerieBoxDTO>(),
             });
             return boxesDTO;
         }

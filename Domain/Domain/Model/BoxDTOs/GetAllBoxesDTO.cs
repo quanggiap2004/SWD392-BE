@@ -24,6 +24,5 @@ namespace Domain.Domain.Model.BoxDTOs
         public List<BoxImageDTO> BoxImage { get; set; }
         public List<BoxItemDTO> BoxItem { get; set; }
         public List<BoxOptionDTO> BoxOptions { get; set; }
-        public List<OnlineSerieBoxDTO> OnlineSerieBox { get; set; }
     }
 }
