@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BlogPostDTOs;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BlogPostDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

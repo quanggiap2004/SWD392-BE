@@ -10,8 +10,12 @@ namespace Application.Services.Implementations
         {
             _voucherRepository = voucherRepository;
         }
-        public async Task ReduceVoucherQuantity(int voucherId)
+        public async Task ReduceVoucherQuantity(int? voucherId)
         {
+            if (voucherId == null || voucherId == 0)
+            {
+                return;
+            }
             await _voucherRepository.ReduceVoucherQuantity(voucherId);
         }
     }

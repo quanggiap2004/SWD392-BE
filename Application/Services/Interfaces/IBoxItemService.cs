@@ -1,6 +1,6 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxItemDTOs;
-using Domain.Domain.Model.UserVotedBoxItemDTOs;
+﻿using Common.Model.BoxItemDTOs;
+using Common.Model.UserVotedBoxItemDTOs;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {

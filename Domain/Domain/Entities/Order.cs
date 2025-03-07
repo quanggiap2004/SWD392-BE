@@ -11,11 +11,11 @@ namespace Domain.Domain.Entities
         public int UserId { get; set; }
 
         public DateTime OrderCreatedAt { get; set; }
-        public int VoucherId { get; set; }
+        public int? VoucherId { get; set; }
         public string PaymentMethod { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal Revenue { get; set; }
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public bool OpenRequest { get; set; } = false;
         public bool RefundRequest { get; set; } = false;
         public int CurrentOrderStatusId { get; set; }

@@ -1,7 +1,7 @@
-﻿using Data.Repository.Interfaces;
+﻿using Common.Model.OrderItem;
+using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderItem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations
@@ -41,6 +41,11 @@ namespace Data.Repository.Implementations
             return await _context.BoxOptions.FindAsync(id);
         }
 
+        public async Task<BoxOption> GetBoxOptionByIdWithOnlineSerieBox(int id)
+        {
+            return await _context.BoxOptions.Include(b => b.OnlineSerieBox).FirstOrDefaultAsync(bo => bo.BoxOptionId == id);
+        }
+
         public async Task<BoxOption> GetBoxOptionByIdDTO(int id)
         {
             return await _context.BoxOptions.Include(b => b.Box).FirstOrDefaultAsync(b => b.BoxOptionId == id);
@@ -74,9 +79,11 @@ namespace Data.Repository.Implementations
             var boxOptionList = await _context.BoxOptions.Where(b => boxOptionIds.Contains(b.BoxOptionId)).ToListAsync();
             foreach (var boxOption in boxOptionList)
             {
-                boxOption.BoxOptionStock -= orderItems.FirstOrDefault(oi => oi.BoxOptionId == boxOption.BoxOptionId).Quantity;
+                if (boxOption.IsOnlineSerieBox == false)
+                {
+                    boxOption.BoxOptionStock -= orderItems.FirstOrDefault(oi => oi.BoxOptionId == boxOption.BoxOptionId).Quantity;
+                }
             }
-
             await _context.SaveChangesAsync();
         }
     }

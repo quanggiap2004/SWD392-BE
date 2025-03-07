@@ -1,4 +1,4 @@
-﻿using Domain.Domain.Model.PaymentDTOs.Response;
+﻿using Common.Model.PaymentDTOs.Response;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using System.Net;

@@ -1,9 +1,9 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxDTOs;
+using Common.Model.BoxOptionDTOs;
+using Common.Model.OrderItem;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs;
-using Domain.Domain.Model.BoxOptionDTOs;
-using Domain.Domain.Model.OrderItem;
 
 namespace Application.Services.Implementations
 {
@@ -78,7 +78,8 @@ namespace Application.Services.Implementations
                 {
                     BoxId = boxOption.BoxId,
                     BoxName = boxOption.Box.BoxName,
-                }
+                },
+                isOnlineSerieBox = boxOption.IsOnlineSerieBox
             };
             return boxOptionDTO;
         }

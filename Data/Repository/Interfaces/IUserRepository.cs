@@ -1,7 +1,7 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.AuthenticationDTO;
-using Domain.Domain.Model.UserDTO.Request;
-using Domain.Domain.Model.UserDTO.Response;
+﻿using Common.Model.AuthenticationDTO;
+using Common.Model.UserDTO.Request;
+using Common.Model.UserDTO.Response;
+using Domain.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Data.Repository.Interfaces

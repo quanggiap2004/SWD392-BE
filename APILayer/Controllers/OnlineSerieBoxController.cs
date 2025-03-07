@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
-using Domain.Domain.Model.OnlineSerieBoxDTOs.Request;
-using Domain.Domain.Model.OnlineSerieBoxDTOs.Response;
+using Common.Model.BoxItemDTOs.Response;
+using Common.Model.OnlineSerieBoxDTOs.Request;
+using Common.Model.OnlineSerieBoxDTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 using static Common.Exceptions.CustomExceptions;
 
@@ -50,9 +51,32 @@ namespace APILayer.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }  
+            }
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetAllOnlineSerieBoxResponse>>> GetAllOnlineSerieBoxes()
+        {
+            var response = await _onlineSerieBoxService.GetAllOnlineSerieBoxesAsync();
+            return Ok(response);
+        }
 
+        [HttpPost("unbox")]
+        public async Task<ActionResult<BoxItemResponseDto>> OpenOnlineSerieBox([FromBody] OpenOnlineSerieBoxRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Request data is required.");
+            }
+            try
+            {
+                BoxItemResponseDto response = await _onlineSerieBoxService.OpenOnlineSerieBoxAsync(request);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

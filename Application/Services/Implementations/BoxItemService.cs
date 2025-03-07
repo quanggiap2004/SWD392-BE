@@ -1,9 +1,9 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxDTOs;
+using Common.Model.BoxItemDTOs;
+using Common.Model.UserVotedBoxItemDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs;
-using Domain.Domain.Model.BoxItemDTOs;
-using Domain.Domain.Model.UserVotedBoxItemDTOs;
 
 namespace Application.Services.Implementations
 {

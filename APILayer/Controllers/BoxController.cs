@@ -1,8 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxDTOs;
+using Common.Model.BoxDTOs.ResponseDTOs;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs;
-using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
-using Domain.Domain.Model.OrderItem.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

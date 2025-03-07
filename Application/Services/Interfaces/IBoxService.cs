@@ -1,6 +1,6 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs;
-using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
+﻿using Common.Model.BoxDTOs;
+using Common.Model.BoxDTOs.ResponseDTOs;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {
@@ -18,5 +18,6 @@ namespace Application.Services.Interfaces
         Task<IEnumerable<AllBoxesDto>> GetBoxByBrand(int brandId);
         Task<IEnumerable<GetAllBoxesDTO>> SearchBoxesByNameAsync(string? boxName);
         Task UpdateSoldQuantity(ICollection<OrderItem> orderItems);
+        Task<BoxAndBoxItemResponseDto> getBoxByBoxOptionId(int boxOptionId);
     }
 }

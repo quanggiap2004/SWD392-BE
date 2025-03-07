@@ -1,10 +1,6 @@
-﻿using Domain.Domain.Model.OnlineSerieBoxDTOs.Request;
-using Domain.Domain.Model.OnlineSerieBoxDTOs.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Model.BoxItemDTOs.Response;
+using Common.Model.OnlineSerieBoxDTOs.Request;
+using Common.Model.OnlineSerieBoxDTOs.Response;
 
 namespace Application.Services.Interfaces
 {
@@ -12,6 +8,7 @@ namespace Application.Services.Interfaces
     {
         Task<CreateBoxOptionAndOnlineSerieBoxResponse> CreateBoxOptionAndOnlineSerieBoxAsync(CreateBoxOptionAndOnlineSerieBoxRequest request);
         Task<UpdateOnlineSerieBoxResponse> UpdateOnlineSerieBoxAsync(int onlineSerieBoxId, UpdateOnlineSerieBoxRequest request);
-
+        Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync();
+        Task<BoxItemResponseDto> OpenOnlineSerieBoxAsync(OpenOnlineSerieBoxRequest request);
     }
 }

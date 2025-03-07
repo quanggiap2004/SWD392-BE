@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Model.ShippingDTOs.Request;
-using Domain.Domain.Model.ShippingDTOs.Response;
+﻿using Common.Model.ShippingDTOs.Request;
+using Common.Model.ShippingDTOs.Response;
 
 namespace Application.Services.Interfaces
 {

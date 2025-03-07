@@ -1,7 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.Address.Request;
+using Common.Model.Address.Response;
 using Data.Repository.Interfaces;
-using Domain.Domain.Model.Address.Request;
-using Domain.Domain.Model.Address.Response;
 
 namespace Application.Services.Implementations
 {

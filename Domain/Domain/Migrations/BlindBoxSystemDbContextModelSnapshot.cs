@@ -370,15 +370,27 @@ namespace BlindBoxSystem.Domain.Migrations
             modelBuilder.Entity("Domain.Domain.Entities.CurrentRolledItem", b =>
                 {
                     b.Property<int>("CurrentRolledItemId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<int>("OnlienSeriesBoxId")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CurrentRolledItemId"));
+
+                    b.Property<int>("BoxItemId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDisable")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("OnlineSerieBoxId")
                         .HasColumnType("integer");
 
                     b.HasKey("CurrentRolledItemId");
+
+                    b.HasIndex("BoxItemId")
+                        .IsUnique();
 
                     b.HasIndex("OnlineSerieBoxId");
 
@@ -432,6 +444,9 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("OnlineSerieBoxId")
                         .HasColumnType("integer");
 
+                    b.Property<decimal>("BasePrice")
+                        .HasColumnType("numeric");
+
                     b.Property<bool>("IsPublished")
                         .HasColumnType("boolean");
 
@@ -467,7 +482,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("integer");
 
                     b.Property<int>("CurrentOrderStatusId")
@@ -508,7 +523,7 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("VoucherId")
+                    b.Property<int?>("VoucherId")
                         .HasColumnType("integer");
 
                     b.HasKey("OrderId");
@@ -557,11 +572,17 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("UserRolledItemId")
+                        .HasColumnType("integer");
+
                     b.HasKey("OrderItemId");
 
                     b.HasIndex("BoxOptionId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("UserRolledItemId")
+                        .IsUnique();
 
                     b.ToTable("OrderItems");
                 });
@@ -686,9 +707,6 @@ namespace BlindBoxSystem.Domain.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<int>("OnlineSerieBoxId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OnlineSeriesBoxId")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -955,12 +973,12 @@ namespace BlindBoxSystem.Domain.Migrations
                 {
                     b.HasOne("Domain.Domain.Entities.BoxItem", "BoxItem")
                         .WithOne("CurrentRolledItem")
-                        .HasForeignKey("Domain.Domain.Entities.CurrentRolledItem", "CurrentRolledItemId")
+                        .HasForeignKey("Domain.Domain.Entities.CurrentRolledItem", "BoxItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Domain.Entities.OnlineSerieBox", "OnlineSerieBox")
-                        .WithMany()
+                        .WithMany("CurrentRolledItems")
                         .HasForeignKey("OnlineSerieBoxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1004,9 +1022,7 @@ namespace BlindBoxSystem.Domain.Migrations
                 {
                     b.HasOne("Domain.Domain.Entities.Address", "Address")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Domain.Domain.Entities.User", "User")
                         .WithMany("Orders")
@@ -1016,9 +1032,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     b.HasOne("Domain.Domain.Entities.Voucher", "Voucher")
                         .WithMany("Orders")
-                        .HasForeignKey("VoucherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VoucherId");
 
                     b.Navigation("Address");
 
@@ -1041,9 +1055,15 @@ namespace BlindBoxSystem.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Domain.Entities.UserRolledItem", "UserRolledItem")
+                        .WithOne("OrderItem")
+                        .HasForeignKey("Domain.Domain.Entities.OrderItem", "UserRolledItemId");
+
                     b.Navigation("BoxOption");
 
                     b.Navigation("Order");
+
+                    b.Navigation("UserRolledItem");
                 });
 
             modelBuilder.Entity("Domain.Domain.Entities.OrderStatusDetail", b =>
@@ -1085,7 +1105,7 @@ namespace BlindBoxSystem.Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Domain.Entities.OnlineSerieBox", "OnlineSerieBox")
-                        .WithMany()
+                        .WithMany("UserRolledItems")
                         .HasForeignKey("OnlineSerieBoxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1208,6 +1228,13 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Navigation("Box");
                 });
 
+            modelBuilder.Entity("Domain.Domain.Entities.OnlineSerieBox", b =>
+                {
+                    b.Navigation("CurrentRolledItems");
+
+                    b.Navigation("UserRolledItems");
+                });
+
             modelBuilder.Entity("Domain.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -1242,6 +1269,12 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("UserVotedBoxItems");
+                });
+
+            modelBuilder.Entity("Domain.Domain.Entities.UserRolledItem", b =>
+                {
+                    b.Navigation("OrderItem")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Domain.Entities.Voucher", b =>

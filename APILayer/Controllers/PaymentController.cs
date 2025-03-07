@@ -1,8 +1,8 @@
 ﻿using Application.Services.Interfaces;
 using Common.Constants;
-using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.OrderDTOs.Response;
-using Domain.Domain.Model.PaymentDTOs.Response;
+using Common.Model.OrderDTOs.Request;
+using Common.Model.OrderDTOs.Response;
+using Common.Model.PaymentDTOs.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -10,12 +10,12 @@ namespace Data.Repository.Implementations
         {
             _context = context;
         }
-        public async Task ReduceVoucherQuantity(int voucherId)
+        public async Task ReduceVoucherQuantity(int? voucherId)
         {
             var voucher = await _context.Vouchers.FindAsync(voucherId);
             if (voucher == null)
             {
-                throw new Exception("Voucher not found");
+                return;
             }
             voucher.NumOfVoucher--;
             await _context.SaveChangesAsync();

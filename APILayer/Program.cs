@@ -1,6 +1,6 @@
 using Application.Services.Implementations;
 using Application.Services.Interfaces;
-using Data;
+using Data.Mapper;
 using Data.Repository.Implementations;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
@@ -135,7 +135,6 @@ builder.Services.AddAuthorization(options =>
 });
 
 #region Services
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
@@ -153,6 +152,8 @@ builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IOnlineSerieBoxService, OnlineSerieBoxService>();
+builder.Services.AddScoped<IUserRolledItemService, UserRolledItemService>();
+builder.Services.AddScoped<ICurrentRolledItemService, CurrentRolledItemService>();
 #endregion
 
 #region Repositories
@@ -171,6 +172,8 @@ builder.Services.AddScoped<IUserVotedBoxItemRepository, UserVotedBoxItemReposito
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IOnlineSerieBoxRepository, OnlineSerieBoxRepository>();
+builder.Services.AddScoped<IUserRolledItemRepository, UserRolledItemRepository>();
+builder.Services.AddScoped<ICurrentRolledItemRepository, CurrentRolledItemRepository>();
 #endregion
 
 builder.Services.AddHttpClient<ShippingService>();

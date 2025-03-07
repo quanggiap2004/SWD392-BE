@@ -1,13 +1,13 @@
 ﻿using Common.Constants;
+using Common.Model.Address.Response;
+using Common.Model.OrderDTOs.Request;
+using Common.Model.OrderDTOs.Response;
+using Common.Model.OrderItem;
+using Common.Model.OrderStatusDetailDTOs;
+using Common.Model.VoucherDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.Address.Response;
-using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.OrderDTOs.Response;
-using Domain.Domain.Model.OrderItem;
-using Domain.Domain.Model.OrderStatusDetailDTOs;
-using Domain.Domain.Model.VoucherDTOs.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations

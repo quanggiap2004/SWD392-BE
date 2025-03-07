@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxImageDTOs;
+﻿using Common.Model.BoxImageDTOs;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {

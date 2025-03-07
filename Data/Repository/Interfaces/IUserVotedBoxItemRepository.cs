@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.UserVotedBoxItemDTOs;
+﻿using Common.Model.UserVotedBoxItemDTOs;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {

@@ -1,7 +1,7 @@
-﻿using Data.Repository.Interfaces;
+﻿using Common.Model.Address.Request;
+using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.Address.Request;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations
@@ -21,7 +21,7 @@ namespace Data.Repository.Implementations
                 AddressDetail = createAddressDTO.AddressDetail,
                 District = createAddressDTO.District,
                 Province = createAddressDTO.Province,
-                Ward = createAddressDTO.Ward, 
+                Ward = createAddressDTO.Ward,
                 UserId = createAddressDTO.UserId,
                 PhoneNumber = createAddressDTO.phoneNumber,
                 Name = createAddressDTO.name,
@@ -41,7 +41,7 @@ namespace Data.Repository.Implementations
 
         public async Task<IEnumerable<Address>> GetAllAddressesAsync(int userId)
         {
-            if(userId > 0)
+            if (userId > 0)
             {
                 return await _context.Addresses.Where(a => a.UserId == userId).ToListAsync();
             }

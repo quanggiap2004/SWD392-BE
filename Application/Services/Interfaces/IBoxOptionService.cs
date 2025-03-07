@@ -1,6 +1,6 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxOptionDTOs;
-using Domain.Domain.Model.OrderItem;
+﻿using Common.Model.BoxOptionDTOs;
+using Common.Model.OrderItem;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {

@@ -1,18 +1,13 @@
 ﻿using Application.Services.Interfaces;
 using AutoMapper;
-using Data;
+using Common.Model.BoxItemDTOs.Response;
+using Common.Model.BoxOptionDTOs.Response;
+using Common.Model.CurrentRolledITemDTOs.Request;
+using Common.Model.OnlineSerieBoxDTOs.Request;
+using Common.Model.OnlineSerieBoxDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxOptionDTOs.Response;
-using Domain.Domain.Model.OnlineSerieBoxDTOs.Request;
-using Domain.Domain.Model.OnlineSerieBoxDTOs.Response;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using static Common.Exceptions.CustomExceptions;
 
 namespace Application.Services.Implementations
@@ -23,13 +18,19 @@ namespace Application.Services.Implementations
         private readonly IBoxOptionRepository _boxOptionRepository;
         private readonly IMapper _mapper;
         private readonly IBoxItemService _boxItemService;
+        private readonly IBoxService _boxService;
+        private readonly ICurrentRolledItemService _currentRolledItemService;
+        private readonly IUserRolledItemService _userRolledItemService;
 
-        public OnlineSerieBoxService(IOnlineSerieBoxRepository onlineSerieBoxRepository, IBoxOptionRepository boxOptionRepository, IMapper mapper, IBoxItemService boxItemService)
+        public OnlineSerieBoxService(IOnlineSerieBoxRepository onlineSerieBoxRepository, IBoxOptionRepository boxOptionRepository, IMapper mapper, IBoxItemService boxItemService, IBoxService boxService, ICurrentRolledItemService currentRolledItemService, IUserRolledItemService userRolledItemService)
         {
             _onlineSerieBoxRepository = onlineSerieBoxRepository;
             _boxOptionRepository = boxOptionRepository;
             _mapper = mapper;
             _boxItemService = boxItemService;
+            _boxService = boxService;
+            _currentRolledItemService = currentRolledItemService;
+            _userRolledItemService = userRolledItemService;
         }
         public async Task<CreateBoxOptionAndOnlineSerieBoxResponse> CreateBoxOptionAndOnlineSerieBoxAsync(CreateBoxOptionAndOnlineSerieBoxRequest request)
         {
@@ -54,6 +55,7 @@ namespace Application.Services.Implementations
                 Name = request.name,
                 PriceAfterSecret = request.priceAfterSecret,
                 PriceIncreasePercent = request.priceIncreasePercent,
+                BasePrice = request.createBoxOptionRequest.displayPrice,
             };
 
             var createdOnlineSerieBox = await _onlineSerieBoxRepository.AddOnlineSerieBoxAsync(onlineSerieBox);
@@ -64,6 +66,7 @@ namespace Application.Services.Implementations
                 name = createdOnlineSerieBox.Name,
                 priceAfterSecret = createdOnlineSerieBox.PriceAfterSecret,
                 priceIncreasePercent = createdOnlineSerieBox.PriceIncreasePercent,
+                basePrice = createdOnlineSerieBox.BasePrice,
                 turn = createdOnlineSerieBox.Turn,
                 createBoxOptionResponse = createBoxOptionResponse
             };
@@ -116,6 +119,129 @@ namespace Application.Services.Implementations
         {
             var boxItemList = _boxItemService.GetBoxItemByBoxId(boxId);
             return boxItemList.Result.Count;
+        }
+
+        public async Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync()
+        {
+            var onlineSerieBoxes = await _onlineSerieBoxRepository.GetAllOnlineSerieBoxesAsync();
+            var response = new List<GetAllOnlineSerieBoxResponse>();
+
+            foreach (var onlineSerieBox in onlineSerieBoxes)
+            {
+                var onlineSerieBoxResponse = _mapper.Map<GetAllOnlineSerieBoxResponse>(onlineSerieBox);
+                onlineSerieBoxResponse.boxOption = _mapper.Map<BoxOptionResponse>(onlineSerieBox.BoxOption);
+
+                response.Add(onlineSerieBoxResponse);
+            }
+
+            return response;
+        }
+
+        public async Task<BoxItemResponseDto> OpenOnlineSerieBoxAsync(OpenOnlineSerieBoxRequest request)
+        {
+            var box = await _boxService.getBoxByBoxOptionId(request.onlineSerieBoxId);
+            var boxOption = await _boxOptionRepository.GetBoxOptionByIdWithOnlineSerieBox(request.onlineSerieBoxId);
+            if (box == null || boxOption == null || boxOption.BoxOptionStock == 0)
+            {
+                throw new NotFoundException("box not found or out of stock");
+            }
+            var onlineSerieBox = boxOption.OnlineSerieBox;
+            //var testCurrentRolledItem = onlineSerieBox.CurrentRolledItems;
+            var boxItemList = box.boxItems;
+            var rolledIds = (await _currentRolledItemService
+                                   .GetAllCurrentRolledItemByOnlineSerieBoxId(request.onlineSerieBoxId))
+                                   .Select(cri => cri.boxItemId)
+                                   .ToHashSet();
+            var notRolledItems = boxItemList.Where(bi => !rolledIds.Contains(bi.boxItemId)).ToList();
+            if (!notRolledItems.Any())
+            {
+                throw new InvalidOperationException("All items have been rolled.");
+            }
+            var weightedItems = notRolledItems.Select(item => new
+            {
+                Item = item,
+                Weight = item.isSecret ? 25 : 25
+            }).ToList();
+
+            int totalWeight = weightedItems.Sum(w => w.Weight);
+
+            // Generate a random number between 1 and totalWeight (inclusive).
+            var rng = new Random();
+            int randomNumber = rng.Next(1, totalWeight + 1);
+
+            // Use cumulative weights (roulette wheel selection) to pick an item.
+            int cumulative = 0;
+            BoxItemResponseDto selectedItem = null;
+            foreach (var wi in weightedItems)
+            {
+                cumulative += wi.Weight;
+                if (randomNumber <= cumulative)
+                {
+                    selectedItem = wi.Item;
+                    break;
+                }
+            }
+
+            if (selectedItem == null)
+            {
+                throw new Exception("Failed to select a box item.");
+            }
+
+            // Record the selected item in the CurrentRolledItem table.
+            var currentRolledItemDto = new CurrentRolledItemDto
+            {
+                boxItemId = selectedItem.boxItemId,
+                onlineSerieBoxId = request.onlineSerieBoxId,
+                createdAt = DateTime.UtcNow
+            };
+
+            // Add to UserRolledItem
+            var userRolledItem = new UserRolledItem
+            {
+                OnlineSerieBoxId = request.onlineSerieBoxId,
+                UserId = request.userId,
+                BoxItemId = selectedItem.boxItemId,
+                IsCheckOut = false
+            };
+
+
+            // Increase turn
+            onlineSerieBox.Turn += 1;
+
+            // Update BoxOption DisplayPrice
+            decimal basePrice = onlineSerieBox.BasePrice;
+            int turn = onlineSerieBox.Turn;
+            int priceIncreasePercent = onlineSerieBox.PriceIncreasePercent;
+            decimal priceAfterSecret = onlineSerieBox.PriceAfterSecret;
+
+            if (selectedItem.isSecret)
+            {
+                // Reset DisplayPrice if secret item is rolled
+                boxOption.DisplayPrice = onlineSerieBox.PriceAfterSecret;
+                onlineSerieBox.IsSecretOpen = true;
+            }
+            else
+            {
+                boxOption.DisplayPrice += boxOption.DisplayPrice * priceIncreasePercent / 100m;
+            }
+
+            await _currentRolledItemService.AddCurrentRolledItem(currentRolledItemDto);
+            // Check if all items have been rolled and turn equals MaxTurn
+            if (notRolledItems.Count == 1)
+            {
+                boxOption.BoxOptionStock -= 1;
+                boxOption.DisplayPrice = basePrice;
+                onlineSerieBox.Turn = 0;
+                onlineSerieBox.IsPublished = false;
+                await _currentRolledItemService.ResetCurrentRoll(onlineSerieBox.OnlineSerieBoxId);
+            }
+
+            await _userRolledItemService.AddUserRolledItemAsync(userRolledItem);
+            await _onlineSerieBoxRepository.UpdateOnlineSerieBoxAsync(onlineSerieBox);
+            await _boxOptionRepository.UpdateBoxOptionAsync(boxOption);
+
+            return selectedItem;
+
         }
     }
 }

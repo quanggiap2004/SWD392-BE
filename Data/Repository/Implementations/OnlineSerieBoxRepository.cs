@@ -3,11 +3,6 @@ using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repository.Implementations
 {
@@ -27,6 +22,13 @@ namespace Data.Repository.Implementations
             return onlineSerieBox;
         }
 
+        public async Task<IEnumerable<OnlineSerieBox>> GetAllOnlineSerieBoxesAsync()
+        {
+            return await _context.OnlineSerieBoxes
+                .Include(osb => osb.BoxOption)
+                .ToListAsync();
+        }
+
         public async Task<OnlineSerieBox?> GetOnlineSerieBoxByIdAsync(int id)
         {
             return await _context.OnlineSerieBoxes.FindAsync(id);
@@ -34,7 +36,7 @@ namespace Data.Repository.Implementations
 
         public async Task<OnlineSerieBox> UpdateOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox)
         {
-            var onlineSerieBoxToUpdate =await  _context.OnlineSerieBoxes.FindAsync(onlineSerieBox.OnlineSerieBoxId);
+            var onlineSerieBoxToUpdate = await _context.OnlineSerieBoxes.FindAsync(onlineSerieBox.OnlineSerieBoxId);
             if (onlineSerieBoxToUpdate == null)
             {
                 throw new CustomExceptions.NotFoundException($"OnlineSerieBox with ID {onlineSerieBox.OnlineSerieBoxId} not found.");

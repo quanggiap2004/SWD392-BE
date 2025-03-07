@@ -1,6 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.Address.Request;
-using Domain.Domain.Model.Address.Response;
+﻿using Common.Model.Address.Request;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {

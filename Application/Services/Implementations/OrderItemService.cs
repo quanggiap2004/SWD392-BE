@@ -1,9 +1,9 @@
 ﻿using Application.Services.Interfaces;
 using Common.Constants;
 using Common.Exceptions;
+using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderStatusDetailDTOs;
 
 namespace Application.Services.Implementations
 {
@@ -27,6 +27,11 @@ namespace Application.Services.Implementations
             await _boxOptionService.ReduceStockQuantity(orderItems);
             await _orderItemRepository.AddRangeOrderItems(orderItems);
             await _boxService.UpdateSoldQuantity(orderItems);
+        }
+
+        public async Task<OrderItem> GetOrderItemById(int orderItemId)
+        {
+            return await _orderItemRepository.GetOrderItemById(orderItemId);
         }
 
         public async Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)

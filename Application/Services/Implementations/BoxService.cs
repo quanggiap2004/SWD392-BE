@@ -1,12 +1,11 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxDTOs;
+using Common.Model.BoxDTOs.ResponseDTOs;
+using Common.Model.BoxImageDTOs;
+using Common.Model.BoxItemDTOs;
+using Common.Model.BoxOptionDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs;
-using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
-using Domain.Domain.Model.BoxImageDTOs;
-using Domain.Domain.Model.BoxItemDTOs;
-using Domain.Domain.Model.BoxOptionDTOs;
-using Domain.Domain.Model.OnlineSerieBoxDTOs;
 using static Common.Exceptions.CustomExceptions;
 
 namespace Application.Services.Implementations
@@ -270,6 +269,12 @@ namespace Application.Services.Implementations
         public async Task UpdateSoldQuantity(ICollection<OrderItem> orderItems)
         {
             await _boxRepository.UpdateSoldQuantity(orderItems);
+        }
+
+        public Task<BoxAndBoxItemResponseDto> getBoxByBoxOptionId(int boxOptionId)
+        {
+            var result = _boxRepository.getBoxByBoxOptionId(boxOptionId);
+            return result;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Domain.Domain.Model.OrderStatusDetailDTOs;
+﻿using Common.Model.OrderStatusDetailDTOs;
 
 namespace Data.Repository.Interfaces
 {

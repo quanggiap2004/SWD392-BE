@@ -1,7 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BrandDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BrandDTOs;
 
 namespace Application.Services.Implementations
 {

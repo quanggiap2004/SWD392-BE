@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderItem;
+﻿using Common.Model.OrderItem;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {
@@ -14,5 +14,6 @@ namespace Data.Repository.Interfaces
         Task DeleteBoxOptionAsync(int id);
         Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems);
         Task ReduceStockQuantity(ICollection<OrderItem> orderItems);
+        Task<BoxOption> GetBoxOptionByIdWithOnlineSerieBox(int id);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.AuthenticationDTO;
+using Common.Model.UserDTO.Request;
+using Common.Model.UserDTO.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities.ApplicationEntities;
-using Domain.Domain.Model.AuthenticationDTO;
-using Domain.Domain.Model.UserDTO.Request;
-using Domain.Domain.Model.UserDTO.Response;
 using Microsoft.AspNetCore.Identity;
 using static Common.Exceptions.CustomExceptions;
 

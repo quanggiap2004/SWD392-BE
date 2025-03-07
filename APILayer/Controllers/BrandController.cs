@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BrandDTOs;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BrandDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

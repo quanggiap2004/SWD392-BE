@@ -1,7 +1,7 @@
 ﻿using Application.Library;
 using Application.Services.Interfaces;
-using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.PaymentDTOs.Response;
+using Common.Model.OrderDTOs.Request;
+using Common.Model.PaymentDTOs.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 

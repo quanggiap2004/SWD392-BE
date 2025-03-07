@@ -2,6 +2,6 @@
 {
     public interface IVoucherService
     {
-        Task ReduceVoucherQuantity(int voucherId);
+        Task ReduceVoucherQuantity(int? voucherId);
     }
 }

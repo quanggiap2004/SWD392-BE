@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.PaymentDTOs.Response;
+﻿using Common.Model.OrderDTOs.Request;
+using Common.Model.PaymentDTOs.Response;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Services.Interfaces

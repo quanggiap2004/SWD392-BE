@@ -7,6 +7,7 @@ namespace Domain.Domain.Entities
     {
         [Key, ForeignKey("BoxOption")]
         public int OnlineSerieBoxId { get; set; }
+        public decimal BasePrice { get; set; }
         public decimal PriceAfterSecret { get; set; }
         public int PriceIncreasePercent { get; set; }
         public string Name { get; set; }
@@ -14,6 +15,8 @@ namespace Domain.Domain.Entities
         public int Turn { get; set; }
         public int MaxTurn { get; set; }
         public virtual BoxOption BoxOption { get; set; }
+        public virtual ICollection<UserRolledItem> UserRolledItems { get; set; }
+        public virtual ICollection<CurrentRolledItem> CurrentRolledItems { get; set; }
         public bool IsPublished { get; set; } = false;
     }
 }

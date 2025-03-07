@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.OrderDTOs.Response;
+﻿using Common.Model.OrderDTOs.Request;
+using Common.Model.OrderDTOs.Response;
 
 namespace Application.Services.Interfaces
 {

@@ -1,5 +1,5 @@
 ﻿using Application.Services.Interfaces;
-using Domain.Domain.Model.OrderDTOs.Response;
+using Common.Model.OrderDTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -27,7 +27,7 @@ namespace APILayer.Controllers
             try
             {
                 var result = await _orderService.CancelOrder(orderId, note);
-                if(result == false)
+                if (result == false)
                 {
                     return BadRequest("Cancel order failed");
                 }

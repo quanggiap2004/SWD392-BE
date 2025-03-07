@@ -2,6 +2,6 @@
 {
     public interface IVoucherRepository
     {
-        Task ReduceVoucherQuantity(int voucherId);
+        Task ReduceVoucherQuantity(int? voucherId);
     }
 }

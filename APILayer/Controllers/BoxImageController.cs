@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxImageDTOs;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxImageDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

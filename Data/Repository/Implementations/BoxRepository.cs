@@ -1,8 +1,9 @@
 ﻿using Common.Constants;
+using Common.Model.BoxDTOs.ResponseDTOs;
+using Common.Model.BoxItemDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations
@@ -158,13 +159,13 @@ namespace Data.Repository.Implementations
             {
                 int soldQuantity = 0;
                 var boxOption = await _context.BoxOptions.FindAsync(item.BoxOptionId);
-                if(boxOption == null)
+                if (boxOption == null)
                 {
                     return false;
                 }
                 var box = await _context.Boxes.FindAsync(boxOption.BoxId);
-                var orderItemWithCondition = await _context.OrderItems.Where(oi => 
-                                        oi.BoxOption.BoxId == box.BoxId 
+                var orderItemWithCondition = await _context.OrderItems.Where(oi =>
+                                        oi.BoxOption.BoxId == box.BoxId
                                         &&
                                         oi.Order.CurrentOrderStatusId != (int)ProjectConstant.OrderStatus.Cancelled)
                                             .ToListAsync();
@@ -176,6 +177,32 @@ namespace Data.Repository.Implementations
             }
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<BoxAndBoxItemResponseDto?> getBoxByBoxOptionId(int boxOptionId)
+        {
+            var boxOption = await _context.BoxOptions.FindAsync(boxOptionId);
+            return await _context.Boxes.Where(b => b.BoxId == boxOption.BoxId).Select(box => new BoxAndBoxItemResponseDto
+            {
+                boxId = box.BoxId,
+                boxName = box.BoxName,
+                boxDescription = box.BoxDescription,
+                isDeleted = box.IsDeleted,
+                soldQuantity = box.SoldQuantity,
+                brandId = box.BrandId,
+                boxItems = box.BoxItems.Select(bItem => new BoxItemResponseDto
+                {
+                    boxItemId = bItem.BoxItemId,
+                    boxItemName = bItem.BoxItemName,
+                    boxItemDescription = bItem.BoxItemDescription,
+                    boxItemColor = bItem.BoxItemColor,
+                    boxItemEyes = bItem.BoxItemEyes,
+                    averageRating = bItem.AverageRating,
+                    imageUrl = bItem.ImageUrl,
+                    isSecret = bItem.IsSecret,
+                    numOfVote = bItem.NumOfVote
+                }).ToList()
+            }).FirstOrDefaultAsync();
         }
     }
 }

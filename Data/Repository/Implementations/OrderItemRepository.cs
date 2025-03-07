@@ -1,8 +1,8 @@
 ﻿using Common.Constants;
+using Common.Model.OrderItem.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderItem.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations
@@ -20,6 +20,11 @@ namespace Data.Repository.Implementations
             await _context.SaveChangesAsync();
         }
 
+        public async Task<OrderItem?> GetOrderItemById(int orderItemId)
+        {
+            return await _context.OrderItems.FirstOrDefaultAsync(x => x.OrderItemId == orderItemId);
+        }
+
         public async Task<OpenRequestResponseDto?> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
         {
             var orderItem = await _context.OrderItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.OrderItemId == orderItemId);
@@ -27,7 +32,7 @@ namespace Data.Repository.Implementations
             {
                 return null;
             }
-            if(orderItem.OpenRequestNumber == imageList.Count)
+            if (orderItem.OpenRequestNumber == imageList.Count)
             {
                 orderItem.Order.OpenRequest = false;
                 orderItem.Order.CurrentOrderStatusId = (int)ProjectConstant.OrderStatus.Shipping;

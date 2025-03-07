@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxDTOs.ResponseDTOs;
+﻿using Common.Model.BoxDTOs.ResponseDTOs;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {
@@ -19,5 +19,6 @@ namespace Data.Repository.Interfaces
 
         Task<IEnumerable<Box>> SearchBoxesByNameAsync(string? boxName);
         Task<bool> UpdateSoldQuantity(ICollection<OrderItem> orderItems);
+        Task<BoxAndBoxItemResponseDto?> getBoxByBoxOptionId(int boxOptionId);
     }
 }

@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BlogPostDTOs;
+﻿using Common.Model.BlogPostDTOs;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {

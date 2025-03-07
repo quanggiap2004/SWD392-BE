@@ -1,13 +1,12 @@
 ﻿using Application.Services.Interfaces;
 using Common.Constants;
+using Common.Model.AuthenticationDTO;
 using Domain.Domain.Entities.ApplicationEntities;
-using Domain.Domain.Model.AuthenticationDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -308,7 +307,8 @@ namespace APILayer.Controllers
                 };
                 await _userManager.CreateAsync(user, user.Password);
                 var userLogin = await _userManager.FindByEmailAsync(email);
-                if (userLogin == null) {
+                if (userLogin == null)
+                {
                     return BadRequest(new { message = "create user failed" });
                 }
                 await _userManager.AddToRoleAsync(userLogin, ProjectConstant.USER);

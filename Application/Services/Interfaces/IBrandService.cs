@@ -1,5 +1,5 @@
-﻿using Domain.Domain.Entities;
-using Domain.Domain.Model.BrandDTOs;
+﻿using Common.Model.BrandDTOs;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {

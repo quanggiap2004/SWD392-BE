@@ -1,7 +1,7 @@
-﻿using Data.Repository.Interfaces;
+﻿using Common.Model.UserVotedBoxItemDTOs;
+using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.UserVotedBoxItemDTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations

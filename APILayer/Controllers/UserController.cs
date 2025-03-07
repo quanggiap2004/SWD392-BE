@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
-using Domain.Domain.Model.UserDTO.Request;
-using Domain.Domain.Model.UserDTO.Response;
+using Common.Model.UserDTO.Request;
+using Common.Model.UserDTO.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

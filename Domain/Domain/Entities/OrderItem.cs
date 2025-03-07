@@ -7,6 +7,8 @@ namespace Domain.Domain.Entities
     {
         [Key]
         public int OrderItemId { get; set; }
+        [ForeignKey("UserRolledItem")]
+        public int? UserRolledItemId { get; set; }
         public int OrderId { get; set; }
 
         public int BoxOptionId { get; set; }
@@ -22,7 +24,7 @@ namespace Domain.Domain.Entities
         [ForeignKey("BoxOptionId")]
         public BoxOption BoxOption { get; set; }
         public Order Order { get; set; }
+        public virtual UserRolledItem UserRolledItem { get; set; }
         public int NumOfRefund { get; set; }
-
     }
 }

@@ -6,5 +6,6 @@ namespace Application.Services.Interfaces
     {
         Task AddOrderItems(ICollection<OrderItem> orderItems);
         Task<bool> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList);
+        Task<OrderItem> GetOrderItemById(int orderItemId);
     }
 }

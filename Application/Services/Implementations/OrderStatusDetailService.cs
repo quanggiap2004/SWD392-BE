@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
-using Domain.Domain.Model.OrderStatusDetailDTOs;
 
 namespace Application.Services.Implementations
 {

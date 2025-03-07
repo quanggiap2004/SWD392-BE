@@ -1,7 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BlogPostDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BlogPostDTOs;
 
 namespace Application.Services.Implementations
 {

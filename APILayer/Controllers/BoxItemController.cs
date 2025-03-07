@@ -1,7 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using Common.Model.BoxItemDTOs;
+using Common.Model.UserVotedBoxItemDTOs;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.BoxItemDTOs;
-using Domain.Domain.Model.UserVotedBoxItemDTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

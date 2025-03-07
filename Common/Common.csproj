@@ -10,4 +10,10 @@
     <PackageReference Include="AutoMapper" Version="14.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\BoxItemDTOs\Request\" />
+    <Folder Include="Model\CurrentRolledITemDTOs\Response\" />
+    <Folder Include="Model\VoucherDTOs\Request\" />
+  </ItemGroup>
+
 </Project>

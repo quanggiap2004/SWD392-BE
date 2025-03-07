@@ -1,7 +1,7 @@
-﻿using Data.Repository.Interfaces;
+﻿using Common.Model.OrderStatusDetailDTOs;
+using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderStatusDetailDTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.Implementations

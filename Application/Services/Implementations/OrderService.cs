@@ -1,11 +1,11 @@
 ﻿using Application.Services.Interfaces;
 using Common.Constants;
 using Common.Exceptions;
+using Common.Model.OrderDTOs.Request;
+using Common.Model.OrderDTOs.Response;
+using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
-using Domain.Domain.Model.OrderDTOs.Request;
-using Domain.Domain.Model.OrderDTOs.Response;
-using Domain.Domain.Model.OrderStatusDetailDTOs;
 using Newtonsoft.Json;
 
 namespace Application.Services.Implementations
@@ -84,7 +84,7 @@ namespace Application.Services.Implementations
                 }).ToList();
                 foreach (var item in order.orderItems)
                 {
-                    
+
                 }
                 await _box.UpdateSoldQuantity(orderItems);
 
@@ -166,8 +166,15 @@ namespace Application.Services.Implementations
             bool openRequest = false;
             int currentOrderStatusId = 2; //Processing with VnPay
             string paymentStatus = ProjectConstant.PaymentSuccess;
+            bool onlineSerieBoxCheck = false;
             foreach (var item in model.orderItemRequestDto)
             {
+                if (item.isOnlineSerieBox && item.price > 0) //check if this is online serie box
+                {
+                    currentOrderStatusId = (int)ProjectConstant.OrderStatus.Arrived;
+                    onlineSerieBoxCheck = true;
+                    break;
+                }
                 if (item.orderItemOpenRequestNumber > 0)
                 {
                     openRequest = true;
@@ -180,16 +187,11 @@ namespace Application.Services.Implementations
                 paymentStatus = paymentStatus,
                 revenue = revenue,
                 openRequest = openRequest,
-                currentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing,
+                currentOrderStatusId = currentOrderStatusId,
                 createOrderDto = model,
             }, orderId);
 
-            await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
-            {
-                orderId = result.orderId,
-                statusId = (int)ProjectConstant.OrderStatus.Processing,
-                note = "Order created",
-            });
+            bool addOrderStatus = AddOrderStatus(onlineSerieBoxCheck, result, currentOrderStatusId);
 
             ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
             {
@@ -203,6 +205,25 @@ namespace Application.Services.Implementations
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
             await _voucherService.ReduceVoucherQuantity(model.voucherId);
             return result;
+        }
+
+        private bool AddOrderStatus(bool onlineSerieBoxCheck, OrderResponseDto result, int currentOrderStatusId)
+        {
+            if (onlineSerieBoxCheck)
+            {
+                return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+                {
+                    orderId = result.orderId,
+                    statusId = (int)ProjectConstant.OrderStatus.Arrived,
+                    note = "Order arrived",
+                }).Result;
+            }
+            return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = result.orderId,
+                statusId = currentOrderStatusId,
+                note = "Order created",
+            }).Result;
         }
     }
 }
