@@ -36,7 +36,7 @@ namespace Data.Repository.Implementations
                         note = osd.OrderStatusNote,
                         updatedAt = osd.OrderStatusUpdatedAt
                     }).ToList(),
-                    address = new AddressResponseDto
+                    address = o.Address == null ? null : new AddressResponseDto
                     {
                         addressId = o.AddressId,
                         province = o.Address.Province,
@@ -52,7 +52,7 @@ namespace Data.Repository.Implementations
                     paymentMethod = o.PaymentMethod,
                     totalPrice = o.TotalPrice,
                     currentStatusId = o.CurrentOrderStatusId,
-                    voucher = new VoucherDto
+                    voucher = o.Voucher == null ? null : new VoucherDto
                     {
                         voucherId = o.VoucherId,
                         voucherDiscount = o.Voucher.VoucherDiscount,
