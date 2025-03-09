@@ -154,6 +154,8 @@ builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IOnlineSerieBoxService, OnlineSerieBoxService>();
 builder.Services.AddScoped<IUserRolledItemService, UserRolledItemService>();
 builder.Services.AddScoped<ICurrentRolledItemService, CurrentRolledItemService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 #endregion
 
 #region Repositories

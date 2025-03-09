@@ -215,5 +215,10 @@ namespace Data.Repository.Implementations
             }
             return null;
         }
+
+        public async Task<IEnumerable<Order>> GetAllOrderForDasboard()
+        {
+            return await _context.Orders.Where(u => u.PaymentStatus == "Payment Success").ToListAsync();
+        }
     }
 }
