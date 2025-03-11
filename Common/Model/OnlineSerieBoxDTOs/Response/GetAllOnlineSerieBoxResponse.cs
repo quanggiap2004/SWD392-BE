@@ -10,6 +10,7 @@
         public bool isPublished { get; set; }
         public int maxTurn { get; set; }
         public int turn { get; set; }
+        public string imageUrl { get; set; }
         public BoxOptionResponse boxOption { get; set; }
     }
 }

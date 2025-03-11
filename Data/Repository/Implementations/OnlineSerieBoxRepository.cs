@@ -46,6 +46,7 @@ namespace Data.Repository.Implementations
             onlineSerieBoxToUpdate.Name = onlineSerieBox.Name;
             onlineSerieBoxToUpdate.PriceAfterSecret = onlineSerieBox.PriceAfterSecret;
             onlineSerieBoxToUpdate.PriceIncreasePercent = onlineSerieBox.PriceIncreasePercent;
+            onlineSerieBoxToUpdate.ImageUrl = onlineSerieBox.ImageUrl;
             await _context.SaveChangesAsync();
             return onlineSerieBox;
         }

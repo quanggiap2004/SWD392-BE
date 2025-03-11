@@ -8,6 +8,7 @@ namespace Common.Model.OrderDTOs.Response
     public class ManageOrderDto
     {
         public int userId { get; set; }
+        public string userName { get; set; }
         public int orderId { get; set; }
         public DateTime orderCreatedAt { get; set; }
         public string paymentMethod { get; set; }
@@ -16,6 +17,7 @@ namespace Common.Model.OrderDTOs.Response
         public bool openRequest { get; set; } = false;
         public bool refundRequest { get; set; } = false;
         public int currentStatusId { get; set; }
+        public decimal shippingFee { get; set; }
         public ICollection<OrderStatusDetailSimple> orderStatusDetailsSimple { get; set; }
 
         public ICollection<OrderItemSimpleDto> orderItems { get; set; }

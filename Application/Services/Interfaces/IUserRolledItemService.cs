@@ -1,4 +1,4 @@
-﻿using Common.Model.UserRolledItemDTOs;
+﻿using Common.Model.UserRolledItemDTOs.Request;
 using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces

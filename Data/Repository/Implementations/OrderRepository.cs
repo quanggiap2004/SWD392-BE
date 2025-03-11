@@ -4,6 +4,8 @@ using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
 using Common.Model.OrderItem;
 using Common.Model.OrderStatusDetailDTOs;
+using Common.Model.UserRolledItemDTOs;
+using Common.Model.UserRolledItemDTOs.Response;
 using Common.Model.VoucherDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
@@ -28,6 +30,7 @@ namespace Data.Repository.Implementations
                 {
                     userId = o.UserId,
                     orderId = o.OrderId,
+                    userName = o.User.Username,
                     orderCreatedAt = o.OrderCreatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
@@ -52,6 +55,7 @@ namespace Data.Repository.Implementations
                     paymentMethod = o.PaymentMethod,
                     totalPrice = o.TotalPrice,
                     currentStatusId = o.CurrentOrderStatusId,
+                    shippingFee = o.ShippingFee,
                     voucher = o.Voucher == null ? null : new VoucherDto
                     {
                         voucherId = o.VoucherId,
@@ -70,7 +74,12 @@ namespace Data.Repository.Implementations
                         boxOptionName = oi.BoxOption.BoxOptionName,
                         boxName = oi.BoxOption.Box.BoxName,
                         imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
-                        numOfRefund = oi.NumOfRefund
+                        numOfRefund = oi.NumOfRefund,
+                        userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
+                        {
+                            userRolledItemId = oi.UserRolledItem.UserRolledItemId,
+                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl
+                        }
                     }).ToList(),
                 }).ToListAsync();
 
@@ -93,7 +102,7 @@ namespace Data.Repository.Implementations
         public async Task<ManageOrderDto?> GetOrderById(int orderId)
         {
             return await _context.Orders
-                .Where(o => o.OrderId == orderId)
+                .Where(o => o.OrderId == orderId).Include(o => o.OrderItems).ThenInclude(oi => oi.UserRolledItem)
                 .Select(o => new ManageOrderDto
                 {
                     userId = o.UserId,
@@ -120,7 +129,11 @@ namespace Data.Repository.Implementations
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         isRefund = oi.IsRefund,
                         openRequestNumber = oi.OpenRequestNumber,
-                        currentUserRolledItemId = oi.UserRolledItemId,
+                        userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
+                        {
+                            userRolledItemId = oi.UserRolledItem.UserRolledItemId,
+                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl
+                        }
                     }).ToList(),
                     currentStatusId = o.CurrentOrderStatusId
                 }).FirstOrDefaultAsync();

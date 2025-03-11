@@ -7,6 +7,7 @@ namespace Common.Model.OnlineSerieBoxDTOs.Request
         public string name { get; set; }
         public decimal priceAfterSecret { get; set; }
         public int priceIncreasePercent { get; set; }
+        public string imageUrl { get; set; }
         public CreateBoxOptionRequest createBoxOptionRequest { get; set; }
     }
 }
