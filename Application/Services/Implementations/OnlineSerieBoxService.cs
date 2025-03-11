@@ -250,5 +250,19 @@ namespace Application.Services.Implementations
             return selectedItem;
 
         }
+
+        public async Task<GetAllOnlineSerieBoxResponse> GetOnlineSerieBoxByIdAsync(int onlineSerieBoxId)
+        {
+            var onlineSerieBox = await _onlineSerieBoxRepository.GetOnlineSerieBoxByIdAsync(onlineSerieBoxId);
+            if (onlineSerieBox == null)
+            {
+                throw new NotFoundException($"OnlineSerieBox with ID {onlineSerieBoxId} not found.");
+            }
+
+            var response = _mapper.Map<GetAllOnlineSerieBoxResponse>(onlineSerieBox);
+            response.boxOption = _mapper.Map<BoxOptionResponse>(onlineSerieBox.BoxOption);
+
+            return response;
+        }
     }
 }

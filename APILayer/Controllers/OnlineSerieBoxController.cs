@@ -78,5 +78,19 @@ namespace APILayer.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpGet("{onlineSerieBoxId}")]
+        public async Task<ActionResult<GetAllOnlineSerieBoxResponse>> GetOnlineSerieBoxById(int onlineSerieBoxId)
+        {
+            try
+            {
+                var response = await _onlineSerieBoxService.GetOnlineSerieBoxByIdAsync(onlineSerieBoxId);
+                return Ok(response);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
