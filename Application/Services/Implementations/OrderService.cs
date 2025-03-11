@@ -89,9 +89,9 @@ namespace Application.Services.Implementations
                 List<int> currentUserRolledItemIds = new List<int>();
                 foreach (var item in order.orderItems)
                 {
-                    if(item.currentUserRolledItemId != null)
+                    if(item.userRolledItemForManageOrder != null)
                     {
-                        currentUserRolledItemIds.Add(item.currentUserRolledItemId.Value);
+                        currentUserRolledItemIds.Add(item.userRolledItemForManageOrder.userRolledItemId);
                     }
                 }
                 var updateResult = await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, false);

@@ -1,5 +1,5 @@
 ﻿using Common.Model.BoxItemDTOs.Response;
-using Common.Model.UserRolledItemDTOs;
+using Common.Model.UserRolledItemDTOs.Request;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;

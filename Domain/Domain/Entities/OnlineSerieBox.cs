@@ -14,6 +14,7 @@ namespace Domain.Domain.Entities
         public bool IsSecretOpen { get; set; } = false;
         public int Turn { get; set; }
         public int MaxTurn { get; set; }
+        public string ImageUrl { get; set; }
         public virtual BoxOption BoxOption { get; set; }
         public virtual ICollection<UserRolledItem> UserRolledItems { get; set; }
         public virtual ICollection<CurrentRolledItem> CurrentRolledItems { get; set; }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Model.UserRolledItemDTOs
+namespace Common.Model.UserRolledItemDTOs.Request
 {
     public class UserRolledItemDto
     {

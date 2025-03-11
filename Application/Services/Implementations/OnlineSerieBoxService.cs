@@ -56,6 +56,7 @@ namespace Application.Services.Implementations
                 PriceAfterSecret = request.priceAfterSecret,
                 PriceIncreasePercent = request.priceIncreasePercent,
                 BasePrice = request.createBoxOptionRequest.displayPrice,
+                ImageUrl = request.imageUrl,
             };
 
             var createdOnlineSerieBox = await _onlineSerieBoxRepository.AddOnlineSerieBoxAsync(onlineSerieBox);
@@ -68,7 +69,8 @@ namespace Application.Services.Implementations
                 priceIncreasePercent = createdOnlineSerieBox.PriceIncreasePercent,
                 basePrice = createdOnlineSerieBox.BasePrice,
                 turn = createdOnlineSerieBox.Turn,
-                createBoxOptionResponse = createBoxOptionResponse
+                createBoxOptionResponse = createBoxOptionResponse,
+                imageUrl = createdOnlineSerieBox.ImageUrl,
             };
 
             return response;
@@ -89,6 +91,8 @@ namespace Application.Services.Implementations
 
             onlineSerieBox.PriceAfterSecret = request.priceAfterSecret;
             onlineSerieBox.PriceIncreasePercent = request.priceIncreasePercent;
+            onlineSerieBox.ImageUrl = request.imageUrl;
+            onlineSerieBox.BasePrice = request.displayPrice;
 
             var boxOption = await _boxOptionRepository.GetBoxOptionByIdAsync(onlineSerieBox.OnlineSerieBoxId);
             if (boxOption == null)
@@ -109,7 +113,10 @@ namespace Application.Services.Implementations
                 priceIncreasePercent = updatedOnlineSerieBox.PriceIncreasePercent,
                 displayPrice = boxOption.DisplayPrice,
                 originPrice = boxOption.OriginPrice,
-                isPublished = updatedOnlineSerieBox.IsPublished
+                isPublished = updatedOnlineSerieBox.IsPublished,
+                imageUrl = updatedOnlineSerieBox.ImageUrl,
+                basePrice = updatedOnlineSerieBox.BasePrice
+                
             };
 
             return response;

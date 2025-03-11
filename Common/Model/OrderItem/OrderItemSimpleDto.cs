@@ -1,4 +1,6 @@
-﻿namespace Common.Model.OrderItem
+﻿using Common.Model.UserRolledItemDTOs.Request;
+using Common.Model.UserRolledItemDTOs.Response;
+namespace Common.Model.OrderItem
 {
     public class OrderItemSimpleDto
     {
@@ -17,6 +19,6 @@
         public string boxName { get; set; }
         public string? imageUrl { get; set; }
         public int numOfRefund { get; set; }
-        public int? currentUserRolledItemId { get; set; }
+        public UserRolledItemForManageOrder? userRolledItemForManageOrder { get; set; }
     }
 }

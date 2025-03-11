@@ -11,6 +11,7 @@ namespace Common.Model.OnlineSerieBoxDTOs.Response
         public int priceIncreasePercent { get; set; }
         public decimal basePrice { get; set; }
         public int turn { get; set; }
+        public string imageUrl { get; set; }
         public CreateBoxOptionResponse createBoxOptionResponse { get; set; }
     }
 }

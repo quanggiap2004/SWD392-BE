@@ -1,5 +1,5 @@
 ﻿using Application.Services.Interfaces;
-using Common.Model.UserRolledItemDTOs;
+using Common.Model.UserRolledItemDTOs.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers

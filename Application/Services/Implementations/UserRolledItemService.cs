@@ -1,6 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Common.Exceptions;
-using Common.Model.UserRolledItemDTOs;
+using Common.Model.UserRolledItemDTOs.Request;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
 
