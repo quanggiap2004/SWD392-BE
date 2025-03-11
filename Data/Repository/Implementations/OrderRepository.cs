@@ -119,7 +119,8 @@ namespace Data.Repository.Implementations
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         isRefund = oi.IsRefund,
-                        openRequestNumber = oi.OpenRequestNumber
+                        openRequestNumber = oi.OpenRequestNumber,
+                        currentUserRolledItemId = oi.UserRolledItemId,
                     }).ToList(),
                     currentStatusId = o.CurrentOrderStatusId
                 }).FirstOrDefaultAsync();

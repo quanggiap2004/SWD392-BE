@@ -8,5 +8,6 @@
         public decimal originPrice { get; set; }
         public bool isOnlineSerieBox { get; set; } = false;
         public int orderItemOpenRequestNumber { get; set; }
+        public int? userRolledItemId { get; set; }
     }
 }
