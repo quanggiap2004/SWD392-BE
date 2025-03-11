@@ -10,5 +10,6 @@ namespace Application.Services.Interfaces
         Task<UpdateOnlineSerieBoxResponse> UpdateOnlineSerieBoxAsync(int onlineSerieBoxId, UpdateOnlineSerieBoxRequest request);
         Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync();
         Task<BoxItemResponseDto> OpenOnlineSerieBoxAsync(OpenOnlineSerieBoxRequest request);
+        Task<GetAllOnlineSerieBoxResponse> GetOnlineSerieBoxByIdAsync(int onlineSerieBoxId);
     }
 }

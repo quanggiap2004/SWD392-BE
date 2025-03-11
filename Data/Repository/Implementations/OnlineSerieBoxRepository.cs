@@ -31,7 +31,7 @@ namespace Data.Repository.Implementations
 
         public async Task<OnlineSerieBox?> GetOnlineSerieBoxByIdAsync(int id)
         {
-            return await _context.OnlineSerieBoxes.FindAsync(id);
+            return await _context.OnlineSerieBoxes.Include(o => o.BoxOption).FirstOrDefaultAsync(o => o.OnlineSerieBoxId == id);
         }
 
         public async Task<OnlineSerieBox> UpdateOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox)
