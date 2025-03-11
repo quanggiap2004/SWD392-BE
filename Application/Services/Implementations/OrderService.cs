@@ -3,6 +3,7 @@ using Common.Constants;
 using Common.Exceptions;
 using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
+using Common.Model.OrderItem.Request;
 using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
@@ -18,7 +19,8 @@ namespace Application.Services.Implementations
         private readonly IOrderItemService _orderItemService;
         private readonly IVoucherService _voucherService;
         private readonly IBoxService _box;
-        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box)
+        private readonly IUserRolledItemService _userRolledItemService;
+        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box, IUserRolledItemService userRolledItemService)
         {
             _orderRepository = orderRepository;
             _orderStatusDetailService = orderStatusDetailService;
@@ -26,6 +28,7 @@ namespace Application.Services.Implementations
             _orderItemService = orderItemService;
             _voucherService = voucherService;
             _box = box;
+            _userRolledItemService = userRolledItemService;
         }
 
         public Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
@@ -82,12 +85,22 @@ namespace Application.Services.Implementations
                     OrderStatusCheckCardImage = new List<string>(),
                     BoxOptionId = model.boxOptionId,
                 }).ToList();
+
+                List<int> currentUserRolledItemIds = new List<int>();
                 foreach (var item in order.orderItems)
                 {
-
+                    if(item.currentUserRolledItemId != null)
+                    {
+                        currentUserRolledItemIds.Add(item.currentUserRolledItemId.Value);
+                    }
+                }
+                var updateResult = await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, false);
+                if(!updateResult)
+                {
+                    throw new CustomExceptions.BadRequestException("Update user rolled item failed");
                 }
                 await _box.UpdateSoldQuantity(orderItems);
-
+                
                 return true;
             }
             return false;
@@ -131,8 +144,10 @@ namespace Application.Services.Implementations
                 Quantity = model.quantity,
                 OrderPrice = model.price,
                 OpenRequestNumber = model.orderItemOpenRequestNumber,
+                UserRolledItemId = model.userRolledItemId,
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
+            await UpdateUserRolledItemCheckoutStatus(model.orderItemRequestDto, true);
             await _voucherService.ReduceVoucherQuantity(model.voucherId);
             return result;
         }
@@ -201,8 +216,10 @@ namespace Application.Services.Implementations
                 OrderPrice = model.price,
                 OpenRequestNumber = model.orderItemOpenRequestNumber,
                 OrderStatusCheckCardImage = new List<string>(),
+                UserRolledItemId = model.userRolledItemId
             }).ToList();
-            await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
+            await _orderItemService.AddOrderItems(orderItems);
+            await UpdateUserRolledItemCheckoutStatus(model.orderItemRequestDto, true);
             await _voucherService.ReduceVoucherQuantity(model.voucherId);
             return result;
         }
@@ -224,6 +241,19 @@ namespace Application.Services.Implementations
                 statusId = currentOrderStatusId,
                 note = "Order created",
             }).Result;
+        }
+         
+        private async Task<bool> UpdateUserRolledItemCheckoutStatus(ICollection<OrderItemRequestDto> orderItemRequestDto, bool status)
+        {
+            List<int> currentUserRolledItemIds = new List<int>();
+            foreach (var item in orderItemRequestDto)
+            {
+                if (item.isOnlineSerieBox)
+                {
+                    currentUserRolledItemIds.Add(item.userRolledItemId.Value);
+                }
+            }
+            return await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, status);
         }
     }
 }

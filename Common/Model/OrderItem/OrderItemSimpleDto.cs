@@ -17,5 +17,6 @@
         public string boxName { get; set; }
         public string? imageUrl { get; set; }
         public int numOfRefund { get; set; }
+        public int? currentUserRolledItemId { get; set; }
     }
 }
