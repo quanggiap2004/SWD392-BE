@@ -66,6 +66,7 @@ namespace Data.Repository.Implementations
         {
             return await _context.UserVotedBoxItems
                 .Where(uv => uv.BoxItemId == boxItemId)
+                .Include(u => u.User)
                 .ToListAsync();
         }
     }

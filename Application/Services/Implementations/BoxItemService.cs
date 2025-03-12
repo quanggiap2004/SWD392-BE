@@ -129,10 +129,19 @@ namespace Application.Services.Implementations
             };
             return VotedDTO;
         }
-        public async Task<IEnumerable<UserVotedBoxItem>> GetVotesByBoxItemId(int id)
+        public async Task<IEnumerable<GetAllVotedDTO>> GetVotesByBoxItemId(int id)
         {
             var Vote = await _userVotedBoxItemRepository.GetVotesByBoxItemIdAsync(id);
-            return Vote;
+            var VotedDTO = Vote.Select(vote => new GetAllVotedDTO
+            {
+                UserVotedBoxItemId = vote.UserVotedBoxItemId,
+                BoxItemId = vote.BoxItemId,
+                UserId = vote.UserId,
+                Username = vote.User.Username,
+                Rating = vote.Rating,
+                LastUpdated = vote.LastUpdated,
+            }).ToList();
+            return VotedDTO;
         }
 
         public async Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id)
