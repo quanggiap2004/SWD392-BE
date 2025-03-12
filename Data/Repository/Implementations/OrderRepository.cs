@@ -153,7 +153,9 @@ namespace Data.Repository.Implementations
                 OpenRequest = model.openRequest,
                 CurrentOrderStatusId = model.currentOrderStatusId,
                 PaymentStatus = model.paymentStatus,
-                ShippingFee = model.createOrderDto.shippingFee
+                ShippingFee = model.createOrderDto.shippingFee,
+                DiscountAmount = model.createOrderDto.discountAmount,
+                SubTotal = model.createOrderDto.subTotal
             };
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -167,7 +169,9 @@ namespace Data.Repository.Implementations
                 addressId = order.AddressId,
                 revenue = order.Revenue,
                 currentOrderStatusId = order.CurrentOrderStatusId,
-                shippingFee = model.createOrderDto.shippingFee
+                shippingFee = model.createOrderDto.shippingFee,
+                discountAmount = model.createOrderDto.discountAmount,
+                subTotal = model.createOrderDto.subTotal
             };
         }
 
@@ -187,7 +191,9 @@ namespace Data.Repository.Implementations
                 CurrentOrderStatusId = 1,
                 PaymentStatus = ProjectConstant.PaymentPending,
                 IsEnable = false,
-                ShippingFee = model.shippingFee
+                ShippingFee = model.shippingFee,
+                DiscountAmount = model.discountAmount,
+                SubTotal = model.subTotal
             };
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();

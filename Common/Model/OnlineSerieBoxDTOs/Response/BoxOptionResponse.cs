@@ -1,4 +1,6 @@
-﻿namespace Common.Model.OnlineSerieBoxDTOs.Response
+﻿using Common.Model.BoxDTOs.ResponseDTOs;
+
+namespace Common.Model.OnlineSerieBoxDTOs.Response
 {
     public class BoxOptionResponse
     {
@@ -7,5 +9,6 @@
         public decimal originPrice { get; set; }
         public decimal displayPrice { get; set; }
         public int boxOptionStock { get; set; }
+        public SimpleBoxDtoResponse simpleBoxDtoResponse { get; set; }
     }
 }

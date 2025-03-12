@@ -12,5 +12,7 @@
         public int currentOrderStatusId { get; set; }
         public string url { get; set; }
         public decimal shippingFee { get; set; }
+        public decimal subTotal { get; set; }
+        public decimal discountAmount { get; set; }
     }
 }
