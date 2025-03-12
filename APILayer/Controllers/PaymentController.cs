@@ -29,13 +29,20 @@ namespace APILayer.Controllers
         [HttpPost("make-payment")]
         public async Task<ActionResult> MakePayment([FromBody] CreateOrderDTO model)
         {
-            if (model.paymentMethod == ProjectConstant.COD)
+            try
             {
-                OrderResponseDto result = await _orderService.CreateOrderCOD(model);
-                return Ok(result);
+                if (model.paymentMethod == ProjectConstant.COD)
+                {
+                    OrderResponseDto result = await _orderService.CreateOrderCOD(model);
+                    return Ok(result);
+                }
+                var response = await _orderService.SaveDraftOrder(model);
+                return Ok(_vnPayService.CreatePaymentUrl(model, HttpContext, response.orderId));
             }
-            var response = await _orderService.SaveDraftOrder(model);
-            return Ok(_vnPayService.CreatePaymentUrl(model, HttpContext, response.orderId));
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [AllowAnonymous]
