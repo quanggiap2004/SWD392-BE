@@ -1,4 +1,5 @@
 ﻿using Common.Exceptions;
+using Common.Model.BoxDTOs.ResponseDTOs;
 using Common.Model.BoxItemDTOs.Response;
 using Common.Model.BrandDTOs.Response;
 using Common.Model.OnlineSerieBoxDTOs.Response;
@@ -43,7 +44,12 @@ namespace Data.Repository.Implementations
                         boxOptionName = o.BoxOption.BoxOptionName,
                         originPrice = o.BoxOption.OriginPrice,
                         displayPrice = o.BoxOption.DisplayPrice,
-                        boxOptionStock = o.BoxOption.BoxOptionStock
+                        boxOptionStock = o.BoxOption.BoxOptionStock,
+                        simpleBoxDtoResponse = new SimpleBoxDtoResponse
+                        {
+                            boxId = o.BoxOption.Box.BoxId,
+                            boxName = o.BoxOption.Box.BoxName,
+                        }
                     },
                     brandDtoResponse = new BrandDtoResponse
                     {
@@ -77,7 +83,12 @@ namespace Data.Repository.Implementations
                         boxOptionName = o.BoxOption.BoxOptionName,
                         originPrice = o.BoxOption.OriginPrice,
                         displayPrice = o.BoxOption.DisplayPrice,
-                        boxOptionStock = o.BoxOption.BoxOptionStock
+                        boxOptionStock = o.BoxOption.BoxOptionStock,
+                        simpleBoxDtoResponse = new SimpleBoxDtoResponse
+                        {
+                            boxId = o.BoxOption.Box.BoxId,
+                            boxName = o.BoxOption.Box.BoxName,
+                        }
                     },
                     brandDtoResponse = new BrandDtoResponse
                     {

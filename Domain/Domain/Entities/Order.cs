@@ -22,6 +22,8 @@ namespace Domain.Domain.Entities
         public string PaymentStatus { get; set; } = ProjectConstant.PaymentPending;
         public bool IsEnable { get; set; } = true;
         public decimal ShippingFee { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal DiscountAmount { get; set; }
         [Column(TypeName = "jsonb")]
         public string? JsonOrderModel { get; set; }
         public virtual ICollection<OrderStatusDetail> OrderStatusDetails { get; set; }

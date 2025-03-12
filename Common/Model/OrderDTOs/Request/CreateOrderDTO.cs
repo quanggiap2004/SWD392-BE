@@ -10,6 +10,8 @@ namespace Common.Model.OrderDTOs.Request
         public int? voucherId { get; set; }
         public string paymentMethod { get; set; }
         public int? addressId { get; set; }
+        public decimal subTotal { get; set; }
+        public decimal discountAmount { get; set; }
         public ICollection<OrderItemRequestDto> orderItemRequestDto { get; set; }
     }
 }
