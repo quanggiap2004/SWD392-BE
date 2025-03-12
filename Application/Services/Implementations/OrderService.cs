@@ -117,8 +117,7 @@ namespace Application.Services.Implementations
             {
                 if (item.orderItemOpenRequestNumber > 0)
                 {
-                    openRequest = true;
-                    break;
+                    throw new CustomExceptions.BadRequestException("Open request not allowed for COD");
                 }
             }
 
