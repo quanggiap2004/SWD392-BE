@@ -10,5 +10,6 @@ namespace Data.Repository.Interfaces
         Task<OnlineSerieBox> UpdateOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox);
         Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync();
         Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxDetail(int onlineSerieBoxId);
+        Task<bool> UpdatePublishStatusAsync(bool status, int id);
     }
 }

@@ -36,6 +36,7 @@ namespace Data.Repository.Implementations
                     maxTurn = o.MaxTurn,
                     isSecretOpen = o.IsSecretOpen,
                     imageUrl = o.ImageUrl,
+                    basePrice = o.BasePrice,
                     boxOption = new BoxOptionResponse
                     {
                         boxOptionId = o.BoxOption.BoxOptionId,
@@ -69,6 +70,7 @@ namespace Data.Repository.Implementations
                     maxTurn = o.MaxTurn,
                     isSecretOpen = o.IsSecretOpen,
                     imageUrl = o.ImageUrl,
+                    basePrice = o.BasePrice,
                     boxOption = new BoxOptionResponse
                     {
                         boxOptionId = o.BoxOption.BoxOptionId,
@@ -113,6 +115,11 @@ namespace Data.Repository.Implementations
             onlineSerieBoxToUpdate.ImageUrl = onlineSerieBox.ImageUrl;
             await _context.SaveChangesAsync();
             return onlineSerieBox;
+        }
+
+        public async Task<bool> UpdatePublishStatusAsync(bool status, int id)
+        {
+            return await _context.OnlineSerieBoxes.Where(o => o.OnlineSerieBoxId == id).ExecuteUpdateAsync(setter => setter.SetProperty(o => o.IsPublished, status)) > 0;
         }
     }
 }

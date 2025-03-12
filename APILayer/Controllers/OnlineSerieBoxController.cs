@@ -7,7 +7,7 @@ using static Common.Exceptions.CustomExceptions;
 
 namespace APILayer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/online-serie-box")]
     [ApiController]
     public class OnlineSerieBoxController : ControllerBase
     {
@@ -73,9 +73,9 @@ namespace APILayer.Controllers
                 BoxItemResponseDto response = await _onlineSerieBoxService.OpenOnlineSerieBoxAsync(request);
                 return Ok(response);
             }
-            catch (NotFoundException ex)
+            catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -90,6 +90,25 @@ namespace APILayer.Controllers
             catch (NotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+        }
+        [HttpPut("{id}/publish")]
+        public async Task<ActionResult> UpdatePublishStatus(int id, bool status)
+        {
+            try
+            {
+                bool response = await _onlineSerieBoxService.UpdatePublishStatusAsync(status, id);
+                if(response == true)
+                {
+                    return Ok("Update publish status successfully");
+                } else
+                {
+                    return BadRequest("Update publish status failed");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
