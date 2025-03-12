@@ -1,4 +1,7 @@
 ﻿using Common.Exceptions;
+using Common.Model.BoxItemDTOs.Response;
+using Common.Model.BrandDTOs.Response;
+using Common.Model.OnlineSerieBoxDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
@@ -22,16 +25,78 @@ namespace Data.Repository.Implementations
             return onlineSerieBox;
         }
 
-        public async Task<IEnumerable<OnlineSerieBox>> GetAllOnlineSerieBoxesAsync()
+        public async Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync()
         {
             return await _context.OnlineSerieBoxes
-                .Include(osb => osb.BoxOption)
-                .ToListAsync();
+                .Select(o => new GetAllOnlineSerieBoxResponse
+                {
+                    onlineSerieBoxId = o.OnlineSerieBoxId,
+                    priceAfterSecret = o.PriceAfterSecret,
+                    priceIncreasePercent = o.PriceIncreasePercent,
+                    maxTurn = o.MaxTurn,
+                    isSecretOpen = o.IsSecretOpen,
+                    imageUrl = o.ImageUrl,
+                    boxOption = new BoxOptionResponse
+                    {
+                        boxOptionId = o.BoxOption.BoxOptionId,
+                        boxOptionName = o.BoxOption.BoxOptionName,
+                        originPrice = o.BoxOption.OriginPrice,
+                        displayPrice = o.BoxOption.DisplayPrice,
+                        boxOptionStock = o.BoxOption.BoxOptionStock
+                    },
+                    brandDtoResponse = new BrandDtoResponse
+                    {
+                        brandId = o.BoxOption.Box.BrandId,
+                        brandName = o.BoxOption.Box.Brand.BrandName,
+                        imageUrl = o.BoxOption.Box.Brand.ImageUrl
+                    }
+                }).ToListAsync();
         }
 
         public async Task<OnlineSerieBox?> GetOnlineSerieBoxByIdAsync(int id)
         {
             return await _context.OnlineSerieBoxes.Include(o => o.BoxOption).FirstOrDefaultAsync(o => o.OnlineSerieBoxId == id);
+        }
+
+        public async Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxDetail(int onlineSerieBoxId)
+        {
+            return await _context.OnlineSerieBoxes.Where(o => o.OnlineSerieBoxId == onlineSerieBoxId)
+                .Select(o => new OnlineSerieBoxDetailResponse
+                {
+                    onlineSerieBoxId = o.OnlineSerieBoxId,
+                    priceAfterSecret = o.PriceAfterSecret,
+                    priceIncreasePercent = o.PriceIncreasePercent,
+                    maxTurn = o.MaxTurn,
+                    isSecretOpen = o.IsSecretOpen,
+                    imageUrl = o.ImageUrl,
+                    boxOption = new BoxOptionResponse
+                    {
+                        boxOptionId = o.BoxOption.BoxOptionId,
+                        boxOptionName = o.BoxOption.BoxOptionName,
+                        originPrice = o.BoxOption.OriginPrice,
+                        displayPrice = o.BoxOption.DisplayPrice,
+                        boxOptionStock = o.BoxOption.BoxOptionStock
+                    },
+                    brandDtoResponse = new BrandDtoResponse
+                    {
+                        brandId = o.BoxOption.Box.BrandId,
+                        brandName = o.BoxOption.Box.Brand.BrandName,
+                        imageUrl = o.BoxOption.Box.Brand.ImageUrl
+                    },
+                    boxItemResponseDtos = o.BoxOption.Box.BoxItems.Select(b => new BoxItemResponseDto
+                    {
+                        boxItemId = b.BoxItemId,
+                        boxItemName = b.BoxItemName,
+                        boxItemDescription = b.BoxItemDescription,
+                        boxItemEyes = b.BoxItemEyes,
+                        boxItemColor = b.BoxItemColor,
+                        averageRating = b.AverageRating,
+                        boxId = b.BoxId,
+                        imageUrl = b.ImageUrl,
+                        numOfVote = b.NumOfVote,
+                        isSecret = b.IsSecret
+                    }).ToList()
+                }).FirstOrDefaultAsync();
         }
 
         public async Task<OnlineSerieBox> UpdateOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox)
@@ -43,7 +108,6 @@ namespace Data.Repository.Implementations
             }
             onlineSerieBoxToUpdate.IsSecretOpen = onlineSerieBox.IsSecretOpen;
             onlineSerieBoxToUpdate.MaxTurn = onlineSerieBox.MaxTurn;
-            onlineSerieBoxToUpdate.Name = onlineSerieBox.Name;
             onlineSerieBoxToUpdate.PriceAfterSecret = onlineSerieBox.PriceAfterSecret;
             onlineSerieBoxToUpdate.PriceIncreasePercent = onlineSerieBox.PriceIncreasePercent;
             onlineSerieBoxToUpdate.ImageUrl = onlineSerieBox.ImageUrl;

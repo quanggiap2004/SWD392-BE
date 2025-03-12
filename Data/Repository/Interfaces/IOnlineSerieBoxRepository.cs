@@ -1,4 +1,5 @@
-﻿using Domain.Domain.Entities;
+﻿using Common.Model.OnlineSerieBoxDTOs.Response;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {
@@ -7,7 +8,7 @@ namespace Data.Repository.Interfaces
         Task<OnlineSerieBox> AddOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox);
         Task<OnlineSerieBox?> GetOnlineSerieBoxByIdAsync(int id);
         Task<OnlineSerieBox> UpdateOnlineSerieBoxAsync(OnlineSerieBox onlineSerieBox);
-        Task<IEnumerable<OnlineSerieBox>> GetAllOnlineSerieBoxesAsync();
-
+        Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync();
+        Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxDetail(int onlineSerieBoxId);
     }
 }

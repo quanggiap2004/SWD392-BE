@@ -6,7 +6,6 @@ namespace Common.Model.OnlineSerieBoxDTOs.Response
     {
         public bool isSecretOpen { get; set; }
         public int maxTurn { get; set; }
-        public string name { get; set; }
         public decimal priceAfterSecret { get; set; }
         public int priceIncreasePercent { get; set; }
         public decimal basePrice { get; set; }
