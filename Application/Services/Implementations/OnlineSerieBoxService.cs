@@ -140,7 +140,10 @@ namespace Application.Services.Implementations
                 throw new NotFoundException("box not found or out of stock");
             }
             var onlineSerieBox = boxOption.OnlineSerieBox;
-            //var testCurrentRolledItem = onlineSerieBox.CurrentRolledItems;
+            if(onlineSerieBox.IsPublished == false)
+            {
+                throw new InvalidOperationException("OnlineSerieBox is not published.");
+            }
             var boxItemList = box.boxItems;
             var rolledIds = (await _currentRolledItemService
                                    .GetAllCurrentRolledItemByOnlineSerieBoxId(request.onlineSerieBoxId))
@@ -248,6 +251,11 @@ namespace Application.Services.Implementations
             }
 
             return onlineSerieBox;
+        }
+
+        public async Task<bool> UpdatePublishStatusAsync(bool status, int id)
+        {
+            return await _onlineSerieBoxRepository.UpdatePublishStatusAsync(status, id);
         }
     }
 }
