@@ -1,8 +1,14 @@
-﻿using Common.Model.BrandDTOs.Response;
+﻿using Common.Model.BoxItemDTOs.Response;
+using Common.Model.BrandDTOs.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Common.Model.OnlineSerieBoxDTOs.Response
 {
-    public class GetAllOnlineSerieBoxResponse
+    public class OnlineSerieBoxDetailResponse
     {
         public int onlineSerieBoxId { get; set; }
         public decimal priceAfterSecret { get; set; }
@@ -15,5 +21,6 @@ namespace Common.Model.OnlineSerieBoxDTOs.Response
         public bool isSecretOpen { get; set; }
         public BrandDtoResponse brandDtoResponse { get; set; }
         public BoxOptionResponse boxOption { get; set; }
+        public IEnumerable<BoxItemResponseDto>? boxItemResponseDtos { get; set; }
     }
 }

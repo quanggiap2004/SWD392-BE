@@ -10,7 +10,6 @@ namespace Domain.Domain.Entities
         public decimal BasePrice { get; set; }
         public decimal PriceAfterSecret { get; set; }
         public int PriceIncreasePercent { get; set; }
-        public string Name { get; set; }
         public bool IsSecretOpen { get; set; } = false;
         public int Turn { get; set; }
         public int MaxTurn { get; set; }

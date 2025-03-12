@@ -52,7 +52,6 @@ namespace Application.Services.Implementations
                 OnlineSerieBoxId = createdBoxOption.BoxOptionId,
                 IsSecretOpen = false,
                 MaxTurn = CalculateMaxTurn(request.createBoxOptionRequest.boxId),
-                Name = request.name,
                 PriceAfterSecret = request.priceAfterSecret,
                 PriceIncreasePercent = request.priceIncreasePercent,
                 BasePrice = request.createBoxOptionRequest.displayPrice,
@@ -64,7 +63,6 @@ namespace Application.Services.Implementations
             var response = new CreateBoxOptionAndOnlineSerieBoxResponse
             {
                 maxTurn = createdOnlineSerieBox.MaxTurn,
-                name = createdOnlineSerieBox.Name,
                 priceAfterSecret = createdOnlineSerieBox.PriceAfterSecret,
                 priceIncreasePercent = createdOnlineSerieBox.PriceIncreasePercent,
                 basePrice = createdOnlineSerieBox.BasePrice,
@@ -130,18 +128,7 @@ namespace Application.Services.Implementations
 
         public async Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync()
         {
-            var onlineSerieBoxes = await _onlineSerieBoxRepository.GetAllOnlineSerieBoxesAsync();
-            var response = new List<GetAllOnlineSerieBoxResponse>();
-
-            foreach (var onlineSerieBox in onlineSerieBoxes)
-            {
-                var onlineSerieBoxResponse = _mapper.Map<GetAllOnlineSerieBoxResponse>(onlineSerieBox);
-                onlineSerieBoxResponse.boxOption = _mapper.Map<BoxOptionResponse>(onlineSerieBox.BoxOption);
-
-                response.Add(onlineSerieBoxResponse);
-            }
-
-            return response;
+            return await _onlineSerieBoxRepository.GetAllOnlineSerieBoxesAsync();
         }
 
         public async Task<BoxItemResponseDto> OpenOnlineSerieBoxAsync(OpenOnlineSerieBoxRequest request)
@@ -160,6 +147,7 @@ namespace Application.Services.Implementations
                                    .Select(cri => cri.boxItemId)
                                    .ToHashSet();
             var notRolledItems = boxItemList.Where(bi => !rolledIds.Contains(bi.boxItemId)).ToList();
+
             if (!notRolledItems.Any())
             {
                 throw new InvalidOperationException("All items have been rolled.");
@@ -167,7 +155,7 @@ namespace Application.Services.Implementations
             var weightedItems = notRolledItems.Select(item => new
             {
                 Item = item,
-                Weight = item.isSecret ? 25 : 25
+                Weight = item.isSecret ? 35 : 25
             }).ToList();
 
             int totalWeight = weightedItems.Sum(w => w.Weight);
@@ -251,18 +239,15 @@ namespace Application.Services.Implementations
 
         }
 
-        public async Task<GetAllOnlineSerieBoxResponse> GetOnlineSerieBoxByIdAsync(int onlineSerieBoxId)
+        public async Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxByIdAsync(int onlineSerieBoxId)
         {
-            var onlineSerieBox = await _onlineSerieBoxRepository.GetOnlineSerieBoxByIdAsync(onlineSerieBoxId);
+            var onlineSerieBox = await _onlineSerieBoxRepository.GetOnlineSerieBoxDetail(onlineSerieBoxId);
             if (onlineSerieBox == null)
             {
                 throw new NotFoundException($"OnlineSerieBox with ID {onlineSerieBoxId} not found.");
             }
 
-            var response = _mapper.Map<GetAllOnlineSerieBoxResponse>(onlineSerieBox);
-            response.boxOption = _mapper.Map<BoxOptionResponse>(onlineSerieBox.BoxOption);
-
-            return response;
+            return onlineSerieBox;
         }
     }
 }
