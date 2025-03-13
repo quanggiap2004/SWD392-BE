@@ -38,6 +38,7 @@ namespace Data.Repository.Implementations
                     isSecretOpen = o.IsSecretOpen,
                     imageUrl = o.ImageUrl,
                     basePrice = o.BasePrice,
+                    isPublished = o.IsPublished,
                     boxOption = new BoxOptionResponse
                     {
                         boxOptionId = o.BoxOption.BoxOptionId,
@@ -77,6 +78,7 @@ namespace Data.Repository.Implementations
                     isSecretOpen = o.IsSecretOpen,
                     imageUrl = o.ImageUrl,
                     basePrice = o.BasePrice,
+                    isPublished = o.IsPublished,
                     boxOption = new BoxOptionResponse
                     {
                         boxOptionId = o.BoxOption.BoxOptionId,
