@@ -69,7 +69,7 @@ namespace Data.Repository.Implementations
                         orderPrice = oi.OrderPrice,
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
-                        isRefund = oi.IsRefund,
+                        refundStatus = oi.RefundStatus,
                         openRequestNumber = oi.OpenRequestNumber,
                         boxOptionName = oi.BoxOption.BoxOptionName,
                         boxName = oi.BoxOption.Box.BoxName,
@@ -127,7 +127,7 @@ namespace Data.Repository.Implementations
                         orderPrice = oi.OrderPrice,
                         isFeedback = oi.IsFeedback,
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
-                        isRefund = oi.IsRefund,
+                        refundStatus = oi.RefundStatus,
                         openRequestNumber = oi.OpenRequestNumber,
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
