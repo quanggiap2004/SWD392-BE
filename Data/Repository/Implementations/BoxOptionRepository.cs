@@ -26,7 +26,7 @@ namespace Data.Repository.Implementations
             var deletedBoxOption = await _context.BoxOptions.FindAsync(id);
             if (deletedBoxOption != null)
             {
-                _context.BoxOptions.Remove(deletedBoxOption);
+                deletedBoxOption.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }
