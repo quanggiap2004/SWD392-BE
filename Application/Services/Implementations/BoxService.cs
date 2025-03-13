@@ -276,5 +276,10 @@ namespace Application.Services.Implementations
             var result = _boxRepository.getBoxByBoxOptionId(boxOptionId);
             return result;
         }
+
+        public async Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId)
+        {
+            return await _boxRepository.UpdateBoxRatingByBoxOptionId(boxOptionId);
+        }
     }
 }

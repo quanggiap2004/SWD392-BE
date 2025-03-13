@@ -14,5 +14,6 @@ namespace Application.Services.Interfaces
         Task DeleteBoxOptionAsync(int id);
         Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems);
         Task ReduceStockQuantity(ICollection<OrderItem> orderItems);
+        Task<bool> UpdateAverageBoxOptionRating(int boxOptionId);
     }
 }

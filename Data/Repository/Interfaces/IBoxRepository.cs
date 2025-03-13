@@ -20,5 +20,6 @@ namespace Data.Repository.Interfaces
         Task<IEnumerable<Box>> SearchBoxesByNameAsync(string? boxName);
         Task<bool> UpdateSoldQuantity(ICollection<OrderItem> orderItems);
         Task<BoxAndBoxItemResponseDto?> getBoxByBoxOptionId(int boxOptionId);
+        Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId);
     }
 }

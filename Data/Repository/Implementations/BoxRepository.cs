@@ -204,5 +204,33 @@ namespace Data.Repository.Implementations
                 }).ToList()
             }).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId)
+        {
+            var result = await _context.Boxes
+                .Where(b => b.BoxOptions.Any(bo => bo.BoxOptionId == boxOptionId))
+                .Select(b => new
+                {
+                    Box = b,
+                    TotalRating = b.BoxOptions
+                        .SelectMany(bo => bo.OrderItem)
+                        .Where(oi => oi.Feedback != null)
+                        .Sum(oi => (float?)oi.Feedback.Rating) ?? 0,
+                    TotalFeedbacks = b.BoxOptions
+                        .SelectMany(bo => bo.OrderItem)
+                        .Count(oi => oi.Feedback != null)
+                })
+                .FirstOrDefaultAsync();
+
+            if (result == null)
+                return false;
+
+            result.Box.Rating = result.TotalFeedbacks > 0
+                                  ? result.TotalRating / result.TotalFeedbacks
+                                  : 0;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

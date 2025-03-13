@@ -12,12 +12,9 @@ namespace Domain.Domain.Entities
         public DateTime? UpdatedAt { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
-
-
-        public string FeedbackType { get; set; }
         public string ImageUrl { get; set; }
-
         public int OrderItemId { get; set; }
+        public float Rating { get; set; }
         public virtual User User { get; set; }
 
         [ForeignKey("OrderItemId")]
