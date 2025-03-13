@@ -37,13 +37,19 @@ namespace APILayer.Controllers
         [HttpPost]
         public async Task<ActionResult<VoucherResponseDto>> CreateVoucher([FromBody] CreateVoucherRequest request)
         {
-            if (request == null)
+            try
             {
-                return BadRequest("Request data is required.");
+                if (request == null)
+                {
+                    return BadRequest("Request data is required.");
+                }
+                var createdVoucher = await _voucherService.CreateVoucherAsync(request);
+                return CreatedAtAction(nameof(GetVoucherById), new { createdVoucher.voucherId }, createdVoucher);
             }
-
-            var createdVoucher = await _voucherService.CreateVoucherAsync(request);
-            return CreatedAtAction(nameof(GetVoucherById), new { createdVoucher.voucherId }, createdVoucher);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{voucherId}")]
