@@ -19,7 +19,7 @@ namespace Domain.Domain.Entities
 
         // Foreign Key to Brand
         public int BrandId { get; set; }
-
+        public float Rating { get; set; }
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
 

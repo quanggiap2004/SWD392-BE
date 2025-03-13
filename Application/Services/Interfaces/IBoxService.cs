@@ -19,5 +19,6 @@ namespace Application.Services.Interfaces
         Task<IEnumerable<GetAllBoxesDTO>> SearchBoxesByNameAsync(string? boxName);
         Task UpdateSoldQuantity(ICollection<OrderItem> orderItems);
         Task<BoxAndBoxItemResponseDto> getBoxByBoxOptionId(int boxOptionId);
+        Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId);
     }
 }

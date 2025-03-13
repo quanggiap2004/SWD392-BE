@@ -110,5 +110,10 @@ namespace Application.Services.Implementations
         {
             await _boxOptionRepository.ReduceStockQuantity(orderItems);
         }
+
+        public async Task<bool> UpdateAverageBoxOptionRating(int boxOptionId)
+        {
+            return await _boxOptionRepository.UpdateAverageBoxOptionRating(boxOptionId);
+        }
     }
 }
