@@ -72,11 +72,11 @@ namespace Data.Repository.Implementations
             }
 
             existingVoucher.VoucherName = voucher.VoucherName;
-            existingVoucher.VoucherCode = voucher.VoucherCode;
             existingVoucher.VoucherDiscount = voucher.VoucherDiscount;
             existingVoucher.VoucherStartDate = voucher.VoucherStartDate;
             existingVoucher.VoucherEndDate = voucher.VoucherEndDate;
             existingVoucher.MaxDiscount = voucher.MaxDiscount;
+            existingVoucher.NumOfVoucher = voucher.NumOfVoucher;
 
             _context.Vouchers.Update(existingVoucher);
             await _context.SaveChangesAsync();
