@@ -77,6 +77,10 @@ namespace Application.Services.Implementations
             address.AddressDetail = updateAddressDTO.addressDetail;
             address.PhoneNumber = updateAddressDTO.phoneNumber;
             address.Name = updateAddressDTO.name;
+            address.WardCode = updateAddressDTO.WardCode;
+            address.DistrictId = updateAddressDTO.DistrictId;
+            address.ProvinceId = updateAddressDTO.ProvinceId;
+            address.Note = updateAddressDTO.note;
 
             var updatedAddress = await _addressRepository.UpdateAddressAsync(address);
             return new AddressResponseDto
@@ -91,6 +95,7 @@ namespace Application.Services.Implementations
                 phoneNumber = updatedAddress.PhoneNumber,
                 districtId = address.DistrictId,
                 provinceId = address.ProvinceId,
+                wardCode = address.WardCode,
                 note = address.Note
             };
         }
