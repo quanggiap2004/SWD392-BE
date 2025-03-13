@@ -5,6 +5,7 @@ using Common.Model.VoucherDTOs.Request;
 using Common.Model.VoucherDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
+using System;
 
 namespace Application.Services.Implementations
 {
@@ -28,9 +29,17 @@ namespace Application.Services.Implementations
 
         public async Task<VoucherResponseDto> CreateVoucherAsync(CreateVoucherRequest request)
         {
-            var voucher = _mapper.Map<Voucher>(request);
-            var createdVoucher = await _voucherRepository.CreateVoucherAsync(voucher);
-            return _mapper.Map<VoucherResponseDto>(createdVoucher);
+            try
+            {
+                var voucher = _mapper.Map<Voucher>(request);
+                voucher.VoucherCode = GenerateVoucherCode(9);
+                var createdVoucher = await _voucherRepository.CreateVoucherAsync(voucher);
+                return _mapper.Map<VoucherResponseDto>(createdVoucher);
+            }
+            catch (Exception ex)
+            {
+                throw new CustomExceptions.BadRequestException("Voucher id create failed due to random into duplicate id :((");
+            }
         }
 
         public async Task<bool> DeleteVoucherAsync(int voucherId)
@@ -65,6 +74,14 @@ namespace Application.Services.Implementations
             _mapper.Map(request, voucherToUpdate);
             var updatedVoucher = await _voucherRepository.UpdateVoucherAsync(voucherToUpdate);
             return _mapper.Map<VoucherResponseDto>(updatedVoucher);
+        }
+        private string GenerateVoucherCode(int length)
+        {
+            Random _random = new Random();
+            string VoucherChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Range(0, length)
+                .Select(_ => VoucherChars[_random.Next(VoucherChars.Length)])
+                .ToArray());
         }
     }
 }
