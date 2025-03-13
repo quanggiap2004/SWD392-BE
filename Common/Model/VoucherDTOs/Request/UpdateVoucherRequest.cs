@@ -10,7 +10,6 @@ namespace Common.Model.VoucherDTOs.Request
     {
         public string voucherName { get; set; }
         public int voucherDiscount { get; set; }
-        public string voucherCode { get; set; }
         public int numOfVoucher { get;set; }
         public DateTime voucherStartDate { get; set; }
         public DateTime voucherEndDate { get; set; }
