@@ -25,7 +25,7 @@ namespace Data.Repository.Implementations
         public async Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
         {
             var result = await _context.Orders.AsNoTracking()
-                .Where(o => userId <= 0 || o.UserId == userId)
+                .Where(o => (userId <= 0 || o.UserId == userId) && o.IsEnable == true)
                 .Select(o => new ManageOrderDto
                 {
                     userId = o.UserId,
