@@ -47,14 +47,40 @@ namespace Data.Repository.Implementations
             return result;
         }
 
-        public async Task<IEnumerable<Feedback>> GetAllFeedback()
+        public async Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedback()
         {
-            return await _context.Feedbacks.Include(f => f.User).ToListAsync();
+            return await _context.Feedbacks.AsNoTracking().Select( f => new FullFeedbackResponseDto
+            {
+                feedbackId = f.FeedbackId,
+                feedbackContent = f.FeedbackContent,
+                imageUrl = f.ImageUrl,
+                rating = f.Rating,
+                createdAt = f.CreatedAt,
+                updatedAt = f.UpdatedAt,
+                userId = f.User.UserId,
+                userName = f.User.Username,
+                email = f.User.Email,
+                boxOptionName = f.OrderItem.BoxOption.BoxOptionName,
+                boxOptionId = f.OrderItem.BoxOptionId
+            }).ToListAsync();
         }
 
-        public async Task<IEnumerable<Feedback>> GetAllFeedbackByBoxId(int boxId)
+        public async Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedbackByBoxId(int boxId)
         {
-            return await _context.Feedbacks.Where(f => f.OrderItem.BoxOption.BoxId == boxId).Include(f => f.User).ToListAsync();
+            return await _context.Feedbacks.Where(f => f.OrderItem.BoxOption.BoxId == boxId).Select(f => new FullFeedbackResponseDto
+            {
+                feedbackId = f.FeedbackId,
+                feedbackContent = f.FeedbackContent,
+                imageUrl = f.ImageUrl,
+                rating = f.Rating,
+                createdAt = f.CreatedAt,
+                updatedAt = f.UpdatedAt,
+                userId = f.User.UserId,
+                userName = f.User.Username,
+                email = f.User.Email,
+                boxOptionName = f.OrderItem.BoxOption.BoxOptionName,
+                boxOptionId = f.OrderItem.BoxOptionId
+            }).ToListAsync();
         }
 
         public async Task<bool> UpdateFeedback(int id, UpdateFeedbackRequestDto feedbackRequestDto)
