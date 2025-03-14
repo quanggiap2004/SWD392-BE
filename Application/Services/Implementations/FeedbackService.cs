@@ -76,14 +76,12 @@ namespace Application.Services.Implementations
 
         public async Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedback()
         {
-            var feedbacks = await _feedbackRepository.GetAllFeedback();
-            return _mapper.Map<IEnumerable<FullFeedbackResponseDto>>(feedbacks);
+            return await _feedbackRepository.GetAllFeedback();
         }
 
         public async Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedbackByBoxId(int boxId)
         {
-            var feedbacks = await _feedbackRepository.GetAllFeedbackByBoxId(boxId);
-            return _mapper.Map<IEnumerable<FullFeedbackResponseDto>>(feedbacks);
+            return await _feedbackRepository.GetAllFeedbackByBoxId(boxId);
         }
 
         public async Task<bool> UpdateFeedback(int id, UpdateFeedbackRequestDto feedbackRequestDto)

@@ -15,9 +15,11 @@ namespace Common.Model.FeedbackDTOs.Response
         public string imageUrl { get; set; }
 
         public int orderItemId { get; set; }
-        public int rating { get; set; }
+        public float rating { get; set; }
         public int userId { get; set; }
         public string userName { get; set; }
         public string email { get; set; }
+        public string boxOptionName { get; set; }
+        public int boxOptionId { get; set; }
     }
 }

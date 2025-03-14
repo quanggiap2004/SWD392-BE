@@ -1,4 +1,5 @@
 ﻿using Common.Model.FeedbackDTOs.Request;
+using Common.Model.FeedbackDTOs.Response;
 using Domain.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Data.Repository.Interfaces
     {
         Task<Feedback> CreateFeedback(Feedback feedback);
         Task<bool> DeleteFeedbackAsync(int id);
-        Task<IEnumerable<Feedback>> GetAllFeedback();
-        Task<IEnumerable<Feedback>> GetAllFeedbackByBoxId(int boxId);
+        Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedback();
+        Task<IEnumerable<FullFeedbackResponseDto>> GetAllFeedbackByBoxId(int boxId);
         Task<bool> UpdateFeedback(int id, UpdateFeedbackRequestDto feedbackRequestDto);
     }
 }
