@@ -70,8 +70,8 @@ namespace APILayer.Controllers
 
                 // Generate email confirmation token
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
-
+                //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+                var confirmationLink = $"{_configuration["FrontendUrl"]}/confirm-email?token={token}&email={user.Email}";
                 // Send email
                 await _emailService.SendRegistrationConfirmationEmailAsync(user.Email, confirmationLink, user.FullName);
 
