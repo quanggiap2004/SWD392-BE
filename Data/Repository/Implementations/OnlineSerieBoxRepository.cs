@@ -134,7 +134,7 @@ namespace Data.Repository.Implementations
 
         public async Task<bool> UpdatePublishStatusAsync(bool status, int id)
         {
-            return await _context.OnlineSerieBoxes.Where(o => o.OnlineSerieBoxId == id).ExecuteUpdateAsync(setter => setter.SetProperty(o => o.IsPublished, status)) > 0;
+            return await _context.OnlineSerieBoxes.Where(o => o.OnlineSerieBoxId == id && o.BoxOption.BoxOptionStock > 0).ExecuteUpdateAsync(setter => setter.SetProperty(o => o.IsPublished, status)) > 0;
         }
     }
 }
