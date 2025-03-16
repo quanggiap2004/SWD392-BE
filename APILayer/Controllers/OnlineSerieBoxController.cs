@@ -103,7 +103,7 @@ namespace APILayer.Controllers
                     return Ok("Update publish status successfully");
                 } else
                 {
-                    return BadRequest("Update publish status failed");
+                    return BadRequest("Update publish status failed, out of stock");
                 }
             }
             catch (Exception e)

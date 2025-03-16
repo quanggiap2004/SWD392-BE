@@ -230,7 +230,6 @@ namespace Application.Services.Implementations
                 boxOption.BoxOptionStock -= 1;
                 boxOption.DisplayPrice = basePrice;
                 onlineSerieBox.Turn = 0;
-                onlineSerieBox.IsPublished = false;
                 await _currentRolledItemService.ResetCurrentRoll(onlineSerieBox.OnlineSerieBoxId);
             }
 
@@ -239,7 +238,6 @@ namespace Application.Services.Implementations
             await _boxOptionRepository.UpdateBoxOptionAsync(boxOption);
 
             return selectedItem;
-
         }
 
         public async Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxByIdAsync(int onlineSerieBoxId)
