@@ -38,5 +38,18 @@ namespace APILayer.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetOrderById (int id)
+        {
+            try
+            {
+                var result = await _orderService.GetOrderById(id);
+                return Ok(result);
+            }catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

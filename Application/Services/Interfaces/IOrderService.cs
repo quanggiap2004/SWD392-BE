@@ -12,5 +12,6 @@ namespace Application.Services.Interfaces
         Task<DraftOrderDto> SaveDraftOrder(CreateOrderDTO model);
         Task<CreateOrderDTO> GetOrderDto(int orderId);
         Task<OrderResponseDto> UpdateOrderVnPay(CreateOrderDTO orderDto, int orderId);
+        Task<ManageOrderDto> GetOrderById(int orderId);
     }
 }

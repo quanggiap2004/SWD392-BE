@@ -17,6 +17,8 @@ namespace Common.Model.OrderDTOs.Response
         public bool openRequest { get; set; } = false;
         public bool refundRequest { get; set; } = false;
         public int currentStatusId { get; set; }
+        public decimal subTotal {  get; set; }
+        public decimal discountAmount {  get; set; }
         public decimal shippingFee { get; set; }
         public ICollection<OrderStatusDetailSimple> orderStatusDetailsSimple { get; set; }
 

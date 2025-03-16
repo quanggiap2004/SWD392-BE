@@ -56,6 +56,8 @@ namespace Data.Repository.Implementations
                     totalPrice = o.TotalPrice,
                     currentStatusId = o.CurrentOrderStatusId,
                     shippingFee = o.ShippingFee,
+                    subTotal = o.SubTotal,
+                    discountAmount = o.DiscountAmount,
                     voucher = o.Voucher == null ? null : new VoucherDto
                     {
                         voucherId = o.VoucherId,
@@ -101,12 +103,13 @@ namespace Data.Repository.Implementations
 
         public async Task<ManageOrderDto?> GetOrderById(int orderId)
         {
-            return await _context.Orders
-                .Where(o => o.OrderId == orderId).Include(o => o.OrderItems).ThenInclude(oi => oi.UserRolledItem)
+            return await _context.Orders.AsNoTracking()
+                .Where(o => o.OrderId == orderId)
                 .Select(o => new ManageOrderDto
                 {
                     userId = o.UserId,
                     orderId = o.OrderId,
+                    userName = o.User.Username,
                     orderCreatedAt = o.OrderCreatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
@@ -115,10 +118,30 @@ namespace Data.Repository.Implementations
                         note = osd.OrderStatusNote,
                         updatedAt = osd.OrderStatusUpdatedAt
                     }).ToList(),
+                    address = o.Address == null ? null : new AddressResponseDto
+                    {
+                        addressId = o.AddressId,
+                        province = o.Address.Province,
+                        district = o.Address.District,
+                        ward = o.Address.Ward,
+                        addressDetail = o.Address.AddressDetail,
+                        userId = o.UserId,
+                        name = o.Address.Name,
+                        phoneNumber = o.Address.PhoneNumber
+                    },
                     openRequest = o.OpenRequest,
                     refundRequest = o.RefundRequest,
                     paymentMethod = o.PaymentMethod,
                     totalPrice = o.TotalPrice,
+                    currentStatusId = o.CurrentOrderStatusId,
+                    shippingFee = o.ShippingFee,
+                    subTotal = o.SubTotal,
+                    discountAmount = o.DiscountAmount,
+                    voucher = o.Voucher == null ? null : new VoucherDto
+                    {
+                        voucherId = o.VoucherId,
+                        voucherDiscount = o.Voucher.VoucherDiscount,
+                    },
                     orderItems = o.OrderItems.Select(oi => new OrderItemSimpleDto
                     {
                         orderItemId = oi.OrderItemId,
@@ -129,13 +152,16 @@ namespace Data.Repository.Implementations
                         orderStatusCheckCardImage = oi.OrderStatusCheckCardImage,
                         refundStatus = oi.RefundStatus,
                         openRequestNumber = oi.OpenRequestNumber,
+                        boxOptionName = oi.BoxOption.BoxOptionName,
+                        boxName = oi.BoxOption.Box.BoxName,
+                        imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
+                        numOfRefund = oi.NumOfRefund,
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
                             userRolledItemId = oi.UserRolledItem.UserRolledItemId,
                             boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl
                         }
-                    }).ToList(),
-                    currentStatusId = o.CurrentOrderStatusId
+                    }).ToList()
                 }).FirstOrDefaultAsync();
         }
 
