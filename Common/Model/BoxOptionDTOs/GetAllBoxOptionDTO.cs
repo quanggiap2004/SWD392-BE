@@ -11,6 +11,7 @@ namespace Common.Model.BoxOptionDTOs
         public decimal DisplayPrice { get; set; }  // float
         public int BoxOptionStock { get; set; }  // int
         public bool IsDeleted { get; set; } = false;
+        public bool IsOnlineSerieBox { get; set; } = false;
         public BelongBoxResponseDTO BelongBox { get; set; }
         public bool isOnlineSerieBox { get; set; }
     }

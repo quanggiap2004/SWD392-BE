@@ -83,6 +83,7 @@ namespace Application.Services.Implementations
                     OriginPrice = boption.OriginPrice,
                     DisplayPrice = boption.DisplayPrice,
                     IsDeleted = boption.IsDeleted,
+                    IsOnlineSerieBox = boption.IsOnlineSerieBox,
                 }).ToList() ?? new List<BoxOptionDTO>(),
 
                 //OnlineSerieBox = b.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO
@@ -152,6 +153,8 @@ namespace Application.Services.Implementations
                     OriginPrice = boption.OriginPrice,
                     DisplayPrice = boption.DisplayPrice,
                     IsDeleted = boption.IsDeleted,
+                    IsOnlineSerieBox = boption.IsOnlineSerieBox,
+
                 }).ToList() ?? new List<BoxOptionDTO>(),
 
                 //OnlineSerieBox = box.OnlineSerieBoxes?.Select(bOnline => new OnlineSerieBoxDTO

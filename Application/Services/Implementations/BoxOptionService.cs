@@ -43,6 +43,7 @@ namespace Application.Services.Implementations
                 OriginPrice = bOption.OriginPrice,
                 DisplayPrice = bOption.DisplayPrice,
                 IsDeleted = bOption.IsDeleted,
+                IsOnlineSerieBox = bOption.IsOnlineSerieBox,
                 BelongBox = new BelongBoxResponseDTO
                 {
                     BoxId = bOption.BoxId,
@@ -74,6 +75,7 @@ namespace Application.Services.Implementations
                 OriginPrice = boxOption.OriginPrice,
                 DisplayPrice = boxOption.DisplayPrice,
                 IsDeleted = boxOption.IsDeleted,
+                IsOnlineSerieBox = boxOption.IsOnlineSerieBox,
                 BelongBox = new BelongBoxResponseDTO
                 {
                     BoxId = boxOption.BoxId,
