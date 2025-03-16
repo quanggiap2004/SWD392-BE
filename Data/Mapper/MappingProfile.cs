@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Model.BoxItemDTOs.Response;
 using Common.Model.BoxOptionDTOs.Response;
 using Common.Model.CurrentRolledITemDTOs.Request;
 using Common.Model.FeedbackDTOs.Request;
@@ -32,6 +33,9 @@ namespace Data.Mapper
                 .ForMember(dest => dest.userId, opt => opt.MapFrom(src => src.User.UserId))
                 .ForMember(dest => dest.userName, opt => opt.MapFrom(src => src.User.Username))
                 .ForMember(dest => dest.email, opt => opt.MapFrom(src => src.User.Email));
+
+            //BoxItem
+            CreateMap<BoxItem, BoxItemResponseDto>();
         }
     }
 }

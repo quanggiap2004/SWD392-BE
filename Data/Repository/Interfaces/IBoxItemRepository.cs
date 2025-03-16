@@ -1,4 +1,5 @@
-﻿using Domain.Domain.Entities;
+﻿using Common.Model.BoxItemDTOs.Response;
+using Domain.Domain.Entities;
 
 namespace Data.Repository.Interfaces
 {
@@ -8,7 +9,7 @@ namespace Data.Repository.Interfaces
 
         Task<BoxItem> GetBoxItemByIdAsync(int id);
         Task<BoxItem> GetBoxItemByIdDTO(int id);
-        Task<BoxItem> AddBoxItemAsync(BoxItem boxItem);
+        Task<BoxItemResponseDto> AddBoxItemAsync(BoxItem boxItem);
         Task<BoxItem> UpdateBoxItemAsync(BoxItem boxItem);
         Task DeleteBoxItemAsync(int id);
         Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id);

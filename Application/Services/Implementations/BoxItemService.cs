@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.BoxDTOs;
 using Common.Model.BoxItemDTOs;
+using Common.Model.BoxItemDTOs.Response;
 using Common.Model.UserVotedBoxItemDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
@@ -19,7 +20,7 @@ namespace Application.Services.Implementations
             _userVotedBoxItemRepository = userVotedBoxItemRepository;
 
         }
-        public async Task<BoxItem> AddBoxItemAsync(BoxItem boxItem)
+        public async Task<BoxItemResponseDto> AddBoxItemAsync(BoxItem boxItem)
         {
             var addedBoxitem = await _boxItemRepository.AddBoxItemAsync(boxItem);
             return addedBoxitem;
