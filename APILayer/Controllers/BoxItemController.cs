@@ -51,31 +51,38 @@ namespace APILayer.Controllers
         [HttpPost]
         public async Task<ActionResult<BoxItem>> AddBoxItem([FromBody] AddBoxItemDTO addBoxItemDTO)
         {
-
-            if (addBoxItemDTO == null)
+            try
             {
-                return BadRequest("Box Item's Data is required");
+                if (addBoxItemDTO == null)
+                {
+                    return BadRequest("Box Item's Data is required");
+                }
+
+                //var existingBrand = await _brandService.GetBrandByNameAsync(addBrand.Name);
+                //if (existingBrand != null)
+                //{
+                //    return Conflict("Brand already exists.");
+                //}
+
+                var ToAddBoxItem = new BoxItem
+                {
+                    BoxItemName = addBoxItemDTO.BoxItemName,
+                    BoxItemDescription = addBoxItemDTO.BoxItemDescription,
+                    BoxItemColor = addBoxItemDTO.BoxItemColor,
+                    BoxItemEyes = addBoxItemDTO.BoxItemEyes,
+                    ImageUrl = addBoxItemDTO.ImageUrl,
+                    IsSecret = addBoxItemDTO.IsSecret,
+                    BoxId = addBoxItemDTO.BoxId,
+                };
+
+                var result = await _boxItemService.AddBoxItemAsync(ToAddBoxItem);
+                return CreatedAtAction(nameof(GetBoxItemById), new { id = result.boxItemId }, result);
             }
-
-            //var existingBrand = await _brandService.GetBrandByNameAsync(addBrand.Name);
-            //if (existingBrand != null)
-            //{
-            //    return Conflict("Brand already exists.");
-            //}
-
-            var ToAddBoxItem = new BoxItem
+            catch(Exception ex)
             {
-                BoxItemName = addBoxItemDTO.BoxItemName,
-                BoxItemDescription = addBoxItemDTO.BoxItemDescription,
-                BoxItemColor = addBoxItemDTO.BoxItemColor,
-                BoxItemEyes = addBoxItemDTO.BoxItemEyes,
-                ImageUrl = addBoxItemDTO.ImageUrl,
-                IsSecret = addBoxItemDTO.IsSecret,
-                BoxId = addBoxItemDTO.BoxId,
-            };
-
-            var result = await _boxItemService.AddBoxItemAsync(ToAddBoxItem);
-            return CreatedAtAction(nameof(GetBoxItemById), new { id = result.BoxItemId }, result);
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpDelete("{id}")]
