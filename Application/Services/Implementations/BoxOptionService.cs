@@ -80,8 +80,7 @@ namespace Application.Services.Implementations
                 {
                     BoxId = boxOption.BoxId,
                     BoxName = boxOption.Box.BoxName,
-                },
-                isOnlineSerieBox = boxOption.IsOnlineSerieBox
+                }
             };
             return boxOptionDTO;
         }

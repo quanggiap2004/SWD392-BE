@@ -13,6 +13,5 @@ namespace Common.Model.BoxOptionDTOs
         public bool IsDeleted { get; set; } = false;
         public bool IsOnlineSerieBox { get; set; } = false;
         public BelongBoxResponseDTO BelongBox { get; set; }
-        public bool isOnlineSerieBox { get; set; }
     }
 }
