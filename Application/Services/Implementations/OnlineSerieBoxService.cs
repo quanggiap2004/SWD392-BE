@@ -158,7 +158,7 @@ namespace Application.Services.Implementations
             var weightedItems = notRolledItems.Select(item => new
             {
                 Item = item,
-                Weight = item.isSecret ? 35 : 25
+                Weight = item.isSecret ? 20 : 25
             }).ToList();
 
             int totalWeight = weightedItems.Sum(w => w.Weight);
@@ -218,18 +218,19 @@ namespace Application.Services.Implementations
                 boxOption.DisplayPrice = onlineSerieBox.PriceAfterSecret;
                 onlineSerieBox.IsSecretOpen = true;
             }
-            else
+            else if(!onlineSerieBox.IsSecretOpen)
             {
                 boxOption.DisplayPrice += boxOption.DisplayPrice * priceIncreasePercent / 100m;
             }
 
             await _currentRolledItemService.AddCurrentRolledItem(currentRolledItemDto);
-            // Check if all items have been rolled and turn equals MaxTurn
+            // Check if all items have been rolled
             if (notRolledItems.Count == 1)
             {
                 boxOption.BoxOptionStock -= 1;
                 boxOption.DisplayPrice = basePrice;
                 onlineSerieBox.Turn = 0;
+                onlineSerieBox.IsSecretOpen = false;
                 await _currentRolledItemService.ResetCurrentRoll(onlineSerieBox.OnlineSerieBoxId);
             }
 
