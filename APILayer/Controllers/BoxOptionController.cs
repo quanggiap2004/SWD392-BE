@@ -86,7 +86,7 @@ namespace APILayer.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<BoxOption>> UpdateBoxItem(int id, [FromBody] AddBoxOptionDTO updateBoxOptionDTO)
+        public async Task<ActionResult<BoxOption>> UpdateBoxOption(int id, [FromBody] AddBoxOptionDTO updateBoxOptionDTO)
         {
             if (updateBoxOptionDTO == null)
             {

@@ -8,6 +8,8 @@
         public decimal DisplayPrice { get; set; }  // float
         public int BoxOptionStock { get; set; }  // int
         public bool IsDeleted { get; set; } = false;
+        public bool IsOnlineSerieBox { get; set; } = false;
+
         public int BoxId { get; set; }  // Foreign Key to Box
     }
 }
