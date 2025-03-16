@@ -16,19 +16,6 @@ namespace Data.Mapper
             CreateMap<OnlineSerieBox, GetAllOnlineSerieBoxResponse>();
             CreateMap<CurrentRolledItemDto, CurrentRolledItem>();
 
-            //Voucher
-            CreateMap<CreateVoucherRequest, Voucher>();
-            CreateMap<Voucher, VoucherResponseDto>();
-            CreateMap<UpdateVoucherRequest, Voucher>();
-
-            //Feedback
-            CreateMap<FeedbackRequestDto, Feedback>();
-            CreateMap<Feedback, FeedbackResponseDto>();
-            CreateMap<Feedback, FullFeedbackResponseDto>()
-                .ForMember(dest => dest.userId, opt => opt.MapFrom(src => src.User.UserId))
-                .ForMember(dest => dest.userName, opt => opt.MapFrom(src => src.User.Username))
-                .ForMember(dest => dest.email, opt => opt.MapFrom(src => src.User.Email));
-
             //BoxItem
             CreateMap<BoxItem, BoxItemResponseDto>();
         }
