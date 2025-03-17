@@ -77,7 +77,7 @@ namespace APILayer.Controllers
 
                 return Ok(new { message = "Registered successful. Please check your email to confirm your account." });
             }
-            return BadRequest(new { message = "Password must contain at least 8 character with 1 upper case, username and email must be unique" });
+            return BadRequest(new { message = result.Errors });
         }
 
         [AllowAnonymous]
