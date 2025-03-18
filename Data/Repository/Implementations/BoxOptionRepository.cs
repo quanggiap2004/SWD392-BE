@@ -86,5 +86,23 @@ namespace Data.Repository.Implementations
             }
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdateAverageBoxOptionRating(int boxOptionId)
+        {
+            var orderItems = await _context.OrderItems.Where(x => x.BoxOptionId == boxOptionId && x.Feedback != null).Include(x => x.Feedback).ToListAsync();
+            if (orderItems.Count == 0)
+            {
+                return false;
+            }
+            float totalRating = 0f;
+            foreach (var orderItem in orderItems)
+            {
+                totalRating += orderItem.Feedback.Rating;
+            }
+            float averageRating = totalRating / orderItems.Count;
+            var result = await _context.BoxOptions.Where(bo => bo.BoxOptionId == boxOptionId).ExecuteUpdateAsync(setter => setter.SetProperty(bo => bo.Rating, averageRating));
+            await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }

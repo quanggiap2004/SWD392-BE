@@ -70,14 +70,14 @@ namespace APILayer.Controllers
 
                 // Generate email confirmation token
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
-
+                //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+                var confirmationLink = $"{_configuration["FrontendUrl"]}/confirm-email?token={token}&email={user.Email}";
                 // Send email
                 await _emailService.SendRegistrationConfirmationEmailAsync(user.Email, confirmationLink, user.FullName);
 
                 return Ok(new { message = "Registered successful. Please check your email to confirm your account." });
             }
-            return BadRequest(new { message = "Password must contain at least 8 character with 1 upper case, username and email must be unique" });
+            return BadRequest(new { message = result.Errors });
         }
 
         [AllowAnonymous]

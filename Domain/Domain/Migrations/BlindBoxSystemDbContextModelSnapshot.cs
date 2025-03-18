@@ -228,6 +228,9 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
                     b.Property<int>("SoldQuantity")
                         .HasColumnType("integer");
 
@@ -340,6 +343,9 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<decimal>("OriginPrice")
                         .HasColumnType("numeric");
 
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
                     b.HasKey("BoxOptionId");
 
                     b.HasIndex("BoxId");
@@ -412,16 +418,15 @@ namespace BlindBoxSystem.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FeedbackType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("OrderItemId")
                         .HasColumnType("integer");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -557,9 +562,6 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<bool>("IsFeedback")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsRefund")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("NumOfRefund")
                         .HasColumnType("integer");
 
@@ -577,6 +579,10 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<string>("RefundStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int?>("UserRolledItemId")
                         .HasColumnType("integer");
@@ -997,7 +1003,7 @@ namespace BlindBoxSystem.Domain.Migrations
             modelBuilder.Entity("Domain.Domain.Entities.Feedback", b =>
                 {
                     b.HasOne("Domain.Domain.Entities.OrderItem", "OrderItem")
-                        .WithOne("Feedbacks")
+                        .WithOne("Feedback")
                         .HasForeignKey("Domain.Domain.Entities.Feedback", "OrderItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1250,7 +1256,7 @@ namespace BlindBoxSystem.Domain.Migrations
 
             modelBuilder.Entity("Domain.Domain.Entities.OrderItem", b =>
                 {
-                    b.Navigation("Feedbacks")
+                    b.Navigation("Feedback")
                         .IsRequired();
                 });
 

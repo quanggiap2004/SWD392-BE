@@ -1,4 +1,5 @@
-﻿using Common.Model.UserRolledItemDTOs.Request;
+﻿using Common.Constants;
+using Common.Model.UserRolledItemDTOs.Request;
 using Common.Model.UserRolledItemDTOs.Response;
 namespace Common.Model.OrderItem
 {
@@ -13,7 +14,7 @@ namespace Common.Model.OrderItem
         public bool isFeedback { get; set; } = false;
 
         public ICollection<string> orderStatusCheckCardImage { get; set; }
-        public bool isRefund { get; set; } = false;
+        public string? refundStatus { get; set; } = ProjectConstant.RefundAvailable;
         public int openRequestNumber { get; set; }
         public string boxOptionName { get; set; }
         public string boxName { get; set; }

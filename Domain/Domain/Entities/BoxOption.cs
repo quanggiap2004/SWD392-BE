@@ -19,6 +19,7 @@ namespace Domain.Domain.Entities
         public int BoxOptionStock { get; set; }  // int
         public bool IsOnlineSerieBox { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
+        public float Rating { get;set; }
 
         [ForeignKey("BoxId")]
         public virtual Box Box { get; set; }

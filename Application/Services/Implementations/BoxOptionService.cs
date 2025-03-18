@@ -43,6 +43,7 @@ namespace Application.Services.Implementations
                 OriginPrice = bOption.OriginPrice,
                 DisplayPrice = bOption.DisplayPrice,
                 IsDeleted = bOption.IsDeleted,
+                IsOnlineSerieBox = bOption.IsOnlineSerieBox,
                 BelongBox = new BelongBoxResponseDTO
                 {
                     BoxId = bOption.BoxId,
@@ -74,12 +75,12 @@ namespace Application.Services.Implementations
                 OriginPrice = boxOption.OriginPrice,
                 DisplayPrice = boxOption.DisplayPrice,
                 IsDeleted = boxOption.IsDeleted,
+                IsOnlineSerieBox = boxOption.IsOnlineSerieBox,
                 BelongBox = new BelongBoxResponseDTO
                 {
                     BoxId = boxOption.BoxId,
                     BoxName = boxOption.Box.BoxName,
-                },
-                isOnlineSerieBox = boxOption.IsOnlineSerieBox
+                }
             };
             return boxOptionDTO;
         }
@@ -109,6 +110,11 @@ namespace Application.Services.Implementations
         public async Task ReduceStockQuantity(ICollection<OrderItem> orderItems)
         {
             await _boxOptionRepository.ReduceStockQuantity(orderItems);
+        }
+
+        public async Task<bool> UpdateAverageBoxOptionRating(int boxOptionId)
+        {
+            return await _boxOptionRepository.UpdateAverageBoxOptionRating(boxOptionId);
         }
     }
 }

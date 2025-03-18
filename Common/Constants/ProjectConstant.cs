@@ -11,6 +11,10 @@
         public static string PaymentPending = "Payment Pending";
         public static string PaymentSuccess = "Payment Success";
         public static string PaymentFailed = "Payment Failed";
+
+        public static string RefundAvailable = "Available";
+        public static string RefundRequest = "Request";
+        public static string RefundResolved = "Resolved";
         public enum OrderStatus
         {
             Pending = 1,

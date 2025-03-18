@@ -8,6 +8,7 @@ namespace Data.Repository.Interfaces
     {
         Task<OrderResponseDto> AddOrder(CreateOrderDtoDetail model);
         Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId);
+        Task<IEnumerable<Order>> GetAllOrderForDasboard();
         Task<ManageOrderDto?> GetOrderById(int orderId);
         Task<DraftOrderDto> SaveDraftOrder(string jsonModel, CreateOrderDTO model);
         Task<bool> UpdateCurrentStatus(int orderId, int statusId);

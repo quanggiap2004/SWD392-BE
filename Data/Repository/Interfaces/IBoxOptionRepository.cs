@@ -15,5 +15,6 @@ namespace Data.Repository.Interfaces
         Task<bool> UpdateStockQuantity(ICollection<OrderItemSimpleDto> orderItems);
         Task ReduceStockQuantity(ICollection<OrderItem> orderItems);
         Task<BoxOption> GetBoxOptionByIdWithOnlineSerieBox(int id);
+        Task<bool> UpdateAverageBoxOptionRating(int boxOptionId);
     }
 }

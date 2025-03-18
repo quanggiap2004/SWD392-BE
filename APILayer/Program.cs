@@ -90,6 +90,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = true;
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
 })
     .AddEntityFrameworkStores<BlindBoxSystemDbContext>()
     .AddDefaultTokenProviders();
@@ -154,6 +155,9 @@ builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IOnlineSerieBoxService, OnlineSerieBoxService>();
 builder.Services.AddScoped<IUserRolledItemService, UserRolledItemService>();
 builder.Services.AddScoped<ICurrentRolledItemService, CurrentRolledItemService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+
 #endregion
 
 #region Repositories
@@ -174,6 +178,7 @@ builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IOnlineSerieBoxRepository, OnlineSerieBoxRepository>();
 builder.Services.AddScoped<IUserRolledItemRepository, UserRolledItemRepository>();
 builder.Services.AddScoped<ICurrentRolledItemRepository, CurrentRolledItemRepository>();
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 #endregion
 
 builder.Services.AddHttpClient<ShippingService>();

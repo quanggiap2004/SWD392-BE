@@ -254,5 +254,15 @@ namespace Application.Services.Implementations
             }
             return await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, status);
         }
+
+        public async Task<ManageOrderDto> GetOrderById(int orderId)
+        {
+            var result = await _orderRepository.GetOrderById(orderId);
+            if(result == null)
+            {
+                throw new CustomExceptions.NotFoundException("Order not found: " + orderId);
+            }
+            return result;
+        }
     }
 }

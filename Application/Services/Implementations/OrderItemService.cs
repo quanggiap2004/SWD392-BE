@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Common.Constants;
 using Common.Exceptions;
+using Common.Model.OrderItem.Request;
 using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
@@ -47,6 +48,26 @@ namespace Application.Services.Implementations
                 statusId = (int)ProjectConstant.OrderStatus.Shipping,
                 note = "Staff uploaded image",
             });
+            return true;
+        }
+
+        public async Task<bool> UpdateDataAfterRefund(RefundOrderItemRequestDto request, int id)
+        {
+            var result = await _orderItemRepository.UpdateDataAfterRefund(request, id);
+            if (!result)
+            {
+                throw new CustomExceptions.NotFoundException("OrderItem not found");
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateRefundRequest(int id)
+        {
+            var result = await _orderItemRepository.UpdateRefundRequest(id);
+            if (!result)
+            {
+                throw new CustomExceptions.NotFoundException("OrderItem not found");
+            }
             return true;
         }
     }

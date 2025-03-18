@@ -66,7 +66,8 @@ namespace APILayer.Controllers
                 BlogPostTitle = addBlogDTO.BlogPostTitle,
                 BlogPostContent = addBlogDTO.BlogPostContent,
                 BlogPostImage = addBlogDTO.BlogPostImage,
-                BlogCreatedDate = DateTime.Now
+                BlogCreatedDate = DateTime.UtcNow,
+                UserId = addBlogDTO.userId
             };
 
             var result = await _blogPostService.AddBlogAsync(ToAddBlog);

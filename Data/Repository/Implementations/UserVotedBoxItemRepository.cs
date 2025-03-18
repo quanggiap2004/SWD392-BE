@@ -34,6 +34,13 @@ namespace Data.Repository.Implementations
                     LastUpdated = DateTime.UtcNow
                 };
                 _context.UserVotedBoxItems.Add(userVotedBoxItem);
+
+
+                var boxItem = await _context.BoxItems
+                .Include(b => b.UserVotedBoxItems)
+                .FirstOrDefaultAsync(b => b.BoxItemId == addVoteDTO.BoxItemId);
+                boxItem.NumOfVote += 1;
+                await _context.SaveChangesAsync();
             }
             else
             {
@@ -66,6 +73,7 @@ namespace Data.Repository.Implementations
         {
             return await _context.UserVotedBoxItems
                 .Where(uv => uv.BoxItemId == boxItemId)
+                .Include(u => u.User)
                 .ToListAsync();
         }
     }
