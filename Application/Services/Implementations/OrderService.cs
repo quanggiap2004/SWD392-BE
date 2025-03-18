@@ -94,10 +94,13 @@ namespace Application.Services.Implementations
                         currentUserRolledItemIds.Add(item.userRolledItemForManageOrder.userRolledItemId);
                     }
                 }
-                var updateResult = await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, false);
-                if(!updateResult)
+                if(currentUserRolledItemIds.Count > 0)
                 {
-                    throw new CustomExceptions.BadRequestException("Update user rolled item failed");
+                    var updateResult = await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, false);
+                    if (!updateResult)
+                    {
+                        throw new CustomExceptions.BadRequestException("Update user rolled item failed");
+                    }
                 }
                 await _box.UpdateSoldQuantity(orderItems);
                 
@@ -215,7 +218,8 @@ namespace Application.Services.Implementations
                 OrderPrice = model.price,
                 OpenRequestNumber = model.orderItemOpenRequestNumber,
                 OrderStatusCheckCardImage = new List<string>(),
-                UserRolledItemId = model.userRolledItemId
+                UserRolledItemId = model.userRolledItemId,
+                RefundStatus = model.isOnlineSerieBox ? ProjectConstant.RefundResolved : ProjectConstant.RefundAvailable,
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems);
             await UpdateUserRolledItemCheckoutStatus(model.orderItemRequestDto, true);
@@ -247,10 +251,14 @@ namespace Application.Services.Implementations
             List<int> currentUserRolledItemIds = new List<int>();
             foreach (var item in orderItemRequestDto)
             {
-                if (item.isOnlineSerieBox)
+                if (item.isOnlineSerieBox && item.userRolledItemId != null)
                 {
                     currentUserRolledItemIds.Add(item.userRolledItemId.Value);
                 }
+            }
+            if(currentUserRolledItemIds.Count <= 0)
+            {
+                return false;
             }
             return await _userRolledItemService.UpdateUserRolledItemCheckoutStatus(currentUserRolledItemIds, status);
         }
