@@ -13,11 +13,15 @@ namespace Common.Model.UserRolledItemDTOs.Request
         public bool isCheckout { get; set; }
         public BoxItemResponseDto boxItem { get; set; }
         public int userId { get; set; }
+        public string userName { get; set; }
         public int quantity { get; set; } = 1;
         public decimal price { get; set; } = 0;
         public int boxOptionId { get; set; }
+        public string boxOptionName { get; set; }
         public decimal originPrice { get; set; } = 0;
         public bool isOnlineSerieBox { get; set; } = false;
         public int orderItemOpenRequestNumber { get; set; } = 0;
+        public string brandName {  get; set; }
+        public int brandId {  get; set; }
     }
 }

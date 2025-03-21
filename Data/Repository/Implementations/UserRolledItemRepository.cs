@@ -28,8 +28,16 @@ namespace Data.Repository.Implementations
                 {
                     id = x.UserRolledItemId,
                     userId = x.UserId,
+                    userName = x.User.Username,
                     boxOptionId = x.OnlineSerieBox.BoxOption.BoxOptionId,
                     isCheckout = x.IsCheckOut,
+                    boxOptionName = x.OnlineSerieBox.BoxOption.BoxOptionName,
+                    brandId = x.BoxItem.Box.BrandId,
+                    brandName = x.BoxItem.Box.Brand.BrandName,
+                    isOnlineSerieBox = true,
+                    originPrice = 0,
+                    price = 0,
+                    quantity = 1,
                     boxItem = new BoxItemResponseDto
                     {
                         boxItemId = x.BoxItem.BoxItemId,
