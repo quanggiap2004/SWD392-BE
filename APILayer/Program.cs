@@ -1,3 +1,4 @@
+using Application.Services.BackgroundServices;
 using Application.Services.Implementations;
 using Application.Services.Interfaces;
 using Data.Mapper;
@@ -157,7 +158,7 @@ builder.Services.AddScoped<IUserRolledItemService, UserRolledItemService>();
 builder.Services.AddScoped<ICurrentRolledItemService, CurrentRolledItemService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
-
+builder.Services.AddHostedService<UpdatePendingOrderBackgroundServices>();
 #endregion
 
 #region Repositories

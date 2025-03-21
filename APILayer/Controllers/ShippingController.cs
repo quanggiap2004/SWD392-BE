@@ -32,8 +32,24 @@ namespace APILayer.Controllers
             return Ok(result);
         }
 
-
-
-
+        [HttpPut("/order/{orderId}")]
+        public async Task<IActionResult> ShipOrder(int orderId)
+        {
+            try
+            {
+                var result = await _shippingService.UpdateOrderStatusForShipping(orderId);
+                if (result)
+                {
+                    return Ok("Update shipping status sucessfully");
+                }
+                else
+                {
+                    return BadRequest("Update shpping status sucessfully failed");
+                }
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

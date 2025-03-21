@@ -7,5 +7,6 @@ namespace Application.Services.Interfaces
     {
         Task<string> GetShopsAsync();
         Task<ShippingFeeResponseDTO> GetShippingFeeAsync(ShippingFeeRequestDTO shippingFeeRequest);
+        Task<bool> UpdateOrderStatusForShipping(int orderId);
     }
 }

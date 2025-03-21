@@ -15,6 +15,10 @@
         public static string RefundAvailable = "Available";
         public static string RefundRequest = "Request";
         public static string RefundResolved = "Resolved";
+        public static bool BackgroundServiceActivatedStatus = false;
+        public static double UpdatePendingStatusInterval = 4;
+
+        public static int BackgroundUpdatePendingInterval = 2;
         public enum OrderStatus
         {
             Pending = 1,

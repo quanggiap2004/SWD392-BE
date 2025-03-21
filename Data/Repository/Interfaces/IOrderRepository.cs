@@ -14,5 +14,8 @@ namespace Data.Repository.Interfaces
         Task<bool> UpdateCurrentStatus(int orderId, int statusId);
         Task<Order?> GetOrderDto(int orderId);
         Task<OrderResponseDto> UpdateVnPayOrder(CreateOrderDtoDetail createOrderDtoDetail, int orderId);
+        Task<bool> SaveChangesAsync();
+        Task<Order> GetOrderEntityById(int orderId);
+        Task<bool> UpdateCodOrdersPendingStatus();
     }
 }

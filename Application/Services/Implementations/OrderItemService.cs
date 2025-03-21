@@ -47,6 +47,7 @@ namespace Application.Services.Implementations
                 orderId = result.orderId,
                 statusId = (int)ProjectConstant.OrderStatus.Shipping,
                 note = "Staff uploaded image",
+                updatedAt = DateTime.UtcNow,
             });
             return true;
         }

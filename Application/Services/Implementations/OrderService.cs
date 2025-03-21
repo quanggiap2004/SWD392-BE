@@ -137,6 +137,7 @@ namespace Application.Services.Implementations
                 orderId = result.orderId,
                 statusId = (int)ProjectConstant.OrderStatus.Pending,
                 note = "Order created",
+                updatedAt = DateTime.UtcNow
             });
 
             ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
@@ -236,6 +237,7 @@ namespace Application.Services.Implementations
                     orderId = result.orderId,
                     statusId = (int)ProjectConstant.OrderStatus.Arrived,
                     note = "Order arrived",
+                    updatedAt = DateTime.UtcNow
                 }).Result;
             }
             return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
@@ -243,6 +245,7 @@ namespace Application.Services.Implementations
                 orderId = result.orderId,
                 statusId = currentOrderStatusId,
                 note = "Order created",
+                updatedAt = DateTime.UtcNow
             }).Result;
         }
          
@@ -271,6 +274,24 @@ namespace Application.Services.Implementations
                 throw new CustomExceptions.NotFoundException("Order not found: " + orderId);
             }
             return result;
+        }
+
+        public async Task<bool> UpdateOrderForShipping(int orderId)
+        {
+            var order = await _orderRepository.GetOrderEntityById(orderId);
+            if (order == null)
+            {
+                throw new CustomExceptions.NotFoundException("order is invalid or current status is not processing");
+            }
+            order.CurrentOrderStatusId = (int)ProjectConstant.OrderStatus.Arrived;
+            order.PaymentStatus = ProjectConstant.PaymentSuccess;
+            return await _orderRepository.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateOrderPendingStatus()
+        {
+            await _orderRepository.UpdateCodOrdersPendingStatus();
+            return true;
         }
     }
 }
