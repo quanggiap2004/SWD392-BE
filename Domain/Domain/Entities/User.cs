@@ -23,7 +23,7 @@ namespace Domain.Domain.Entities
         public bool IsActive { get; set; } = true;
 
         public int RoleId { get; set; }
-
+        public string? AvatarUrl {  get; set; }
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
         public virtual ICollection<Address> Address { get; set; }

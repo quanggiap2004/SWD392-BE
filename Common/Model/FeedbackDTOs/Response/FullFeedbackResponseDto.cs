@@ -21,5 +21,6 @@ namespace Common.Model.FeedbackDTOs.Response
         public string email { get; set; }
         public string boxOptionName { get; set; }
         public int boxOptionId { get; set; }
+        public string? avatarUrl {  get; set; }
     }
 }

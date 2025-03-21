@@ -36,7 +36,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("boxes/{boxId}/feedback")]
-        public async Task<ActionResult<IEnumerable<FeedbackResponseDto>>> GetAllFeedbackByBoxId(int boxId)
+        public async Task<ActionResult<IEnumerable<FullFeedbackResponseDto>>> GetAllFeedbackByBoxId(int boxId)
         {
             var feedbacks = await _feedbackService.GetAllFeedbackByBoxId(boxId);
             return Ok(feedbacks);
