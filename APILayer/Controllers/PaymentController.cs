@@ -73,7 +73,7 @@ namespace APILayer.Controllers
                 {
                     await _emailService.SendPaymentConfirmationEmailAsync(user.email, user.fullname, paymentResponse.OrderId);
                 }
-                if (orderDto.orderItemRequestDto.Count == 1 && orderDto.orderItemRequestDto.First().isOnlineSerieBox == true)
+                if (orderDto.orderItemRequestDto.Count == 1 && orderDto.orderItemRequestDto.First().isOnlineSerieBox == true && orderDto.subTotal != 0)
                 {
                     return Ok(new
                     {
