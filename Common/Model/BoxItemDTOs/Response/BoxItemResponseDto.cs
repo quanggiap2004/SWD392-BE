@@ -1,4 +1,8 @@
-﻿namespace Common.Model.BoxItemDTOs.Response
+﻿using Common.Model.CurrentRolledITemDTOs.Request;
+using Common.Model.UserRolledItemDTOs.Request;
+using Common.Model.UserRolledItemDTOs.Response;
+
+namespace Common.Model.BoxItemDTOs.Response
 {
     public class BoxItemResponseDto
     {
@@ -20,5 +24,7 @@
         public int numOfVote { get; set; }
 
         public bool isSecret { get; set; }
+
+        public UserRolledItemForManageOrder? userRolledItem { get; set; }
     }
 }

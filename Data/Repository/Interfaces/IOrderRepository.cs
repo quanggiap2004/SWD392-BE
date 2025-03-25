@@ -14,5 +14,7 @@ namespace Data.Repository.Interfaces
         Task<bool> UpdateCurrentStatus(int orderId, int statusId);
         Task<Order?> GetOrderDto(int orderId);
         Task<OrderResponseDto> UpdateVnPayOrder(CreateOrderDtoDetail createOrderDtoDetail, int orderId);
+        Task UpdateShippingFeeAndAddress(int orderId, decimal shippingFee, int addressId);
+        Task<bool> UpdateOnlineSerieBoxAfterShip(int orderId);
     }
 }

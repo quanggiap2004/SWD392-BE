@@ -13,9 +13,9 @@ namespace Application.Services.Implementations
         {
             _userRolledItemRepository = userRolledItemRepository;
         }
-        public Task AddUserRolledItemAsync(UserRolledItem userRolledItem)
+        public async Task<UserRolledItem> AddUserRolledItemAsync(UserRolledItem userRolledItem)
         {
-            return _userRolledItemRepository.AddUserRolledItemAsync(userRolledItem);
+            return await _userRolledItemRepository.AddUserRolledItemAsync(userRolledItem);
         }
 
         public async Task<IEnumerable<UserRolledItemDto>> GetUserRolledItemsByUserId(int userId)

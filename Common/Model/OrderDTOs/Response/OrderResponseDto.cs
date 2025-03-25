@@ -14,5 +14,6 @@
         public decimal shippingFee { get; set; }
         public decimal subTotal { get; set; }
         public decimal discountAmount { get; set; }
+        public bool isReadyForShip { get; set; }
     }
 }

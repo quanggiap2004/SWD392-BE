@@ -5,6 +5,7 @@ using Common.Model.BoxOptionDTOs.Response;
 using Common.Model.CurrentRolledITemDTOs.Request;
 using Common.Model.OnlineSerieBoxDTOs.Request;
 using Common.Model.OnlineSerieBoxDTOs.Response;
+using Common.Model.UserRolledItemDTOs.Response;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
@@ -234,7 +235,12 @@ namespace Application.Services.Implementations
                 await _currentRolledItemService.ResetCurrentRoll(onlineSerieBox.OnlineSerieBoxId);
             }
 
-            await _userRolledItemService.AddUserRolledItemAsync(userRolledItem);
+            var userRolledItemResponse = await _userRolledItemService.AddUserRolledItemAsync(userRolledItem);
+            selectedItem.userRolledItem = new UserRolledItemForManageOrder
+            {
+                boxItemImageUrl = selectedItem.imageUrl,
+                userRolledItemId = userRolledItemResponse.UserRolledItemId,
+            };
             await _onlineSerieBoxRepository.UpdateOnlineSerieBoxAsync(onlineSerieBox);
             await _boxOptionRepository.UpdateBoxOptionAsync(boxOption);
 

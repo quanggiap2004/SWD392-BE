@@ -14,10 +14,11 @@ namespace Data.Repository.Implementations
         {
             _context = context;
         }
-        public async Task AddUserRolledItemAsync(UserRolledItem userRolledItem)
+        public async Task<UserRolledItem> AddUserRolledItemAsync(UserRolledItem userRolledItem)
         {
             await _context.UserRolledItems.AddAsync(userRolledItem);
             await _context.SaveChangesAsync();
+            return userRolledItem;
         }
 
         public async Task<IEnumerable<UserRolledItemDto>> GetUserRolledItemsByUserId(int userId)

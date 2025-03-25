@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250325102438_addIsShipOnlineSerieBoxItem")]
+    partial class addIsShipOnlineSerieBoxItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -499,7 +502,7 @@ namespace BlindBoxSystem.Domain.Migrations
                     b.Property<bool>("IsEnable")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsReadyForShipBoxItem")
+                    b.Property<bool>("IsShipOnlineSerieBoxItem")
                         .HasColumnType("boolean");
 
                     b.Property<string>("JsonOrderModel")
