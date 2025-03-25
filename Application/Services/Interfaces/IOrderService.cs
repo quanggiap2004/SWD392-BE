@@ -1,5 +1,7 @@
-﻿using Common.Model.OrderDTOs.Request;
+﻿using Common.Model.BoxItemDTOs.Response;
+using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
+using Domain.Domain.Entities;
 
 namespace Application.Services.Interfaces
 {
@@ -13,6 +15,8 @@ namespace Application.Services.Interfaces
         Task<CreateOrderDTO> GetOrderDto(int orderId);
         Task<OrderResponseDto> UpdateOrderVnPay(CreateOrderDTO orderDto, int orderId);
         Task<ManageOrderDto> GetOrderById(int orderId);
+        Task<BoxItemResponseDto> ProcessOnlineSerieBoxOrder(CreateOrderDTO model, int orderId);
+        Task<bool> UpdateOnlineSerieBoxTotalPrice(int orderId);
         Task<bool> UpdateOrderForShipping(int orderId);
         Task<bool> UpdateOrderPendingStatus();
     }

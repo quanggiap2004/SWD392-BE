@@ -5,7 +5,7 @@ namespace Application.Services.Interfaces
 {
     public interface IUserRolledItemService
     {
-        Task AddUserRolledItemAsync(UserRolledItem userRolledItem);
+        Task<UserRolledItem> AddUserRolledItemAsync(UserRolledItem userRolledItem);
         Task<IEnumerable<UserRolledItemDto>> GetUserRolledItemsByUserId(int userId);
         Task<bool> UpdateUserRolledItemCheckoutStatus(List<int> currentUserRolledItemIds, bool status);
     }

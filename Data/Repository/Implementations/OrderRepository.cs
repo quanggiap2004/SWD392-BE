@@ -1,5 +1,6 @@
 ﻿using Common.Constants;
 using Common.Model.Address.Response;
+using Common.Model.BoxItemDTOs;
 using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
 using Common.Model.OrderItem;
@@ -17,11 +18,13 @@ namespace Data.Repository.Implementations
     public class OrderRepository : IOrderRepository
     {
         private readonly BlindBoxSystemDbContext _context;
+        private readonly IUserRolledItemRepository _userRolledItemRepository;
         private readonly IOrderStatusDetailRepository _orderStatusDetailRepository;
-        public OrderRepository(BlindBoxSystemDbContext context, IOrderStatusDetailRepository orderStatusDetailRepository)
+        public OrderRepository(BlindBoxSystemDbContext context, IOrderStatusDetailRepository orderStatusDetailRepository, IUserRolledItemRepository userRolledItemRepository)
         {
             _context = context;
             _orderStatusDetailRepository = orderStatusDetailRepository;
+            _userRolledItemRepository = userRolledItemRepository;
         }
 
         public async Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
@@ -82,9 +85,23 @@ namespace Data.Repository.Implementations
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
                             userRolledItemId = oi.UserRolledItem.UserRolledItemId,
-                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl
+                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl,
+                            boxItemDto = new BoxItemDTO
+                            {
+                                BoxItemId = oi.UserRolledItem.BoxItem.BoxItemId,
+                                AverageRating = oi.UserRolledItem.BoxItem.AverageRating,
+                                BoxId = oi.UserRolledItem.BoxItem.BoxId,
+                                BoxItemColor = oi.UserRolledItem.BoxItem.BoxItemColor,
+                                BoxItemDescription = oi.UserRolledItem.BoxItem.BoxItemDescription,
+                                BoxItemEyes = oi.UserRolledItem.BoxItem.BoxItemEyes,
+                                BoxItemName = oi.UserRolledItem.BoxItem.BoxItemName,
+                                ImageUrl = oi.UserRolledItem.BoxItem.ImageUrl,
+                                IsSecret = oi.UserRolledItem.BoxItem.IsSecret,
+                                NumOfVote = oi.UserRolledItem.BoxItem.NumOfVote
+                            }
                         }
                     }).ToList(),
+                    isReadyForShipBoxItem = o.IsReadyForShipBoxItem
                 }).ToListAsync();
 
             return result;
@@ -161,9 +178,23 @@ namespace Data.Repository.Implementations
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
                             userRolledItemId = oi.UserRolledItem.UserRolledItemId,
-                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl
+                            boxItemImageUrl = oi.UserRolledItem.BoxItem.ImageUrl,
+                            boxItemDto = new BoxItemDTO
+                            {
+                                BoxItemId = oi.UserRolledItem.BoxItem.BoxItemId,
+                                AverageRating = oi.UserRolledItem.BoxItem.AverageRating,
+                                BoxId = oi.UserRolledItem.BoxItem.BoxId,
+                                BoxItemColor = oi.UserRolledItem.BoxItem.BoxItemColor,
+                                BoxItemDescription = oi.UserRolledItem.BoxItem.BoxItemDescription,
+                                BoxItemEyes = oi.UserRolledItem.BoxItem.BoxItemEyes,
+                                BoxItemName = oi.UserRolledItem.BoxItem.BoxItemName,
+                                ImageUrl = oi.UserRolledItem.BoxItem.ImageUrl,
+                                IsSecret = oi.UserRolledItem.BoxItem.IsSecret,
+                                NumOfVote = oi.UserRolledItem.BoxItem.NumOfVote
+                            }
                         }
-                    }).ToList()
+                    }).ToList(),
+                    isReadyForShipBoxItem = o.IsReadyForShipBoxItem
                 }).FirstOrDefaultAsync();
         }
 
@@ -258,7 +289,8 @@ namespace Data.Repository.Implementations
                     addressId = result.AddressId,
                     revenue = result.Revenue,
                     currentOrderStatusId = result.CurrentOrderStatusId,
-                    shippingFee = result.ShippingFee
+                    shippingFee = result.ShippingFee,
+                    isReadyForShip = result.IsReadyForShipBoxItem,
                 };
             }
             return null;
@@ -267,6 +299,31 @@ namespace Data.Repository.Implementations
         public async Task<IEnumerable<Order>> GetAllOrderForDasboard()
         {
             return await _context.Orders.Where(u => u.PaymentStatus == "Payment Success").ToListAsync();
+        }
+
+        public async Task UpdateShippingFeeAndAddress(int orderId, decimal shippingFee, int addressId)
+        {
+            await _context.Orders.Where(o => o.OrderId == orderId)
+                .ExecuteUpdateAsync(setters => 
+                setters.SetProperty(o => o.ShippingFee, shippingFee)
+                .SetProperty(o => o.AddressId, addressId));
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateOnlineSerieBoxAfterShip(int orderId)
+        {
+            var entity = await _context.Orders.Include(o =>o.OrderItems).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            if(entity == null)
+            {
+                return false;
+            }
+            var currentUserRollItemList = new List<int>();
+            var userRolledItemId = entity.OrderItems.First().UserRolledItemId.Value;
+            currentUserRollItemList.Add(userRolledItemId);
+            await _userRolledItemRepository.UpdateUserRolledItemCheckoutStatus(currentUserRollItemList, true);
+            entity.TotalPrice = entity.TotalPrice + entity.ShippingFee;
+            entity.IsReadyForShipBoxItem = true;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         

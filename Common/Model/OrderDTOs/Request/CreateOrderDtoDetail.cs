@@ -7,5 +7,6 @@
         public bool openRequest { get; set; }
         public int currentOrderStatusId { get; set; }
         public string paymentStatus { get; set; }
+        public bool isReadyForShip { get; set; } = false;
     }
 }

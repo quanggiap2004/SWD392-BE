@@ -3,6 +3,7 @@ using Common.Constants;
 using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
 using Common.Model.PaymentDTOs.Response;
+using Domain.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,13 +60,27 @@ namespace APILayer.Controllers
 
             if (!paymentResponse.VnPayResponseCode.Equals("00"))
             {
-                return BadRequest("Payment failed");
+                 return BadRequest("Payment failed");
             }
 
             // Return a response based on the validation result.
             if (paymentResponse.Success)
             {
                 CreateOrderDTO orderDto = await _orderService.GetOrderDto(paymentResponse.OrderId);
+                var orderForOnlineSerieBox = await _orderService.GetOrderById(paymentResponse.OrderId);
+                if (orderDto.orderItemRequestDto.First().isOnlineSerieBox)
+                {
+                    if (orderForOnlineSerieBox.shippingFee > 0)
+                    {
+                        var updateOnlineSerieBoxResult = await _orderService.UpdateOnlineSerieBoxTotalPrice(paymentResponse.OrderId);
+                        if(!updateOnlineSerieBoxResult)
+                        {
+                            return BadRequest("Update online serie box total price failed");
+                        }
+                        return Ok(paymentResponse);
+                    }
+                    return Ok(await _orderService.ProcessOnlineSerieBoxOrder(orderDto, paymentResponse.OrderId));
+                }
                 OrderResponseDto result = await _orderService.UpdateOrderVnPay(orderDto, paymentResponse.OrderId);
 
                 var user = await _userService.GetUserById(orderDto.userId);

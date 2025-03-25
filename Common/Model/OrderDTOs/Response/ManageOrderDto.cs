@@ -20,6 +20,7 @@ namespace Common.Model.OrderDTOs.Response
         public decimal subTotal {  get; set; }
         public decimal discountAmount {  get; set; }
         public decimal shippingFee { get; set; }
+        public bool isReadyForShipBoxItem { get; set; }
         public ICollection<OrderStatusDetailSimple> orderStatusDetailsSimple { get; set; }
 
         public ICollection<OrderItemSimpleDto> orderItems { get; set; }

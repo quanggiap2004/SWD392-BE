@@ -31,6 +31,7 @@ namespace Application.Library
                 collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value; //hash của dữ liệu trả về
             var orderInfo = vnPay.GetResponseData("vnp_OrderInfo");
             var paymentDate = time;
+            var totalPrice = vnPay.GetResponseData("vnp_Amount");
             Console.WriteLine(paymentDate);
             var checkSignature =
                 vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
@@ -51,6 +52,7 @@ namespace Application.Library
                 Token = vnpSecureHash,
                 VnPayResponseCode = vnpResponseCode,
                 PaymentDate = paymentDate,
+                totalPrice = decimal.Parse(totalPrice)
             };
         }
         public string GetIpAddress(HttpContext context)

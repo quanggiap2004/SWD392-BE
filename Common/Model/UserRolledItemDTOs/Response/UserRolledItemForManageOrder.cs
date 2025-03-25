@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Model.BoxItemDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace Common.Model.UserRolledItemDTOs.Response
     {
         public int userRolledItemId { get; set; }
         public string boxItemImageUrl { get; set; }
+        public BoxItemDTO boxItemDto { get; set; }
     }
 }

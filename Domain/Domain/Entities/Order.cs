@@ -24,6 +24,7 @@ namespace Domain.Domain.Entities
         public decimal ShippingFee { get; set; }
         public decimal SubTotal { get; set; }
         public decimal DiscountAmount { get; set; }
+        public bool IsReadyForShipBoxItem { get; set; } = false;
         [Column(TypeName = "jsonb")]
         public string? JsonOrderModel { get; set; }
         public virtual ICollection<OrderStatusDetail> OrderStatusDetails { get; set; }

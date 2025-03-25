@@ -1,12 +1,16 @@
 ﻿using Application.Services.Interfaces;
+using AutoMapper;
 using Common.Constants;
 using Common.Exceptions;
+using Common.Model.BoxItemDTOs.Response;
+using Common.Model.OnlineSerieBoxDTOs.Request;
 using Common.Model.OrderDTOs.Request;
 using Common.Model.OrderDTOs.Response;
 using Common.Model.OrderItem.Request;
 using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Entities;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace Application.Services.Implementations
@@ -20,7 +24,9 @@ namespace Application.Services.Implementations
         private readonly IVoucherService _voucherService;
         private readonly IBoxService _box;
         private readonly IUserRolledItemService _userRolledItemService;
-        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box, IUserRolledItemService userRolledItemService)
+        private readonly IOnlineSerieBoxService _onlineSerieBoxService;
+        public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, 
+            IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box, IUserRolledItemService userRolledItemService, IOnlineSerieBoxService onlineSerieBoxService)
         {
             _orderRepository = orderRepository;
             _orderStatusDetailService = orderStatusDetailService;
@@ -29,6 +35,7 @@ namespace Application.Services.Implementations
             _voucherService = voucherService;
             _box = box;
             _userRolledItemService = userRolledItemService;
+            _onlineSerieBoxService = onlineSerieBoxService;
         }
 
         public Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
@@ -111,6 +118,10 @@ namespace Application.Services.Implementations
 
         public async Task<OrderResponseDto> CreateOrderCOD(CreateOrderDTO model)
         {
+            if(model.isShipBoxItem)
+            {
+                throw new CustomExceptions.BadRequestException("COD not allowed for ship box item");
+            }
             decimal revenue = CalculateRevenue(model);
             bool openRequest = false;
             int currentOrderStatusId = 1; //Processing with VnPay
@@ -163,10 +174,23 @@ namespace Application.Services.Implementations
 
         public async Task<DraftOrderDto> SaveDraftOrder(CreateOrderDTO model)
         {
+            if (model.orderId != null || model.orderId > 0)
+            {
+                await UpdateShippingFeeAndAddress(model.orderId.Value, model.shippingFee, model.addressId.Value);
+                return new DraftOrderDto
+                {
+                    jsonOrder = "",
+                    orderId = model.orderId.Value
+                };
+            }
             var jsonModel = JsonConvert.SerializeObject(model);
             return await _orderRepository.SaveDraftOrder(jsonModel, model);
         }
 
+        public async Task UpdateShippingFeeAndAddress(int orderId, decimal shippingFee, int address)
+        {
+            await _orderRepository.UpdateShippingFeeAndAddress(orderId, shippingFee, address);
+        }
         public async Task<CreateOrderDTO> GetOrderDto(int orderId)
         {
             var result = await _orderRepository.GetOrderDto(orderId);
@@ -210,6 +234,7 @@ namespace Application.Services.Implementations
             }, orderId);
 
             bool addOrderStatus = AddOrderStatus(onlineSerieBoxCheck, result, currentOrderStatusId);
+
 
             ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
             {
@@ -274,6 +299,52 @@ namespace Application.Services.Implementations
                 throw new CustomExceptions.NotFoundException("Order not found: " + orderId);
             }
             return result;
+        }
+
+        public async Task<BoxItemResponseDto> ProcessOnlineSerieBoxOrder(CreateOrderDTO model, int orderId)
+        {
+            decimal revenue = CalculateRevenue(model);
+            bool openRequest = false;
+            int currentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing;
+            string paymentStatus = ProjectConstant.PaymentSuccess;
+            bool onlineSerieBoxCheck = true;
+            var boxItemResponse = await _onlineSerieBoxService.OpenOnlineSerieBoxAsync(new OpenOnlineSerieBoxRequest
+            {
+                userId = model.userId,
+                onlineSerieBoxId = model.orderItemRequestDto.First().boxOptionId,
+            });
+            OrderResponseDto result = await _orderRepository.UpdateVnPayOrder(new CreateOrderDtoDetail
+            {
+                paymentStatus = paymentStatus,
+                revenue = revenue,
+                openRequest = openRequest,
+                currentOrderStatusId = currentOrderStatusId,
+                createOrderDto = model,
+            }, orderId);
+            await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = result.orderId,
+                statusId = (int)ProjectConstant.OrderStatus.Processing,
+                note = "Waiting for shipping box item",
+            });
+            ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
+            {
+                OrderId = result.orderId,
+                BoxOptionId = model.boxOptionId,
+                Quantity = model.quantity,
+                OrderPrice = model.price,
+                OpenRequestNumber = model.orderItemOpenRequestNumber,
+                OrderStatusCheckCardImage = new List<string>(),
+                UserRolledItemId = boxItemResponse.userRolledItem.userRolledItemId,
+                RefundStatus = ProjectConstant.RefundResolved
+            }).ToList();
+            await _orderItemService.AddOrderItems(orderItems);            
+            return boxItemResponse;
+        }
+
+        public async Task<bool> UpdateOnlineSerieBoxTotalPrice(int orderId)
+        {
+            return await _orderRepository.UpdateOnlineSerieBoxAfterShip(orderId);
         }
 
         public async Task<bool> UpdateOrderForShipping(int orderId)
