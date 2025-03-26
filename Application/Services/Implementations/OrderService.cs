@@ -298,7 +298,7 @@ namespace Application.Services.Implementations
             return result;
         }
 
-        public async Task<BoxItemResponseDto> ProcessOnlineSerieBoxOrder(CreateOrderDTO model, int orderId)
+        public async Task<BoxItemPaymentResponseDto> ProcessOnlineSerieBoxOrder(CreateOrderDTO model, int orderId)
         {
             decimal revenue = CalculateRevenue(model);
             bool openRequest = false;
@@ -335,8 +335,12 @@ namespace Application.Services.Implementations
                 UserRolledItemId = boxItemResponse.userRolledItem.userRolledItemId,
                 RefundStatus = ProjectConstant.RefundResolved
             }).ToList();
-            await _orderItemService.AddOrderItems(orderItems);            
-            return boxItemResponse;
+            await _orderItemService.AddOrderItems(orderItems);         
+            
+            return new BoxItemPaymentResponseDto {
+                boxItemResponseDto = boxItemResponse,
+                boxOptionId = model.orderItemRequestDto.First().boxOptionId,
+            };
         }
 
         public async Task<bool> UpdateOnlineSerieBoxTotalPrice(int orderId)

@@ -15,7 +15,7 @@ namespace Common.Model.BoxItemDTOs.Response
 
         public string boxItemColor { get; set; }
 
-        public int averageRating { get; set; }
+        public float averageRating { get; set; }
 
         public int boxId { get; set; }
 
