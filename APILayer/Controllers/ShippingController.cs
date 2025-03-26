@@ -35,7 +35,7 @@ namespace APILayer.Controllers
             return Ok(result);
         }
 
-        [HttpPut("/order/{orderId}")]
+        [HttpPut("order/{orderId}")]
         [Authorize(Roles = "Admin, Staff")]
         public async Task<IActionResult> ShipOrder(int orderId, int status)
         {

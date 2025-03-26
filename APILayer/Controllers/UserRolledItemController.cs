@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.UserRolledItemDTOs.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -15,6 +16,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{userId}")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult<IEnumerable<UserRolledItemDto>>> getAllUserRolledItemById(int userId)
         {
             try
