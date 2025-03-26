@@ -1,10 +1,12 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.Address.Request;
 using Common.Model.Address.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
+    [Authorize(Roles = "User, Admin, Staff")]
     [Route("api/[controller]")]
     [ApiController]
     public class AddressController : ControllerBase

@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.OrderItem.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -14,6 +15,7 @@ namespace APILayer.Controllers
             _orderItemService = orderItemService;
         }
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
         {
             try
@@ -28,6 +30,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}/refund")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult> RefundBoxItem(int id, RefundOrderItemRequestDto request)
         {
             try
@@ -42,6 +45,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}/refund-request")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult> UpdateRefundRequest(int id)
         {
             try

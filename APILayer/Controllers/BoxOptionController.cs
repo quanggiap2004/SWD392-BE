@@ -2,6 +2,7 @@
 using Common.Model.BoxOptionDTOs;
 using Common.Model.BoxOptionDTOs.Request;
 using Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -18,6 +19,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllBoxOptionDTO>>> GetAllBoxOptions()
         {
             var result = await _boxOptionService.GetAllBoxOptions();
@@ -25,6 +27,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<BoxOption>> GetBoxOptionById(int id)
         {
             var boxOption = await _boxOptionService.GetBoxOptionById(id);
@@ -37,6 +40,7 @@ namespace APILayer.Controllers
 
 
         [HttpGet("withDTO/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetAllBoxOptionDTO>> GetBoxOptionByIdDTO(int id)
         {
 
@@ -50,6 +54,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxOption>> AddBoxOption([FromBody] AddBoxOptionDTO addBoxOptionDTO)
         {
 
@@ -73,6 +78,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBoxOption(int id)
         {
             var deletedBoxOption = await _boxOptionService.GetBoxOptionById(id);
@@ -86,6 +92,7 @@ namespace APILayer.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxOption>> UpdateBoxOption(int id, [FromBody] AddBoxOptionDTO updateBoxOptionDTO)
         {
             if (updateBoxOptionDTO == null)

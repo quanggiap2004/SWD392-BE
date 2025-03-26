@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.BrandDTOs;
 using Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -17,6 +18,8 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+
         public async Task<ActionResult<IEnumerable<GetAllBrandsDTO>>> GetAllBrands()
         {
             var result = await _brandService.GetAllBrands();
@@ -24,12 +27,14 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Brand>> GetBrandsById(int id)
         {
             return await _brandService.GetBrandById(id);
         }
 
         [HttpGet("WithBoxName/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetAllBrandsDTO>> GetBrandWithBoxName(int id)
         {
             return await _brandService.GetBrandWithBoxName(id);
@@ -37,6 +42,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<Brand>> AddBrand([FromBody] AddBrandDTO addBrandDTO)
         {
 
@@ -62,6 +68,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBrand(int id)
         {
             var deletedBrand = await _brandService.GetBrandById(id);
@@ -74,6 +81,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<Brand>> UpdateBrand(int id, [FromBody] AddBrandDTO updateBrandDTO)
         {
             if (updateBrandDTO == null)

@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.OrderDTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -15,6 +16,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult<ICollection<ManageOrderDto>>> GetAllOrders(int userId)
         {
             var result = await _orderService.GetAllOrders(userId);
@@ -22,6 +24,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("cancel/{orderId}")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult> CancelOrder(int orderId, string? note)
         {
             try
@@ -40,6 +43,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult> GetOrderById (int id)
         {
             try
