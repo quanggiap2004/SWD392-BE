@@ -13,7 +13,7 @@ namespace Application.Services.Interfaces
         Task<CreateOrderDTO> GetOrderDto(int orderId);
         Task<OrderResponseDto> UpdateOrderVnPay(CreateOrderDTO orderDto, int orderId);
         Task<ManageOrderDto> GetOrderById(int orderId);
-        Task<bool> UpdateOrderForShipping(int orderId);
+        Task<bool> UpdateOrderForShipping(int orderId, int status);
         Task<bool> UpdateOrderPendingStatus();
     }
 }

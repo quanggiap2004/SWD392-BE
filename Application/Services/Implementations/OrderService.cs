@@ -276,14 +276,14 @@ namespace Application.Services.Implementations
             return result;
         }
 
-        public async Task<bool> UpdateOrderForShipping(int orderId)
+        public async Task<bool> UpdateOrderForShipping(int orderId, int status)
         {
             var order = await _orderRepository.GetOrderEntityById(orderId);
             if (order == null)
             {
-                throw new CustomExceptions.NotFoundException("order is invalid or current status is not processing");
+                throw new CustomExceptions.NotFoundException("order is invalid or current status is not in processing or shipping state");
             }
-            order.CurrentOrderStatusId = (int)ProjectConstant.OrderStatus.Arrived;
+            order.CurrentOrderStatusId = status;
             order.PaymentStatus = ProjectConstant.PaymentSuccess;
             return await _orderRepository.SaveChangesAsync();
         }
