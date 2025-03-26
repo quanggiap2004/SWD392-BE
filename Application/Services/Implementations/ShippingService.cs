@@ -54,17 +54,36 @@ namespace Application.Services.Implementations
 
         public async Task<bool> UpdateOrderStatusForShipping(int orderId, int status)
         {
-            if(status != (int)ProjectConstant.OrderStatus.Shipping && status != (int)ProjectConstant.OrderStatus.Arrived)
+            if(status != (int)ProjectConstant.OrderStatus.Shipping && status != (int)ProjectConstant.OrderStatus.Arrived && status != (int)ProjectConstant.OrderStatus.Processing)
             {
-                throw new Exception("status is only accept value of shipping or arrived");
+                throw new Exception("status is only accept value of shipping,arrived or processing");
             }
             var result = await _orderService.UpdateOrderForShipping(orderId, status);
             if (result == false)
             {
                 throw new Exception("Update order current status failed");
             }
-            var note = status == (int)ProjectConstant.OrderStatus.Shipping ? "Change to shipping status" : "Change to arrived status";
-            var updatedAt = status == (int)ProjectConstant.OrderStatus.Shipping ? DateTime.UtcNow : DateTime.UtcNow.AddDays(2);
+            string note;
+            DateTime updatedAt;
+            switch (status)
+            {
+                case (int)ProjectConstant.OrderStatus.Shipping:
+                    note = "Change to shipping status";
+                    updatedAt = DateTime.UtcNow;
+                    break;
+
+                case (int)ProjectConstant.OrderStatus.Arrived:
+                    note = "Change to arrived status";
+                    updatedAt = DateTime.UtcNow.AddDays(2);
+                    break;
+
+                case (int)ProjectConstant.OrderStatus.Processing:
+                    note = "Change to processing status";
+                    updatedAt = DateTime.UtcNow;
+                    break;
+                default:
+                    throw new Exception("Invalid status value");
+            }
             var updateStatusShipping = await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
             {
                 orderId = orderId,
