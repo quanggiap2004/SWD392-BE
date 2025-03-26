@@ -1,6 +1,4 @@
-﻿using Common.Model.CurrentRolledITemDTOs.Request;
-using Common.Model.UserRolledItemDTOs.Request;
-using Common.Model.UserRolledItemDTOs.Response;
+﻿using Common.Model.UserRolledItemDTOs.Response;
 
 namespace Common.Model.BoxItemDTOs.Response
 {
@@ -15,7 +13,7 @@ namespace Common.Model.BoxItemDTOs.Response
 
         public string boxItemColor { get; set; }
 
-        public int averageRating { get; set; }
+        public float averageRating { get; set; }
 
         public int boxId { get; set; }
 

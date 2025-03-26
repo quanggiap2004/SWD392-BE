@@ -63,7 +63,7 @@ namespace Data.Repository.Implementations
             if (boxItem != null)
             {
                 var averageRating = boxItem.UserVotedBoxItems.Average(uv => uv.Rating);
-                boxItem.AverageRating = (int)averageRating;
+                boxItem.AverageRating = (float)averageRating;
                 await _context.SaveChangesAsync();
                 Console.WriteLine($"Updated Average Rating for BoxItemId {boxItemId}: {averageRating}");
             }

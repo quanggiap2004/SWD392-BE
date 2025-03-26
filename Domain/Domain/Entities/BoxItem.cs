@@ -17,7 +17,7 @@ namespace Domain.Domain.Entities
 
         public string BoxItemColor { get; set; }
 
-        public int AverageRating { get; set; }
+        public float AverageRating { get; set; }
 
         public int BoxId { get; set; }
 

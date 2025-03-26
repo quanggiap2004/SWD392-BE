@@ -54,6 +54,7 @@ namespace APILayer.Controllers
             var ToAddBrand = new Brand
             {
                 BrandName = addBrandDTO.BrandName,
+                ImageUrl = addBrandDTO.ImageUrl
             };
 
             var result = await _brandService.AddBrandAsync(ToAddBrand);
