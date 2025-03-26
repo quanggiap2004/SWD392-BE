@@ -8,5 +8,6 @@
         public string phone { get; set; }
         public string email { get; set; }
         public bool gender { get; set; }
+        public string avatarUrl {  get; set; }
     }
 }

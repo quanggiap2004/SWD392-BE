@@ -61,7 +61,8 @@ namespace Data.Repository.Implementations
                 userName = f.User.Username,
                 email = f.User.Email,
                 boxOptionName = f.OrderItem.BoxOption.BoxOptionName,
-                boxOptionId = f.OrderItem.BoxOptionId
+                boxOptionId = f.OrderItem.BoxOptionId,
+                avatarUrl = f.User.AvatarUrl,
             }).ToListAsync();
         }
 
@@ -79,7 +80,8 @@ namespace Data.Repository.Implementations
                 userName = f.User.Username,
                 email = f.User.Email,
                 boxOptionName = f.OrderItem.BoxOption.BoxOptionName,
-                boxOptionId = f.OrderItem.BoxOptionId
+                boxOptionId = f.OrderItem.BoxOptionId,
+                avatarUrl = f.User.AvatarUrl,
             }).ToListAsync();
         }
 

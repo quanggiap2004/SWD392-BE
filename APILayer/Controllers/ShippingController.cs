@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.ShippingDTOs.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,6 +20,7 @@ namespace APILayer.Controllers
         }
         // GET: api/<ShippingController>
         [HttpGet("shops")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetShops()
         {
             var result = await _shippingService.GetShopsAsync();
@@ -26,14 +28,32 @@ namespace APILayer.Controllers
         }
 
         [HttpPost("fee")]
+        [AllowAnonymous]
         public async Task<IActionResult> CalculateFeeShip([FromBody] ShippingFeeRequestDTO shippingFeeRequest)
         {
             var result = await _shippingService.GetShippingFeeAsync(shippingFeeRequest);
             return Ok(result);
         }
 
-
-
-
+        [HttpPut("order/{orderId}")]
+        [Authorize(Roles = "Admin, Staff")]
+        public async Task<IActionResult> ShipOrder(int orderId, int status)
+        {
+            try
+            {
+                var result = await _shippingService.UpdateOrderStatusForShipping(orderId, status);
+                if (result)
+                {
+                    return Ok("Update shipping status sucessfully");
+                }
+                else
+                {
+                    return BadRequest("Update shpping status sucessfully failed");
+                }
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

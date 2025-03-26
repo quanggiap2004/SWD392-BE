@@ -16,5 +16,8 @@ namespace Data.Repository.Interfaces
         Task<OrderResponseDto> UpdateVnPayOrder(CreateOrderDtoDetail createOrderDtoDetail, int orderId);
         Task UpdateShippingFeeAndAddress(int orderId, decimal shippingFee, int addressId);
         Task<bool> UpdateOnlineSerieBoxAfterShip(int orderId);
+        Task<bool> SaveChangesAsync();
+        Task<Order> GetOrderEntityById(int orderId);
+        Task<bool> UpdateCodOrdersPendingStatus();
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace APILayer.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "User, Admin, Staff")]
     [ApiController]
     public class PaymentController : ControllerBase
     {

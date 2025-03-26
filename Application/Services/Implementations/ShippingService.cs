@@ -1,4 +1,6 @@
 ﻿using Application.Services.Interfaces;
+using Common.Constants;
+using Common.Model.OrderStatusDetailDTOs;
 using Common.Model.ShippingDTOs.Request;
 using Common.Model.ShippingDTOs.Response;
 using System.Text;
@@ -13,12 +15,16 @@ namespace Application.Services.Implementations
         private const string API_TOKEN = "62417330-f6d2-11ef-91ea-021c91d80158";
         private const string BASE_URL = "https://online-gateway.ghn.vn/shiip/public-api/v2";
         private const string SHOP_ID = "5662788";
+        private readonly IOrderService _orderService;
+        private readonly IOrderStatusDetailService _orderStatusDetailService;
 
-        public ShippingService(HttpClient httpClient)
+        public ShippingService(HttpClient httpClient, IOrderService orderService, IOrderStatusDetailService orderStatusDetailService)
         {
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Add("Token", API_TOKEN);
             _httpClient.DefaultRequestHeaders.Add("ShopId", SHOP_ID);
+            _orderService = orderService;
+            _orderStatusDetailService = orderStatusDetailService;
         }
 
         public async Task<string> GetShopsAsync()
@@ -46,6 +52,31 @@ namespace Application.Services.Implementations
             throw new Exception($"GHTK API Error: {response.StatusCode}");
         }
 
-
+        public async Task<bool> UpdateOrderStatusForShipping(int orderId, int status)
+        {
+            if(status != (int)ProjectConstant.OrderStatus.Shipping && status != (int)ProjectConstant.OrderStatus.Arrived)
+            {
+                throw new Exception("status is only accept value of shipping or arrived");
+            }
+            var result = await _orderService.UpdateOrderForShipping(orderId, status);
+            if (result == false)
+            {
+                throw new Exception("Update order current status failed");
+            }
+            var note = status == (int)ProjectConstant.OrderStatus.Shipping ? "Change to shipping status" : "Change to arrived status";
+            var updatedAt = status == (int)ProjectConstant.OrderStatus.Shipping ? DateTime.UtcNow : DateTime.UtcNow.AddDays(2);
+            var updateStatusShipping = await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = orderId,
+                note = note,
+                statusId = status,
+                updatedAt = updatedAt,
+            });
+            if (updateStatusShipping == false)
+            {
+                throw new Exception("Update status shipping failed");
+            }
+            return true;
+        }
     }
 }

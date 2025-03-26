@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.VoucherDTOs.Request;
 using Common.Model.VoucherDTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -17,6 +18,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<VoucherResponseDto>>> GetAllVouchers()
         {
             var vouchers = await _voucherService.GetAllVouchersAsync();
@@ -24,6 +26,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{voucherId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<VoucherResponseDto>> GetVoucherById(int voucherId)
         {
             var voucher = await _voucherService.GetVoucherByIdAsync(voucherId);
@@ -35,6 +38,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<VoucherResponseDto>> CreateVoucher([FromBody] CreateVoucherRequest request)
         {
             try
@@ -53,6 +57,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{voucherId}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<VoucherResponseDto>> UpdateVoucher(int voucherId, [FromBody] UpdateVoucherRequest request)
         {
             if (request == null)
@@ -71,6 +76,7 @@ namespace APILayer.Controllers
 
 
         [HttpDelete("{voucherId}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteVoucher(int voucherId)
         {
             var result = await _voucherService.DeleteVoucherAsync(voucherId);

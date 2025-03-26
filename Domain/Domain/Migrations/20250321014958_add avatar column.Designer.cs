@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250321014958_add avatar column")]
+    partial class addavatarcolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,8 +277,8 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BoxItemId"));
 
-                    b.Property<float>("AverageRating")
-                        .HasColumnType("real");
+                    b.Property<int>("AverageRating")
+                        .HasColumnType("integer");
 
                     b.Property<int>("BoxId")
                         .HasColumnType("integer");
@@ -497,9 +500,6 @@ namespace BlindBoxSystem.Domain.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<bool>("IsEnable")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsReadyForShipBoxItem")
                         .HasColumnType("boolean");
 
                     b.Property<string>("JsonOrderModel")

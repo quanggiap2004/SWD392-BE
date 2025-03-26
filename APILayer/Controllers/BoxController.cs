@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace APILayer.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(Roles = "User, Staff, Admin")]
+    [Authorize(Roles = "User, Staff, Admin")]
     [ApiController]
     public class BoxController : ControllerBase
     {
@@ -36,6 +36,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Box>> GetBoxesById(int id)
         {
             var box = await _boxService.GetBoxById(id);
@@ -47,6 +48,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("withDTO/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetAllBoxesDTO>> GetBoxesByIdDTO(int id)
         {
 
@@ -60,6 +62,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<Box>> AddBox([FromBody] AddBoxDTO addBoxDTO)
         {
 
@@ -86,6 +89,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBox(int id)
         {
             var deletedBox = await _boxService.GetBoxById(id);
@@ -98,6 +102,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<Box>> UpdateBox(int id, [FromBody] AddBoxDTO updateBoxDTO)
         {
             if (updateBoxDTO == null)
@@ -124,6 +129,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("v2/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<AllBoxesDto>> GetBoxById(int id)
         {
             try
@@ -138,6 +144,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("best-seller-box")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BestSellerBoxesDto>>> GetBestSellerBox(int quantityWantToGet)
         {
             try
@@ -152,6 +159,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("box-by-brand")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AllBoxesDto>>> GetBoxByBrand(int brandId)
         {
             try
@@ -166,6 +174,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("search")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllBoxesDTO>>> SearchBoxesByName([FromQuery] string? boxName)
         {
             var boxes = await _boxService.SearchBoxesByNameAsync(boxName);

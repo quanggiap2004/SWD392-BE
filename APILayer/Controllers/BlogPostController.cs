@@ -1,10 +1,12 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.BlogPostDTOs;
 using Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
+    [Authorize(Roles = "User, Admin, Staff")]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogPostController : ControllerBase
@@ -47,6 +49,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BlogPost>> AddBlog([FromBody] AddBlogDTO addBlogDTO)
         {
 
@@ -74,6 +77,7 @@ namespace APILayer.Controllers
             return CreatedAtAction(nameof(GetBlogById), new { id = result.BlogPostId }, result);
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBlog(int id)
         {
@@ -86,6 +90,7 @@ namespace APILayer.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpPut("{id}")]
         public async Task<ActionResult<BlogPost>> UpdateBlog(int id, [FromBody] AddBlogDTO updateBlogDTO)
         {

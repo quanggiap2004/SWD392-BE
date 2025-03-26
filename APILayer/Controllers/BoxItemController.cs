@@ -2,11 +2,13 @@
 using Common.Model.BoxItemDTOs;
 using Common.Model.UserVotedBoxItemDTOs;
 using Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "User, Admin, Staff")]
     [ApiController]
     public class BoxItemController : ControllerBase
     {
@@ -18,6 +20,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllBoxItemDTO>>> GetAllBoxesItem()
         {
             var result = await _boxItemService.GetAllBoxItems();
@@ -25,6 +28,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<BoxItem>> GetBoxItemById(int id)
         {
             var boxItem = await _boxItemService.GetBoxItemById(id);
@@ -36,6 +40,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("withDTO/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetAllBoxItemDTO>> GetBoxItemByIdDTO(int id)
         {
 
@@ -49,6 +54,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxItem>> AddBoxItem([FromBody] AddBoxItemDTO addBoxItemDTO)
         {
             try
@@ -86,6 +92,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBoxItem(int id)
         {
             var deletedBoxItem = await _boxItemService.GetBoxItemById(id);
@@ -99,6 +106,7 @@ namespace APILayer.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxItem>> UpdateBoxItem(int id, [FromBody] AddBoxItemDTO updateBoxItemDTO)
         {
             if (updateBoxItemDTO == null)
@@ -130,6 +138,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost("vote")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<IActionResult> AddOrUpdateVote([FromBody] AddVoteDTO addVoteDTO)
         {
             if (!ModelState.IsValid)
@@ -142,6 +151,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{boxItemId}/votes")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetVotesByBoxItemId(int boxItemId)
         {
             var votes = await _boxItemService.GetVotesByBoxItemId(boxItemId);

@@ -10,5 +10,6 @@
         public bool gender { get; set; }
         public int roleId { get; set; }
         public bool isActive { get; set; }
+        public string? avatarUrl {  get; set; }
     }
 }

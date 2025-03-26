@@ -1,6 +1,4 @@
-﻿using Common.Model.CurrentRolledITemDTOs.Request;
-using Common.Model.UserRolledItemDTOs.Request;
-using Common.Model.UserRolledItemDTOs.Response;
+﻿using Common.Model.UserRolledItemDTOs.Response;
 
 namespace Common.Model.BoxItemDTOs.Response
 {

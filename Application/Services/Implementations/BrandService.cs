@@ -71,6 +71,7 @@ namespace Application.Services.Implementations
                 return null; // Return null if the brand does not exist
             }
             existingBrand.BrandName = brand.BrandName;
+            existingBrand.ImageUrl = brand.ImageUrl;
 
             return await _brandRepository.UpdateBrandAsync(existingBrand);
         }

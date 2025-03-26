@@ -1,11 +1,13 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.BoxImageDTOs;
 using Domain.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "User, Admin, Staff")]
     [ApiController]
     public class BoxImageController : ControllerBase
     {
@@ -17,6 +19,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllBoxImageDTO>>> GetAllBoxImages()
         {
             var result = await _boxImageService.GetAllBoxesImage();
@@ -25,6 +28,7 @@ namespace APILayer.Controllers
 
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<BoxImage>> GetBoxImageById(int id)
         {
             var boxImage = await _boxImageService.GetBoxImageById(id);
@@ -36,6 +40,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("withDTO/{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<GetAllBoxImageDTO>> GetBoxImageByIdDTO(int id)
         {
 
@@ -49,6 +54,7 @@ namespace APILayer.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxImage>> AddBoxImage([FromBody] AddBoxImageDTO addBoxImageDTO)
         {
 
@@ -74,6 +80,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBoxImage(int id)
         {
             var deletedBoxImage = await _boxImageService.GetBoxImageById(id);
@@ -86,6 +93,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<BoxImage>> UpdateBoxImage(int id, [FromBody] AddBoxImageDTO updateBoxImageDTO)
         {
             if (updateBoxImageDTO == null)

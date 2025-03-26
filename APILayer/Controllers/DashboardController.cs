@@ -1,10 +1,12 @@
 ﻿using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin, Staff")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _dashboardService;

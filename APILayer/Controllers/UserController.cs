@@ -1,11 +1,12 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.UserDTO.Request;
 using Common.Model.UserDTO.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
 {
-    //[Authorize(Roles = "User, Admin, Staff")]
+    [Authorize(Roles = "User, Admin, Staff")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -63,6 +64,7 @@ namespace APILayer.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Staff")]
         [HttpGet("all-users")]
         public async Task<ActionResult<IEnumerable<UserProfile>>> GetAllUsers()
         {

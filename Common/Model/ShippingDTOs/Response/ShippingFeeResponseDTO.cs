@@ -21,8 +21,6 @@
             public int pick_remote_areas_fee { get; set; }
             public int deliver_remote_areas_fee { get; set; }
             public int cod_failed_fee { get; set; }
-
-
         }
     }
 }

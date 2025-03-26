@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces;
 using Common.Model.FeedbackDTOs.Request;
 using Common.Model.FeedbackDTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILayer.Controllers
@@ -16,6 +17,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult<FeedbackResponseDto>> CreateFeedback([FromBody] FeedbackRequestDto feedbackRequestDto)
         {
             try
@@ -29,6 +31,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<FullFeedbackResponseDto>>> GetAllFeedback()
         {
             var feedbacks = await _feedbackService.GetAllFeedback();
@@ -36,13 +39,15 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("boxes/{boxId}/feedback")]
-        public async Task<ActionResult<IEnumerable<FeedbackResponseDto>>> GetAllFeedbackByBoxId(int boxId)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<FullFeedbackResponseDto>>> GetAllFeedbackByBoxId(int boxId)
         {
             var feedbacks = await _feedbackService.GetAllFeedbackByBoxId(boxId);
             return Ok(feedbacks);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult<FeedbackResponseDto>> UpdateFeedback(int id, [FromBody] UpdateFeedbackRequestDto feedbackRequestDto)
         {
             try
@@ -57,6 +62,7 @@ namespace APILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteFeedbackAsync(int id)
         {
             try

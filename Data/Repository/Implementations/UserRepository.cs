@@ -70,6 +70,7 @@ namespace Data.Repository.Implementations
                 roleId = u.RoleId,
                 gender = u.Gender,
                 isActive = u.IsActive,
+                avatarUrl = u.AvatarUrl,
             }).FirstOrDefaultAsync();
             return user;
         }
@@ -96,7 +97,9 @@ namespace Data.Repository.Implementations
                 username = u.Username,
                 roleId = u.RoleId,
                 gender = u.Gender,
-                isActive = u.IsActive
+                isActive = u.IsActive,
+                avatarUrl = u.AvatarUrl,
+                userId = u.UserId
             }).FirstOrDefaultAsync();
             return user;
         }
@@ -110,6 +113,7 @@ namespace Data.Repository.Implementations
                 user.Fullname = userProfile.fullname;
                 user.Phone = userProfile.phone;
                 user.Gender = userProfile.gender;
+                user.AvatarUrl = userProfile.avatarUrl;
 
                 _context.Entry(user).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -129,7 +133,8 @@ namespace Data.Repository.Implementations
                 username = u.Username,
                 roleId = u.RoleId,
                 gender = u.Gender,
-                isActive = u.IsActive
+                isActive = u.IsActive,
+                avatarUrl = u.AvatarUrl,
             }).ToListAsync();
         }
     }

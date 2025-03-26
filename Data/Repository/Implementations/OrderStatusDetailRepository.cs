@@ -1,4 +1,5 @@
-﻿using Common.Model.OrderStatusDetailDTOs;
+﻿using AutoMapper;
+using Common.Model.OrderStatusDetailDTOs;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
@@ -9,9 +10,11 @@ namespace Data.Repository.Implementations
     public class OrderStatusDetailRepository : IOrderStatusDetailRepository
     {
         private readonly BlindBoxSystemDbContext _context;
-        public OrderStatusDetailRepository(BlindBoxSystemDbContext context)
+        private readonly IMapper _mapper;
+        public OrderStatusDetailRepository(BlindBoxSystemDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<bool> AddOrderStatusDetailAsync(OrderStatusDetailSimple orderStatusDetail)
@@ -28,9 +31,17 @@ namespace Data.Repository.Implementations
                 OrderId = orderStatusDetail.orderId,
                 OrderStatusId = orderStatusDetail.statusId,
                 OrderStatusNote = orderStatusDetail.note,
-                OrderStatusUpdatedAt = DateTime.UtcNow
+                OrderStatusUpdatedAt = orderStatusDetail.updatedAt
             };
             _context.OrderStatusDetails.Add(statusDetail);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AddRangeOrderStatusDetailAsync(List<OrderStatusDetailSimple> orderStatusDetailSimplesList)
+        {
+            var result = _mapper.Map<List<OrderStatusDetail>>(orderStatusDetailSimplesList);
+            await _context.AddRangeAsync(result);
             await _context.SaveChangesAsync();
             return true;
         }

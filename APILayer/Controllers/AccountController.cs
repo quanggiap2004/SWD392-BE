@@ -13,6 +13,7 @@ using System.Text;
 
 namespace APILayer.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase

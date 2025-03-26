@@ -17,5 +17,7 @@ namespace Application.Services.Interfaces
         Task<ManageOrderDto> GetOrderById(int orderId);
         Task<BoxItemPaymentResponseDto> ProcessOnlineSerieBoxOrder(CreateOrderDTO model, int orderId);
         Task<bool> UpdateOnlineSerieBoxTotalPrice(int orderId);
+        Task<bool> UpdateOrderForShipping(int orderId, int status);
+        Task<bool> UpdateOrderPendingStatus();
     }
 }

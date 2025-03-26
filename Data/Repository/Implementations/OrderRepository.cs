@@ -19,9 +19,11 @@ namespace Data.Repository.Implementations
     {
         private readonly BlindBoxSystemDbContext _context;
         private readonly IUserRolledItemRepository _userRolledItemRepository;
-        public OrderRepository(BlindBoxSystemDbContext context, IUserRolledItemRepository userRolledItemRepository)
+        private readonly IOrderStatusDetailRepository _orderStatusDetailRepository;
+        public OrderRepository(BlindBoxSystemDbContext context, IOrderStatusDetailRepository orderStatusDetailRepository, IUserRolledItemRepository userRolledItemRepository)
         {
             _context = context;
+            _orderStatusDetailRepository = orderStatusDetailRepository;
             _userRolledItemRepository = userRolledItemRepository;
         }
 
@@ -322,6 +324,43 @@ namespace Data.Repository.Implementations
             entity.TotalPrice = entity.TotalPrice + entity.ShippingFee;
             entity.IsReadyForShipBoxItem = true;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        
+
+        public async Task<Order> GetOrderEntityById(int orderId)
+        {
+            return await _context.Orders.Where(o => o.OrderId == orderId
+            &&
+            (o.CurrentOrderStatusId == (int)ProjectConstant.OrderStatus.Processing || o.CurrentOrderStatusId == (int)ProjectConstant.OrderStatus.Shipping)).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateCodOrdersPendingStatus()
+        {
+
+            var timeToReset = DateTime.UtcNow.AddMinutes(-ProjectConstant.UpdatePendingStatusInterval);
+            var result = await _context.Orders.Where(o => o.PaymentMethod.ToLower() 
+            == ProjectConstant.COD.ToLower() 
+            &&
+            o.CurrentOrderStatusId ==(int)ProjectConstant.OrderStatus.Pending
+            && o.OrderCreatedAt < timeToReset
+            && o.OrderStatusDetails.Any(osd => !(osd.OrderStatusId == (int)ProjectConstant.OrderStatus.Processing)))
+                .ToListAsync();
+            result.ForEach(o => o.CurrentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing);
+            var orderStatusList = result.Select(o => new OrderStatusDetailSimple
+            {
+                orderId = o.OrderId,
+                note = "Auto switch from pending to processing",
+                statusId = (int)ProjectConstant.OrderStatus.Processing,
+                updatedAt = DateTime.UtcNow,
+            }).ToList();
+            await _orderStatusDetailRepository.AddRangeOrderStatusDetailAsync(orderStatusList);
+            return true;
         }
     }
 }

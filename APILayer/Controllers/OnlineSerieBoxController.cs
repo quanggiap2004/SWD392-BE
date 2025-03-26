@@ -2,6 +2,7 @@
 using Common.Model.BoxItemDTOs.Response;
 using Common.Model.OnlineSerieBoxDTOs.Request;
 using Common.Model.OnlineSerieBoxDTOs.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Common.Exceptions.CustomExceptions;
 
@@ -18,6 +19,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<CreateBoxOptionAndOnlineSerieBoxResponse>> CreateBoxOptionAndOnlineSerieBox([FromBody] CreateBoxOptionAndOnlineSerieBoxRequest request)
         {
             if (request == null)
@@ -37,6 +39,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<UpdateOnlineSerieBoxResponse>> UpdateOnlineSerieBox(int id, [FromBody] UpdateOnlineSerieBoxRequest request)
         {
             try
@@ -55,6 +58,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GetAllOnlineSerieBoxResponse>>> GetAllOnlineSerieBoxes()
         {
             var response = await _onlineSerieBoxService.GetAllOnlineSerieBoxesAsync();
@@ -62,6 +66,7 @@ namespace APILayer.Controllers
         }
 
         [HttpPost("unbox")]
+        [Authorize(Roles = "User, Admin, Staff")]
         public async Task<ActionResult<BoxItemResponseDto>> OpenOnlineSerieBox([FromBody] OpenOnlineSerieBoxRequest request)
         {
             if (request == null)
@@ -80,6 +85,7 @@ namespace APILayer.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<OnlineSerieBoxDetailResponse>> GetOnlineSerieBoxById(int id)
         {
             try
@@ -93,6 +99,7 @@ namespace APILayer.Controllers
             }
         }
         [HttpPut("{id}/publish")]
+        [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> UpdatePublishStatus(int id, bool status)
         {
             try

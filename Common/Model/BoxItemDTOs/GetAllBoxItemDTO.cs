@@ -9,7 +9,7 @@ namespace Common.Model.BoxItemDTOs
         public string BoxItemDescription { get; set; }
         public string BoxItemEyes { get; set; }
         public string BoxItemColor { get; set; }
-        public int AverageRating { get; set; }
+        public float AverageRating { get; set; }
         public string ImageUrl { get; set; }
         public int NumOfVote { get; set; }
         public bool IsSecret { get; set; }
