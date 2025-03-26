@@ -33,11 +33,11 @@ namespace APILayer.Controllers
         }
 
         [HttpPut("/order/{orderId}")]
-        public async Task<IActionResult> ShipOrder(int orderId)
+        public async Task<IActionResult> ShipOrder(int orderId, int status)
         {
             try
             {
-                var result = await _shippingService.UpdateOrderStatusForShipping(orderId);
+                var result = await _shippingService.UpdateOrderStatusForShipping(orderId, status);
                 if (result)
                 {
                     return Ok("Update shipping status sucessfully");

@@ -332,7 +332,7 @@ namespace Data.Repository.Implementations
         {
             return await _context.Orders.Where(o => o.OrderId == orderId
             &&
-            o.CurrentOrderStatusId == (int)ProjectConstant.OrderStatus.Processing).FirstOrDefaultAsync();
+            (o.CurrentOrderStatusId == (int)ProjectConstant.OrderStatus.Processing || o.CurrentOrderStatusId == (int)ProjectConstant.OrderStatus.Shipping)).FirstOrDefaultAsync();
         }
 
         public async Task<bool> SaveChangesAsync()
