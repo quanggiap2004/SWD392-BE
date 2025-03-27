@@ -206,7 +206,7 @@ namespace Application.Services.Implementations
         {
             decimal revenue = CalculateRevenue(model);
             bool openRequest = false;
-            int currentOrderStatusId = 2; //Processing with VnPay
+            int currentOrderStatusId = (int)ProjectConstant.OrderStatus.Processing; //Processing with VnPay
             string paymentStatus = ProjectConstant.PaymentSuccess;
             bool onlineSerieBoxCheck = false;
             foreach (var item in model.orderItemRequestDto)
@@ -233,8 +233,20 @@ namespace Application.Services.Implementations
                 createOrderDto = model,
             }, orderId);
 
-            bool addOrderStatus = AddOrderStatus(onlineSerieBoxCheck, result, currentOrderStatusId);
-
+            bool addOrderPendingStatus = await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = result.orderId,
+                statusId = (int)ProjectConstant.OrderStatus.Pending,
+                note = "Order created",
+                updatedAt = DateTime.UtcNow
+            });
+            bool addOrderStatus = await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = result.orderId,
+                statusId = currentOrderStatusId,
+                note = "Order processing",
+                updatedAt = DateTime.UtcNow
+            });
 
             ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
             {
@@ -253,26 +265,26 @@ namespace Application.Services.Implementations
             return result;
         }
 
-        private bool AddOrderStatus(bool onlineSerieBoxCheck, OrderResponseDto result, int currentOrderStatusId)
-        {
-            if (onlineSerieBoxCheck)
-            {
-                return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
-                {
-                    orderId = result.orderId,
-                    statusId = (int)ProjectConstant.OrderStatus.Arrived,
-                    note = "Order arrived",
-                    updatedAt = DateTime.UtcNow
-                }).Result;
-            }
-            return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
-            {
-                orderId = result.orderId,
-                statusId = currentOrderStatusId,
-                note = "Order created",
-                updatedAt = DateTime.UtcNow
-            }).Result;
-        }
+        //private bool AddOrderStatus(bool onlineSerieBoxCheck, OrderResponseDto result, int currentOrderStatusId)
+        //{
+        //    if (onlineSerieBoxCheck)
+        //    {
+        //        return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+        //        {
+        //            orderId = result.orderId,
+        //            statusId = (int)ProjectConstant.OrderStatus.Arrived,
+        //            note = "Order arrived",
+        //            updatedAt = DateTime.UtcNow
+        //        }).Result;
+        //    }
+        //    return _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+        //    {
+        //        orderId = result.orderId,
+        //        statusId = currentOrderStatusId,
+        //        note = "Order created",
+        //        updatedAt = DateTime.UtcNow
+        //    }).Result;
+        //}
          
         private async Task<bool> UpdateUserRolledItemCheckoutStatus(ICollection<OrderItemRequestDto> orderItemRequestDto, bool status)
         {
@@ -324,8 +336,16 @@ namespace Application.Services.Implementations
             await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
             {
                 orderId = result.orderId,
+                statusId = (int)ProjectConstant.OrderStatus.Pending,
+                note = "Order created",
+                updatedAt = DateTime.UtcNow
+            });
+            await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
+            {
+                orderId = result.orderId,
                 statusId = (int)ProjectConstant.OrderStatus.Processing,
                 note = "Waiting for shipping box item",
+                updatedAt = DateTime.UtcNow
             });
             ICollection<OrderItem> orderItems = model.orderItemRequestDto.Select(model => new OrderItem
             {

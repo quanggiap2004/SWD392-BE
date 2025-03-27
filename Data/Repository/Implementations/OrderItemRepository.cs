@@ -36,7 +36,6 @@ namespace Data.Repository.Implementations
             if (orderItem.OpenRequestNumber == imageList.Count)
             {
                 orderItem.Order.OpenRequest = false;
-                orderItem.Order.CurrentOrderStatusId = (int)ProjectConstant.OrderStatus.Shipping;
             }
             orderItem.OrderStatusCheckCardImage = imageList;
             await _context.SaveChangesAsync();

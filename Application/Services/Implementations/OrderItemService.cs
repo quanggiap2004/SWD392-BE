@@ -42,13 +42,6 @@ namespace Application.Services.Implementations
             {
                 throw new CustomExceptions.NotFoundException("OrderItem not found");
             }
-            await _orderStatusDetailService.AddOrderStatusDetailAsync(new OrderStatusDetailSimple
-            {
-                orderId = result.orderId,
-                statusId = (int)ProjectConstant.OrderStatus.Shipping,
-                note = "Staff uploaded image",
-                updatedAt = DateTime.UtcNow,
-            });
             return true;
         }
 
