@@ -36,6 +36,7 @@ namespace Data.Repository.Implementations
                     userId = o.UserId,
                     orderId = o.OrderId,
                     userName = o.User.Username,
+                    phoneNumber = o.User.Phone,
                     orderCreatedAt = o.OrderCreatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
@@ -82,6 +83,7 @@ namespace Data.Repository.Implementations
                         boxName = oi.BoxOption.Box.BoxName,
                         imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
                         numOfRefund = oi.NumOfRefund,
+                        note = oi.Note,
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
                             userRolledItemId = oi.UserRolledItem.UserRolledItemId,
@@ -129,6 +131,7 @@ namespace Data.Repository.Implementations
                     userId = o.UserId,
                     orderId = o.OrderId,
                     userName = o.User.Username,
+                    phoneNumber = o.User.Phone,
                     orderCreatedAt = o.OrderCreatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
@@ -156,6 +159,7 @@ namespace Data.Repository.Implementations
                     shippingFee = o.ShippingFee,
                     subTotal = o.SubTotal,
                     discountAmount = o.DiscountAmount,
+                    
                     voucher = o.Voucher == null ? null : new VoucherDto
                     {
                         voucherId = o.VoucherId,
@@ -175,6 +179,7 @@ namespace Data.Repository.Implementations
                         boxName = oi.BoxOption.Box.BoxName,
                         imageUrl = oi.BoxOption.Box.BoxImages.FirstOrDefault().BoxImageUrl,
                         numOfRefund = oi.NumOfRefund,
+                        note = oi.Note,
                         userRolledItemForManageOrder = oi.UserRolledItem == null ? null : new UserRolledItemForManageOrder
                         {
                             userRolledItemId = oi.UserRolledItem.UserRolledItemId,
@@ -278,6 +283,8 @@ namespace Data.Repository.Implementations
                 result.OpenRequest = createOrderDtoDetail.openRequest;
                 result.CurrentOrderStatusId = createOrderDtoDetail.currentOrderStatusId;
                 result.IsEnable = true;
+                result.OrderCreatedAt = DateTime.UtcNow;
+                result.OrderUpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
                 return new OrderResponseDto
                 {

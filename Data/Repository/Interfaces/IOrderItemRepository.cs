@@ -11,5 +11,6 @@ namespace Data.Repository.Interfaces
         Task<OpenRequestResponseDto?> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList);
         Task<bool> UpdateDataAfterRefund(RefundOrderItemRequestDto request, int id);
         Task<bool> UpdateRefundRequest(int id);
+        Task<int> SaveChangesAsync();
     }
 }

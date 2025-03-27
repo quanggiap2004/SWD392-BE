@@ -3,6 +3,7 @@ using System;
 using Domain.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlindBoxSystem.Domain.Migrations
 {
     [DbContext(typeof(BlindBoxSystemDbContext))]
-    partial class BlindBoxSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250327024953_Add order updated at")]
+    partial class Addorderupdatedat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,9 +515,7 @@ namespace BlindBoxSystem.Domain.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("OrderUpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
@@ -569,10 +570,6 @@ namespace BlindBoxSystem.Domain.Migrations
 
                     b.Property<bool>("IsFeedback")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("NumOfRefund")
                         .HasColumnType("integer");

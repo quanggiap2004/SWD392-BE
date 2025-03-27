@@ -9,6 +9,7 @@ namespace Common.Model.OrderDTOs.Response
     {
         public int userId { get; set; }
         public string userName { get; set; }
+        public string phoneNumber { get; set; }
         public int orderId { get; set; }
         public DateTime orderCreatedAt { get; set; }
         public string paymentMethod { get; set; }

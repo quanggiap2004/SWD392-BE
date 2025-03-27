@@ -58,5 +58,22 @@ namespace APILayer.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPut("{id}/refund/details")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateRefundDetails(
+            int id,
+            [FromBody] UpdateOrderItemRefundDetailsRequestDto request)
+        {
+            try
+            {
+                var result = await _orderItemService.UpdateRefundDetails(id, request);
+                return Ok("Refund details updated successfully");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

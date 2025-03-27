@@ -39,6 +39,10 @@ namespace Domain.Domain.Context
                 .HasMany(e => e.OrderStatus)
                 .WithMany(e => e.Orders)
                 .UsingEntity<OrderStatusDetail>();
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderUpdatedAt)
+                .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
         }
     }
 }

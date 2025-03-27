@@ -21,6 +21,7 @@ namespace Domain.Domain.Entities
 
         public ICollection<string>? OrderStatusCheckCardImage { get; set; }
         public int OpenRequestNumber { get; set; }
+        public string Note { get; set; } = "";
         public virtual Feedback Feedback { get; set; }
         [ForeignKey("BoxOptionId")]
         public BoxOption BoxOption { get; set; }

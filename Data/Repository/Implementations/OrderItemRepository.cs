@@ -23,7 +23,7 @@ namespace Data.Repository.Implementations
 
         public async Task<OrderItem?> GetOrderItemById(int orderItemId)
         {
-            return await _context.OrderItems.FirstOrDefaultAsync(x => x.OrderItemId == orderItemId);
+            return await _context.OrderItems.Include(x => x.Order).FirstOrDefaultAsync(x => x.OrderItemId == orderItemId);
         }
 
         public async Task<OpenRequestResponseDto?> UpdateOpenBlindBoxForCustomerImage(int orderItemId, List<string> imageList)
@@ -77,6 +77,7 @@ namespace Data.Repository.Implementations
 
             orderItem.Order.RefundRequest = hasPendingRefunds;
             orderItem.Order.Revenue = newRevenue;
+            orderItem.Order.OrderUpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return true;
@@ -91,8 +92,14 @@ namespace Data.Repository.Implementations
                 return false;
             }
             result.Order.RefundRequest = true;
+            result.Order.OrderUpdatedAt = DateTime.UtcNow;
             result.RefundStatus = ProjectConstant.RefundRequest;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
     }
 }

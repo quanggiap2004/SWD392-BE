@@ -10,5 +10,7 @@ namespace Application.Services.Interfaces
         Task<OrderItem> GetOrderItemById(int orderItemId);
         Task<bool> UpdateDataAfterRefund(RefundOrderItemRequestDto request, int id);
         Task<bool> UpdateRefundRequest(int id);
+        Task<bool> UpdateRefundDetails(int id, UpdateOrderItemRefundDetailsRequestDto request);
+        
     }
 }

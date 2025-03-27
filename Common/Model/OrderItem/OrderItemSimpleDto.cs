@@ -20,6 +20,7 @@ namespace Common.Model.OrderItem
         public string boxName { get; set; }
         public string? imageUrl { get; set; }
         public int numOfRefund { get; set; }
+        public string? note { get; set; }
         public UserRolledItemForManageOrder? userRolledItemForManageOrder { get; set; }
     }
 }

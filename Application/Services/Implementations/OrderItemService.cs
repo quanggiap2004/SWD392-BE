@@ -71,5 +71,22 @@ namespace Application.Services.Implementations
             }
             return true;
         }
+
+        public async Task<bool> UpdateRefundDetails(int id, UpdateOrderItemRefundDetailsRequestDto request)
+        {
+            var orderItem = await _orderItemRepository.GetOrderItemById(id);
+            if (orderItem == null)
+            {
+                throw new CustomExceptions.NotFoundException("OrderItem not found");
+            }
+            if(orderItem.RefundStatus != ProjectConstant.RefundRequest)
+            {
+                throw new CustomExceptions.BadRequestException("OrderItem not in Refund request status");
+            }
+            orderItem.Order.OrderUpdatedAt = DateTime.UtcNow;
+            orderItem.NumOfRefund = request.numOfRefund;
+            orderItem.Note = request.note == null ? "" : request.note;
+            return await _orderItemRepository.SaveChangesAsync() > 0;
+        }
     }
 }
