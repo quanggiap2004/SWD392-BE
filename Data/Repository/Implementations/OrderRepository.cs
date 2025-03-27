@@ -38,6 +38,7 @@ namespace Data.Repository.Implementations
                     userName = o.User.Username,
                     phoneNumber = o.User.Phone,
                     orderCreatedAt = o.OrderCreatedAt,
+                    orderUpdatedAt = o.OrderUpdatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
                         orderId = osd.OrderId,
@@ -133,6 +134,7 @@ namespace Data.Repository.Implementations
                     userName = o.User.Username,
                     phoneNumber = o.User.Phone,
                     orderCreatedAt = o.OrderCreatedAt,
+                    orderUpdatedAt = o.OrderUpdatedAt,
                     orderStatusDetailsSimple = o.OrderStatusDetails.Select(osd => new OrderStatusDetailSimple
                     {
                         orderId = osd.OrderId,

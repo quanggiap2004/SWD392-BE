@@ -12,6 +12,7 @@ namespace Common.Model.OrderDTOs.Response
         public string phoneNumber { get; set; }
         public int orderId { get; set; }
         public DateTime orderCreatedAt { get; set; }
+        public DateTime orderUpdatedAt { get; set; }
         public string paymentMethod { get; set; }
         public decimal totalPrice { get; set; }
         public AddressResponseDto? address { get; set; }
