@@ -54,5 +54,10 @@ namespace Data.Repository.Implementations
             await _context.SaveChangesAsync();
             return address;
         }
+        public async Task DeleteAddressAsync(Address address)
+        {
+            _context.Addresses.Remove(address);
+            await _context.SaveChangesAsync();
+        }
     }
 }

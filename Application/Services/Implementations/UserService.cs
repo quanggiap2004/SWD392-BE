@@ -3,6 +3,7 @@ using Common.Model.AuthenticationDTO;
 using Common.Model.UserDTO.Request;
 using Common.Model.UserDTO.Response;
 using Data.Repository.Interfaces;
+using Domain.Domain.Entities;
 using Domain.Domain.Entities.ApplicationEntities;
 using Microsoft.AspNetCore.Identity;
 using static Common.Exceptions.CustomExceptions;
@@ -79,6 +80,43 @@ namespace Application.Services.Implementations
         public async Task<IEnumerable<UserProfile>> GetAllUsers()
         {
             return await _userRepository.GetAllUsers();
+        }
+
+        public async Task<bool> DeleteUserAsync(int userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+
+            var aspNetUser = await _userManager.FindByEmailAsync(user.Email);
+            if (aspNetUser == null)
+            {
+                throw new KeyNotFoundException("AspNetUser not found");
+            }
+
+            var result = await _userManager.DeleteAsync(aspNetUser);
+            if (!result.Succeeded)
+            {
+                throw new Exception("Failed to delete AspNetUser");
+            }
+            await _userRepository.DeleteUserAsync(user);
+            return true;
+        }
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var result = await _userRepository.GetUserByIdAsync(id);
+            if (result == null)
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+            return result;
+        }
+
+        public async Task<bool> UpdateIsActiveStatus(int userId, bool status)
+        {
+            return await _userRepository.UpdateIsActiveStatus(userId, status);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Data.Repository.Interfaces
         Task<BoxItem> GetBoxItemByIdDTO(int id);
         Task<BoxItemResponseDto> AddBoxItemAsync(BoxItem boxItem);
         Task<BoxItem> UpdateBoxItemAsync(BoxItem boxItem);
-        Task DeleteBoxItemAsync(int id);
+        Task<bool> DeleteBoxItemAsync(int id);
         Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id);
     }
 }

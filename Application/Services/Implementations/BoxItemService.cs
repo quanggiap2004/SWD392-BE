@@ -26,14 +26,15 @@ namespace Application.Services.Implementations
             return addedBoxitem;
         }
 
-        public async Task DeleteBoxItemAsync(int id)
+        public async Task<bool> DeleteBoxItemAsync(int id)
         {
             var existingBoxItem = await _boxItemRepository.GetBoxItemByIdAsync(id);
 
             if (existingBoxItem != null)
             {
-                await _boxItemRepository.DeleteBoxItemAsync(id);
+                return await _boxItemRepository.DeleteBoxItemAsync(id);
             }
+            return false;
         }
 
         public async Task<IEnumerable<GetAllBoxItemDTO>> GetAllBoxItems()

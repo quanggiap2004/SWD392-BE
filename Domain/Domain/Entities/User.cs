@@ -21,6 +21,7 @@ namespace Domain.Domain.Entities
         public string Email { get; set; }
         public bool Gender { get; set; }
         public bool IsActive { get; set; } = true;
+        public bool IsDelete { get; set; } = false;
 
         public int RoleId { get; set; }
         public string? AvatarUrl {  get; set; }

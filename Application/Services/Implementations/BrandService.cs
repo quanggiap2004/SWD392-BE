@@ -26,7 +26,6 @@ namespace Application.Services.Implementations
             {
                 await _brandRepository.DeleteBrandAsync(id);
             }
-
         }
 
         public async Task<IEnumerable<GetAllBrandsDTO>> GetAllBrands()

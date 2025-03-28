@@ -100,8 +100,14 @@ namespace APILayer.Controllers
             {
                 return NotFound("Box Item not found with " + id);
             }
-            await _boxItemService.DeleteBoxItemAsync(id);
-            return NoContent();
+            var result = await _boxItemService.DeleteBoxItemAsync(id);
+            if(result)
+            {
+                return Ok("Delete box item successfully");
+            } else
+            {
+                return BadRequest("Delete box item failed. There is an online serie box that is published");
+            }
         }
 
 

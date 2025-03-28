@@ -20,5 +20,6 @@ namespace Application.Services.Interfaces
         Task UpdateSoldQuantity(ICollection<OrderItem> orderItems);
         Task<BoxAndBoxItemResponseDto> getBoxByBoxOptionId(int boxOptionId);
         Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId);
+        Task<bool> CheckCreateOnlineSerieBoxCriteria(int boxId);
     }
 }

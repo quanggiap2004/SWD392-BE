@@ -21,5 +21,6 @@ namespace Data.Repository.Interfaces
         Task<bool> UpdateSoldQuantity(ICollection<OrderItem> orderItems);
         Task<BoxAndBoxItemResponseDto?> getBoxByBoxOptionId(int boxOptionId);
         Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId);
+        
     }
 }

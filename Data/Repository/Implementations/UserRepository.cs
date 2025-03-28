@@ -1,4 +1,6 @@
-﻿using Common.Model.AuthenticationDTO;
+﻿using Common.Constants;
+using Common.Exceptions;
+using Common.Model.AuthenticationDTO;
 using Common.Model.UserDTO.Request;
 using Common.Model.UserDTO.Response;
 using Data.Repository.Interfaces;
@@ -29,6 +31,7 @@ namespace Data.Repository.Implementations
                 Phone = registerAccountDTO.phoneNumber,
                 Password = registerAccountDTO.password,
                 RoleId = registerAccountDTO.roleId,
+                IsActive = registerAccountDTO.isActive,
             };
 
             _context.Users.Add(user);
@@ -89,7 +92,7 @@ namespace Data.Repository.Implementations
         }
         public async Task<UserProfile?> GetUserById(int id)
         {
-            var user = await _context.Users.AsNoTracking().Where(u => u.UserId == id && u.IsActive == true).Select(u => new UserProfile
+            var user = await _context.Users.AsNoTracking().Where(u => u.UserId == id && u.IsDelete == false).Select(u => new UserProfile
             {
                 fullname = u.Fullname,
                 phone = u.Phone,
@@ -124,7 +127,7 @@ namespace Data.Repository.Implementations
 
         public async Task<IEnumerable<UserProfile>> GetAllUsers()
         {
-            return await _context.Users.AsNoTracking().Select(u => new UserProfile
+            return await _context.Users.AsNoTracking().Where(u => u.IsDelete == false).Select(u => new UserProfile
             {
                 userId = u.UserId,
                 fullname = u.Fullname,
@@ -136,6 +139,28 @@ namespace Data.Repository.Implementations
                 isActive = u.IsActive,
                 avatarUrl = u.AvatarUrl,
             }).ToListAsync();
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            var userToDelete = await _context.Users.FirstOrDefaultAsync(u => u.UserId == user.UserId);
+            if(userToDelete.RoleId == (int)ProjectConstant.RoleId.Admin)
+            {
+                throw new CustomExceptions.BadRequestException("Cannot delete admin account");
+            }
+            userToDelete.IsDelete = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+        }
+
+        public async Task<bool> UpdateIsActiveStatus(int userId, bool status)
+        {
+            await _context.Users.Where(u => u.UserId == userId).ExecuteUpdateAsync(setter => setter.SetProperty(u => u.IsActive, status));
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

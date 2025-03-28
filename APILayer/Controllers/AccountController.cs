@@ -47,6 +47,7 @@ namespace APILayer.Controllers
             if (model.isTestAccount)
             {
                 user.EmailConfirmed = true;
+                model.isActive = true;
             }
             var result = await _userManager.CreateAsync(user, model.password);
             if (result.Succeeded)
@@ -170,6 +171,7 @@ namespace APILayer.Controllers
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+            var userAccount = await _userService.GetUserByEmail(email);
             if (user == null)
             {
                 return BadRequest(new { message = "Invalid email address" });
@@ -178,6 +180,7 @@ namespace APILayer.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
+                await _userService.UpdateIsActiveStatus(userAccount.userId, true);
                 return Ok(new { message = "Email confirmed successfully" });
             }
 

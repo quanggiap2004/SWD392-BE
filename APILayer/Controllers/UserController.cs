@@ -79,6 +79,42 @@ namespace APILayer.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Staff")]
+        [HttpPut("{userId}/active-status")]
+        public async Task<ActionResult> UpdateIsActiveStatus(int userId, bool status)
+        {
+            try
+            {
+                var result = await _userService.UpdateIsActiveStatus(userId, status);
+                if (result)
+                {
+                    return Ok("Update active status successfully");
+                }
+                return BadRequest("Update active status failed");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
+        [Authorize(Roles = "Admin, Staff")]
+        [HttpDelete("{userId}")]
+        public async Task<ActionResult> DeleteUser(int userId)
+        {
+            try
+            {
+                var result = await _userService.DeleteUserAsync(userId);
+                if (result)
+                {
+                    return Ok("Delete user successfully");
+                }
+                return BadRequest("Delete user failed");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

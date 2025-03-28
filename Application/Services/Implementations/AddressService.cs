@@ -99,5 +99,17 @@ namespace Application.Services.Implementations
                 note = address.Note
             };
         }
+
+        public async Task<bool> DeleteAddressAsync(int addressId)
+        {
+            var address = await _addressRepository.GetAddressByIdAsync(addressId);
+            if (address == null)
+            {
+                return false;
+            }
+
+            await _addressRepository.DeleteAddressAsync(address);
+            return true;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Common.Exceptions;
 using Common.Model.BoxDTOs;
 using Common.Model.BoxDTOs.ResponseDTOs;
 using Common.Model.BoxImageDTOs;
@@ -283,6 +284,25 @@ namespace Application.Services.Implementations
         public async Task<bool> UpdateBoxRatingByBoxOptionId(int boxOptionId)
         {
             return await _boxRepository.UpdateBoxRatingByBoxOptionId(boxOptionId);
+        }
+
+        public async Task<bool> CheckCreateOnlineSerieBoxCriteria(int boxId)
+        {
+            var boxEntity = await _boxRepository.GetBoxByIdDTO(boxId);
+            if (boxEntity == null)
+            {
+                throw new NotFoundException($"Cannot found box with id:{boxId}");
+            }
+            if (boxEntity.BoxItems.Count < 3)
+            {
+                throw new BadRequestException("Box need to have more than 2 box item");
+            }
+            var IsSecretExist = boxEntity.BoxItems.Any(b => b.IsSecret == true);
+            if(!IsSecretExist)
+            {
+                throw new BadRequestException("Box must have at least 1 secret item");
+            }
+            return true;
         }
     }
 }

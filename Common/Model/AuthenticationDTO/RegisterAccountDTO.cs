@@ -9,6 +9,7 @@
         public string phoneNumber { get; set; }
         public bool gender { get; set; }
         public int roleId { get; set; }
+        public bool isActive { get; set; } = false;
         public bool isTestAccount { get; set; }
     }
 }

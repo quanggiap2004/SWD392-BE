@@ -56,5 +56,22 @@ namespace APILayer.Controllers
             return Ok(addresses);
         }
 
+        [HttpDelete("{addressId}")]
+        public async Task<IActionResult> DeleteAddress(int addressId)
+        {
+            try
+            {
+                var result = await _addressService.DeleteAddressAsync(addressId);
+                if (result)
+                {
+                    return Ok("Address deleted successfully");
+                }
+                return NotFound("Address not found");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

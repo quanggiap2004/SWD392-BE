@@ -12,7 +12,7 @@ namespace Application.Services.Interfaces
         Task<GetAllBoxItemDTO> GetBoxItemDTO(int id);
         Task<BoxItemResponseDto> AddBoxItemAsync(BoxItem boxItem);
         Task<BoxItem> UpdateBoxItemAsync(int id, BoxItem boxItem);
-        Task DeleteBoxItemAsync(int id);
+        Task<bool> DeleteBoxItemAsync(int id);
         Task<GetAllVotedDTO> AddOrUpdateVoteAsync(AddVoteDTO addVoteDTO);
         Task<IEnumerable<GetAllVotedDTO>> GetVotesByBoxItemId(int id);
         Task<ICollection<BoxItem>> GetBoxItemByBoxId(int id);

@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using AutoMapper;
+using Common.Exceptions;
 using Common.Model.BoxItemDTOs.Response;
 using Common.Model.BoxOptionDTOs.Response;
 using Common.Model.CurrentRolledITemDTOs.Request;
@@ -35,7 +36,13 @@ namespace Application.Services.Implementations
         }
         public async Task<CreateBoxOptionAndOnlineSerieBoxResponse> CreateBoxOptionAndOnlineSerieBoxAsync(CreateBoxOptionAndOnlineSerieBoxRequest request)
         {
+            var isValidToCreate = await _boxService.CheckCreateOnlineSerieBoxCriteria(request.createBoxOptionRequest.boxId);
 
+   
+            if (!isValidToCreate)
+            {
+                throw new BadRequestException("Box do not satisfy criteria to be created OnlineSerieBox for this Box.");
+            }
             var boxOption = new BoxOption
             {
                 BoxId = request.createBoxOptionRequest.boxId,
@@ -260,6 +267,8 @@ namespace Application.Services.Implementations
 
         public async Task<bool> UpdatePublishStatusAsync(bool status, int id)
         {
+            var boxDto = await _boxService.getBoxByBoxOptionId(id);
+            var IsStatisfyPublishCriteria = await _boxService.CheckCreateOnlineSerieBoxCriteria(boxDto.boxId);
             return await _onlineSerieBoxRepository.UpdatePublishStatusAsync(status, id);
         }
     }

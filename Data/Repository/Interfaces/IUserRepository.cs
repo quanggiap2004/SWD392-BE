@@ -16,5 +16,8 @@ namespace Data.Repository.Interfaces
         Task<UserProfile?> GetUserById(int id);
         Task<bool> UpdateUserProfile(UpdateUserProfileDto userProfile);
         Task<IEnumerable<UserProfile>> GetAllUsers();
+        Task DeleteUserAsync(User user);
+        Task<User> GetUserByIdAsync(int id);
+        Task<bool> UpdateIsActiveStatus(int userId, bool status);
     }
 }

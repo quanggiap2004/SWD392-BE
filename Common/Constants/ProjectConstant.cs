@@ -27,5 +27,12 @@
             Cancelled = 4,
             Arrived = 5
         }
+
+        public enum RoleId
+        {
+            Admin = 1,
+            Staff = 2,
+            User = 3
+        }
     }
 }

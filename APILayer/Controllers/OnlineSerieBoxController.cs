@@ -32,9 +32,9 @@ namespace APILayer.Controllers
                 var response = await _onlineSerieBoxService.CreateBoxOptionAndOnlineSerieBoxAsync(request);
                 return Ok(response);
             }
-            catch (NotFoundException ex)
+            catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 

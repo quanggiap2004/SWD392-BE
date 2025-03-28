@@ -44,23 +44,26 @@ namespace Data.Repository.Implementations
             return _mapper.Map<BoxItemResponseDto>(boxItem);
         }
 
-        public async Task DeleteBoxItemAsync(int id)
+        public async Task<bool> DeleteBoxItemAsync(int id)
         {
             var deletedBoxItem = await _context.BoxItems.Include(bi => bi.Box).ThenInclude(bi => bi.BoxOptions).ThenInclude(bo => bo.OnlineSerieBox).FirstOrDefaultAsync(bi => bi.BoxItemId == id);
             if (deletedBoxItem != null)
             {
-                
+                var checkOnlineBoxThatIsPublished = deletedBoxItem.Box.BoxOptions.Any(bo => bo.IsOnlineSerieBox && bo.OnlineSerieBox.IsPublished == true);
+                if(checkOnlineBoxThatIsPublished)
+                {
+                    return false;
+                }
                 foreach (var boxOption in deletedBoxItem.Box.BoxOptions)
                 {
-                    if(boxOption.IsOnlineSerieBox)
+                    if(boxOption.IsOnlineSerieBox )
                     {
                         boxOption.OnlineSerieBox.MaxTurn--;
                     }
                 }
                 _context.BoxItems.Remove(deletedBoxItem);
-                await _context.SaveChangesAsync();
             }
-            
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<IEnumerable<BoxItem>> GetAllBoxItemAsync()
