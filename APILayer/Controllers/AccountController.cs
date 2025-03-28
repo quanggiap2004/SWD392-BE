@@ -330,7 +330,8 @@ namespace APILayer.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("username", user.UserName),
-                new Claim("userId", user.Id)
+                new Claim("userId", user.Id),
+                new Claim(ClaimTypes.Role, ProjectConstant.USER)
             };
 
             var token = new JwtSecurityToken(
