@@ -33,7 +33,7 @@ namespace Data.Repository.Implementations
 
         public async Task<IEnumerable<BoxOption>> GetAllBoxOptionsAsync()
         {
-            return await _context.BoxOptions.Include(b => b.Box).ToListAsync();
+            return await _context.BoxOptions.Include(b => b.Box).Where(b => b.IsDeleted == false).ToListAsync();
         }
 
         public async Task<BoxOption> GetBoxOptionByIdAsync(int id)

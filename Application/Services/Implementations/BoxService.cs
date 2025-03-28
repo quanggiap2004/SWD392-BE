@@ -75,7 +75,7 @@ namespace Application.Services.Implementations
                     IsSecret = bitem.IsSecret,
                 }).ToList() ?? new List<BoxItemDTO>(),
 
-                BoxOptions = b.BoxOptions?.Select(boption => new BoxOptionDTO
+                BoxOptions = b.BoxOptions?.Where(bo => bo.IsDeleted == false).Select(boption => new BoxOptionDTO
                 {
                     BoxId = boption.BoxId,
                     BoxOptionId = boption.BoxOptionId,
