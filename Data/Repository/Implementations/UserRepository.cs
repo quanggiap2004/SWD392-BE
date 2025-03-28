@@ -163,8 +163,14 @@ namespace Data.Repository.Implementations
 
         public async Task<bool> UpdateIsActiveStatus(int userId, bool status)
         {
-            await _context.Users.Where(u => u.UserId == userId).ExecuteUpdateAsync(setter => setter.SetProperty(u => u.IsActive, status));
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            if(result == null)
+            {
+                return false;
+            }
+            result.IsActive = status;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -356,7 +356,7 @@ namespace Application.Services.Implementations
                 OpenRequestNumber = model.orderItemOpenRequestNumber,
                 OrderStatusCheckCardImage = new List<string>(),
                 UserRolledItemId = boxItemResponse.userRolledItem.userRolledItemId,
-                RefundStatus = ProjectConstant.RefundResolved
+                RefundStatus = ProjectConstant.RefundAvailable
             }).ToList();
             await _orderItemService.AddOrderItems(orderItems);         
             
