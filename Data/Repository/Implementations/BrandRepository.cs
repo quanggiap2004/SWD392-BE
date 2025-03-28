@@ -23,9 +23,13 @@ namespace Data.Repository.Implementations
 
         public async Task DeleteBrandAsync(int id)
         {
-            var deletedBrand = await _context.Brands.FindAsync(id);
+            var deletedBrand = await _context.Brands.Include(br => br.Box).FirstOrDefaultAsync(br => br.BrandId ==  id);
             if (deletedBrand != null)
             {
+                if(deletedBrand.Box.Any(b => b.IsDeleted == false))
+                {
+                    throw new Exception("Cannot delete brand with undeleted boxes");
+                }
                 _context.Brands.Remove(deletedBrand);
                 await _context.SaveChangesAsync();
             }

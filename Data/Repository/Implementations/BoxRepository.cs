@@ -29,7 +29,7 @@ namespace Data.Repository.Implementations
             var deletedBox = await _context.Boxes.FindAsync(id);
             if (deletedBox != null)
             {
-                _context.Boxes.Remove(deletedBox);
+                deletedBox.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }

@@ -29,6 +29,7 @@ namespace Data.Repository.Implementations
         public async Task<IEnumerable<GetAllOnlineSerieBoxResponse>> GetAllOnlineSerieBoxesAsync()
         {
             return await _context.OnlineSerieBoxes
+                .Where(o => o.BoxOption.IsDeleted == false)
                 .Select(o => new GetAllOnlineSerieBoxResponse
                 {
                     onlineSerieBoxId = o.OnlineSerieBoxId,
@@ -64,12 +65,15 @@ namespace Data.Repository.Implementations
 
         public async Task<OnlineSerieBox?> GetOnlineSerieBoxByIdAsync(int id)
         {
-            return await _context.OnlineSerieBoxes.Include(o => o.BoxOption).FirstOrDefaultAsync(o => o.OnlineSerieBoxId == id);
+            return await _context.OnlineSerieBoxes
+                .Include(o => o.BoxOption)
+                .FirstOrDefaultAsync(o => o.OnlineSerieBoxId == id && o.BoxOption.IsDeleted == false);
         }
 
         public async Task<OnlineSerieBoxDetailResponse> GetOnlineSerieBoxDetail(int onlineSerieBoxId)
         {
-            return await _context.OnlineSerieBoxes.Where(o => o.OnlineSerieBoxId == onlineSerieBoxId)
+            return await _context.OnlineSerieBoxes
+                .Where(o => o.OnlineSerieBoxId == onlineSerieBoxId & o.BoxOption.IsDeleted == false)
                 .Select(o => new OnlineSerieBoxDetailResponse
                 {
                     onlineSerieBoxId = o.OnlineSerieBoxId,

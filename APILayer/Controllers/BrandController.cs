@@ -71,13 +71,20 @@ namespace APILayer.Controllers
         [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBrand(int id)
         {
-            var deletedBrand = await _brandService.GetBrandById(id);
-            if (deletedBrand == null)
+            try
             {
-                return NotFound("Brand not found with " + id);
+                var deletedBrand = await _brandService.GetBrandById(id);
+                if (deletedBrand == null)
+                {
+                    return NotFound("Brand not found with " + id);
+                }
+                await _brandService.DeleteBrandAsync(id);
+                return NoContent();
             }
-            await _brandService.DeleteBrandAsync(id);
-            return NoContent();
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut("{id}")]
