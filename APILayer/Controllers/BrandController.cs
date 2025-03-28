@@ -48,7 +48,7 @@ namespace APILayer.Controllers
 
             if (addBrandDTO == null)
             {
-                return BadRequest("Brand's Data is required");
+                return BadRequest(new { message = "Brand's Data is required" });
             }
 
             //var existingBrand = await _brandService.GetBrandByNameAsync(addBrand.Name);
@@ -76,7 +76,7 @@ namespace APILayer.Controllers
                 var deletedBrand = await _brandService.GetBrandById(id);
                 if (deletedBrand == null)
                 {
-                    return NotFound("Brand not found with " + id);
+                    return NotFound(new { message = "Brand not found with " + id });
                 }
                 await _brandService.DeleteBrandAsync(id);
                 return NoContent();

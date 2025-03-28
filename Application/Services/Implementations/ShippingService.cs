@@ -58,6 +58,7 @@ namespace Application.Services.Implementations
             {
                 throw new Exception("status is only accept value of shipping,arrived or processing");
             }
+            var orderDto = await _orderService.GetOrderById(orderId);
             var result = await _orderService.UpdateOrderForShipping(orderId, status);
             if (result == false)
             {
@@ -68,6 +69,10 @@ namespace Application.Services.Implementations
             switch (status)
             {
                 case (int)ProjectConstant.OrderStatus.Shipping:
+                    //if (orderDto.orderItems.First().userRolledItemForManageOrder != null && orderDto.isReadyForShipBoxItem == false)
+                    //{
+                    //    throw new Exception("Order is not ready for shipping");
+                    //}
                     note = "Change to shipping status";
                     updatedAt = DateTime.UtcNow;
                     break;
@@ -76,7 +81,6 @@ namespace Application.Services.Implementations
                     note = "Change to arrived status";
                     updatedAt = DateTime.UtcNow.AddDays(2);
                     break;
-
                 case (int)ProjectConstant.OrderStatus.Processing:
                     note = "Change to processing status";
                     updatedAt = DateTime.UtcNow;

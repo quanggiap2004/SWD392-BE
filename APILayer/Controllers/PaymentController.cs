@@ -75,7 +75,7 @@ namespace APILayer.Controllers
                         var updateOnlineSerieBoxResult = await _orderService.UpdateOnlineSerieBoxTotalPrice(paymentResponse.OrderId);
                         if(!updateOnlineSerieBoxResult)
                         {
-                            return BadRequest("Update online serie box total price failed");
+                            return BadRequest(new { message = "Update online serie box total price failed" });
                         }
                         return Ok(paymentResponse);
                     }

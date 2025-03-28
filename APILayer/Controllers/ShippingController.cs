@@ -44,7 +44,7 @@ namespace APILayer.Controllers
                 var result = await _shippingService.UpdateOrderStatusForShipping(orderId, status);
                 if (result)
                 {
-                    return Ok("Update shipping status sucessfully");
+                    return Ok(new { message = "Update shipping status sucessfully" });
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace APILayer.Controllers
                 }
             }catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
     }
