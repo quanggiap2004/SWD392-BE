@@ -34,7 +34,7 @@ namespace APILayer.Controllers
             var boxItem = await _boxItemService.GetBoxItemById(id);
             if (boxItem == null)
             {
-                return NotFound("Box's Item not found with " + id);
+                return NotFound(new { message = "Box's Item not found with " + id });
             }
             return boxItem;
         }
@@ -47,7 +47,7 @@ namespace APILayer.Controllers
             var boxItem = await _boxItemService.GetBoxItemDTO(id);
             if (boxItem == null)
             {
-                return NotFound("Box's Item not found with " + id);
+                return NotFound(new { message = "Box's Item not found with " + id });
             }
             return boxItem;
         }
@@ -61,7 +61,7 @@ namespace APILayer.Controllers
             {
                 if (addBoxItemDTO == null)
                 {
-                    return BadRequest("Box Item's Data is required");
+                    return BadRequest(new { message = "Box Item's Data is required" });
                 }
 
                 //var existingBrand = await _brandService.GetBrandByNameAsync(addBrand.Name);
@@ -98,7 +98,7 @@ namespace APILayer.Controllers
             var deletedBoxItem = await _boxItemService.GetBoxItemById(id);
             if (deletedBoxItem == null)
             {
-                return NotFound("Box Item not found with " + id);
+                return NotFound(new { message = "Box Item not found with " + id });
             }
             var result = await _boxItemService.DeleteBoxItemAsync(id);
             if(result)
@@ -106,7 +106,7 @@ namespace APILayer.Controllers
                 return Ok("Delete box item successfully");
             } else
             {
-                return BadRequest("Delete box item failed. There is an online serie box that is published");
+                return BadRequest(new {message = "Delete box item failed. There is an online serie box that is published"});
             }
         }
 
@@ -117,7 +117,7 @@ namespace APILayer.Controllers
         {
             if (updateBoxItemDTO == null)
             {
-                return BadRequest("Box Item's Data is required");
+                return BadRequest(new { message = "Box Item's Data is required" });
             }
 
             var boxItemToUpdate = new BoxItem
