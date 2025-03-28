@@ -32,6 +32,7 @@ namespace Data.Repository.Implementations
                 Password = registerAccountDTO.password,
                 RoleId = registerAccountDTO.roleId,
                 IsActive = registerAccountDTO.isActive,
+                IsDelete = false
             };
 
             _context.Users.Add(user);
@@ -74,6 +75,7 @@ namespace Data.Repository.Implementations
                 gender = u.Gender,
                 isActive = u.IsActive,
                 avatarUrl = u.AvatarUrl,
+                isDelete = u.IsDelete
             }).FirstOrDefaultAsync();
             return user;
         }
@@ -102,7 +104,8 @@ namespace Data.Repository.Implementations
                 gender = u.Gender,
                 isActive = u.IsActive,
                 avatarUrl = u.AvatarUrl,
-                userId = u.UserId
+                userId = u.UserId,
+                isDeleted = u.IsDelete
             }).FirstOrDefaultAsync();
             return user;
         }
@@ -138,6 +141,7 @@ namespace Data.Repository.Implementations
                 gender = u.Gender,
                 isActive = u.IsActive,
                 avatarUrl = u.AvatarUrl,
+                isDeleted = u.IsDelete
             }).ToListAsync();
         }
 
