@@ -25,8 +25,11 @@ namespace Application.Services.Implementations
         private readonly IBoxService _box;
         private readonly IUserRolledItemService _userRolledItemService;
         private readonly IOnlineSerieBoxService _onlineSerieBoxService;
+        private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
         public OrderService(IOrderRepository orderRepository, IOrderStatusDetailService orderStatusDetailService, IBoxOptionService boxOption, 
-            IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box, IUserRolledItemService userRolledItemService, IOnlineSerieBoxService onlineSerieBoxService)
+            IOrderItemService orderItemService, IVoucherService voucherService, IBoxService box, IUserRolledItemService userRolledItemService, IOnlineSerieBoxService onlineSerieBoxService,
+            IUserService userService, IEmailService emailService)
         {
             _orderRepository = orderRepository;
             _orderStatusDetailService = orderStatusDetailService;
@@ -36,6 +39,8 @@ namespace Application.Services.Implementations
             _box = box;
             _userRolledItemService = userRolledItemService;
             _onlineSerieBoxService = onlineSerieBoxService;
+            _userService = userService;
+            _emailService = emailService;
         }
 
         public Task<ICollection<ManageOrderDto>> GetAllOrders(int? userId)
@@ -163,6 +168,11 @@ namespace Application.Services.Implementations
             await _orderItemService.AddOrderItems(orderItems); //subtracts stock quantity
             await UpdateUserRolledItemCheckoutStatus(model.orderItemRequestDto, true);
             await _voucherService.ReduceVoucherQuantity(model.voucherId);
+            var user = await _userService.GetUserById(model.userId);
+            if (user != null)
+            {
+                await _emailService.SendPaymentConfirmationEmailAsync(user.email, user.fullname, result.orderId);
+            }
             return result;
         }
 

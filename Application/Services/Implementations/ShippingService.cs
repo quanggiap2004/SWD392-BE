@@ -69,10 +69,10 @@ namespace Application.Services.Implementations
             switch (status)
             {
                 case (int)ProjectConstant.OrderStatus.Shipping:
-                    //if (orderDto.orderItems.First().userRolledItemForManageOrder != null && orderDto.isReadyForShipBoxItem == false)
-                    //{
-                    //    throw new Exception("Order is not ready for shipping");
-                    //}
+                    if (orderDto.orderItems.First().userRolledItemForManageOrder != null && orderDto.isReadyForShipBoxItem == false)
+                    {
+                        throw new Exception("Order is not ready for shipping");
+                    }
                     note = "Change to shipping status";
                     updatedAt = DateTime.UtcNow;
                     break;

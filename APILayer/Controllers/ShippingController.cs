@@ -48,7 +48,7 @@ namespace APILayer.Controllers
                 }
                 else
                 {
-                    return BadRequest("Update shpping status sucessfully failed");
+                    return BadRequest(new { message = "Update shpping status sucessfully failed" });
                 }
             }catch (Exception ex)
             {

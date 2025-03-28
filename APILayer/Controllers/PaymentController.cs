@@ -68,6 +68,7 @@ namespace APILayer.Controllers
             {
                 CreateOrderDTO orderDto = await _orderService.GetOrderDto(paymentResponse.OrderId);
                 var orderForOnlineSerieBox = await _orderService.GetOrderById(paymentResponse.OrderId);
+                var user = await _userService.GetUserById(orderDto.userId);
                 if (orderDto.orderItemRequestDto.First().isOnlineSerieBox)
                 {
                     if (orderForOnlineSerieBox.shippingFee > 0)
@@ -79,11 +80,16 @@ namespace APILayer.Controllers
                         }
                         return Ok(paymentResponse);
                     }
-                    return Ok(await _orderService.ProcessOnlineSerieBoxOrder(orderDto, paymentResponse.OrderId));
+                    var onlineSerieBoxResult = await _orderService.ProcessOnlineSerieBoxOrder(orderDto, paymentResponse.OrderId);
+                    if (user != null)
+                    {
+                        await _emailService.SendPaymentConfirmationEmailAsync(user.email, user.fullname, paymentResponse.OrderId);
+                    }
+                    return Ok(onlineSerieBoxResult);
                 }
                 OrderResponseDto result = await _orderService.UpdateOrderVnPay(orderDto, paymentResponse.OrderId);
 
-                var user = await _userService.GetUserById(orderDto.userId);
+                
                 if (user != null)
                 {
                     await _emailService.SendPaymentConfirmationEmailAsync(user.email, user.fullname, paymentResponse.OrderId);
