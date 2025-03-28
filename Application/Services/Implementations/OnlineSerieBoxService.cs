@@ -228,9 +228,7 @@ namespace Application.Services.Implementations
             }
             else if(!onlineSerieBox.IsSecretOpen)
             {
-                decimal newPrice = boxOption.DisplayPrice + (boxOption.DisplayPrice * priceIncreasePercent / 100m);
-                decimal fractionalPart = newPrice - Math.Floor(newPrice);
-                boxOption.DisplayPrice = fractionalPart > 0.5m ? Math.Ceiling(newPrice) : Math.Floor(newPrice);
+                decimal newPrice = Math.Round(boxOption.DisplayPrice + (boxOption.DisplayPrice * priceIncreasePercent / 100m));
             }
 
             await _currentRolledItemService.AddCurrentRolledItem(currentRolledItemDto);
