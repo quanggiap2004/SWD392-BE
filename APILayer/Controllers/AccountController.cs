@@ -298,7 +298,8 @@ namespace APILayer.Controllers
                     UserName = email,
                     Email = email,
                     FullName = fullName,
-                    Password = "Giap123456"
+                    Password = "Giap123456",
+                    EmailConfirmed = true
                 };
                 RegisterAccountDTO registerAccountDTO = new RegisterAccountDTO
                 {
@@ -307,7 +308,8 @@ namespace APILayer.Controllers
                     fullName = fullName,
                     password = "Giap123456",
                     roleId = 3,
-                    phoneNumber = "0943991995"
+                    phoneNumber = "0943991995",
+                    isActive = true
                 };
                 await _userManager.CreateAsync(user, user.Password);
                 var userLogin = await _userManager.FindByEmailAsync(email);
