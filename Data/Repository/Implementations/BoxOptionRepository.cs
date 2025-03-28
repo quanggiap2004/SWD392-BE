@@ -1,4 +1,5 @@
-﻿using Common.Model.OrderItem;
+﻿using Common.Exceptions;
+using Common.Model.OrderItem;
 using Data.Repository.Interfaces;
 using Domain.Domain.Context;
 using Domain.Domain.Entities;
@@ -23,11 +24,16 @@ namespace Data.Repository.Implementations
 
         public async Task DeleteBoxOptionAsync(int id)
         {
-            var deletedBoxOption = await _context.BoxOptions.FindAsync(id);
+            var deletedBoxOption = await _context.BoxOptions.Include(b => b.OnlineSerieBox).FirstOrDefaultAsync(bo => bo.BoxOptionId == id);
             if (deletedBoxOption != null)
             {
-                deletedBoxOption.IsDeleted = true;
-                await _context.SaveChangesAsync();
+                if(deletedBoxOption.IsOnlineSerieBox == true && deletedBoxOption.OnlineSerieBox.IsPublished == true)
+                {
+                    throw new CustomExceptions.BadRequestException("Cannot delete online serie box that is publish");
+                } else
+                {
+                    deletedBoxOption.IsDeleted = true;
+                }
             }
         }
 

@@ -86,7 +86,7 @@ namespace APILayer.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
             
         }
@@ -163,7 +163,7 @@ namespace APILayer.Controllers
             var votes = await _boxItemService.GetVotesByBoxItemId(boxItemId);
             if (votes == null)
             {
-                return NotFound();
+                return NotFound(new { message = "not found box item" });
             }
 
             return Ok(votes);

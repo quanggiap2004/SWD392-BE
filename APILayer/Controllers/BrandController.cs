@@ -83,7 +83,7 @@ namespace APILayer.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { message = e.Message });
             }
         }
 
@@ -93,7 +93,7 @@ namespace APILayer.Controllers
         {
             if (updateBrandDTO == null)
             {
-                return BadRequest("Brand's Data is required");
+                return BadRequest(new { message = "Brand's Data is required" });
             }
 
             var brandToUpdate = new Brand

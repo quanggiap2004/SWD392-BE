@@ -24,7 +24,7 @@ namespace APILayer.Controllers
         {
             if (request == null)
             {
-                return BadRequest("Request data is required.");
+                return BadRequest(new { message = "Request data is required." });
             }
 
             try
@@ -34,7 +34,7 @@ namespace APILayer.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -53,7 +53,7 @@ namespace APILayer.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { message = e.Message });
             }
         }
 
@@ -71,7 +71,7 @@ namespace APILayer.Controllers
         {
             if (request == null)
             {
-                return BadRequest("Request data is required.");
+                return BadRequest( new { message = "Request data is required." });
             }
             try
             {
@@ -80,7 +80,7 @@ namespace APILayer.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message});
             }
         }
 
@@ -95,7 +95,7 @@ namespace APILayer.Controllers
             }
             catch (NotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound( new { message = ex.Message });
             }
         }
         [HttpPut("{id}/publish")]
@@ -115,7 +115,7 @@ namespace APILayer.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { message = e.Message });
             }
         }
     }

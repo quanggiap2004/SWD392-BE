@@ -81,13 +81,21 @@ namespace APILayer.Controllers
         [Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult> DeleteBoxOption(int id)
         {
-            var deletedBoxOption = await _boxOptionService.GetBoxOptionById(id);
-            if (deletedBoxOption == null)
+            try
             {
-                return NotFound("Box Option not found with " + id);
+                var deletedBoxOption = await _boxOptionService.GetBoxOptionById(id);
+                if (deletedBoxOption == null)
+                {
+                    return NotFound("Box Option not found with " + id);
+                }
+                await _boxOptionService.DeleteBoxOptionAsync(id);
+                return NoContent();
             }
-            await _boxOptionService.DeleteBoxOptionAsync(id);
-            return NoContent();
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            
         }
 
 
