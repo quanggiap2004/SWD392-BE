@@ -28,7 +28,7 @@ namespace Application.Services.Implementations
                 var year = order.OrderCreatedAt.Year;
                 var month = order.OrderCreatedAt.ToString("MMMM", CultureInfo.InvariantCulture);
                 var week = GetWeekOfMonth(order.OrderCreatedAt);
-
+                var officialWeek = week > 4 ? 4 : week;
                 if (!response.MonthlyData.ContainsKey(year))
                 {
                     response.MonthlyData[year] = new Dictionary<string, MonthlyDataDTO>();
@@ -46,11 +46,11 @@ namespace Application.Services.Implementations
 
                 response.TotalRevenue += order.TotalPrice;
                 response.TotalProfit += order.Revenue;
-                if (week >= 1 && week <= 4)
+                if (officialWeek >= 1 && officialWeek <= 4)
                 {
-                    response.MonthlyData[year][month].Revenue[week - 1] += order.TotalPrice;
-                    response.MonthlyData[year][month].Profit[week - 1] += order.Revenue;
-                    response.MonthlyData[year][month].WeeklyOrders[week - 1] += 1;
+                    response.MonthlyData[year][month].Revenue[officialWeek - 1] += order.TotalPrice;
+                    response.MonthlyData[year][month].Profit[officialWeek - 1] += order.Revenue;
+                    response.MonthlyData[year][month].WeeklyOrders[officialWeek - 1] += 1;
                 }
 
             }
